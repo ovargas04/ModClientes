@@ -1,0 +1,8 @@
+<div *ngIf="_overlay.show === true">
+  <div id="busy-animation" style="display: block;" hidden>
+    <button class="btn btn-md btn-info">
+      <span class="glyphicon glyphicon-refresh spinning"></span>{{_overlay.message}}
+    </button>
+  </div>
+  <div class="overlay"></div>
+</div>

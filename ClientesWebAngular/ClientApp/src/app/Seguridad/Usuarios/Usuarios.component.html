@@ -1,0 +1,239 @@
+<style>
+  .panel-usuarios .row {
+    margin-top: 5px;
+  }
+  .noHabilitado {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+</style>
+
+<h1>Usuarios</h1>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-12">
+          <input type="text" placeholder="buscar usuario..."  (keyup)="buscarUsuario($event.target.value)" name="" value="" />
+          <span style="float: right;">
+            Solo Usuarios
+            Activos <input type="checkbox" (click)="cargarUsuariosActivos($event.target.checked)" id="soloUsuariosActivosCheckbox">
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 list-usuarios">
+          <div class="list-group" id="listboxUsuario"
+               style="height: 450px;  overflow-y: auto; overflow-x: hidden;">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8 panel-usuarios">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-4">
+          <!-- Standard button -->
+          <button (click)="nuevoUsuario()" type="button" class="btn btn-primary">
+            <i class="fa fa-plus-circle"></i>
+          </button>
+
+          <!-- Indicates a successful or positive action -->
+          <button type="button" (click)="editar()" id="EditarHabilitarCampos" class="btn btn-primary"
+                  style="margin: 0 18px;">
+            <i class="fa fa-pencil"></i>
+          </button>
+
+          <button type="button" (click)="modificarUsuario()" class="btn btn-primary"
+                  style="margin: 0 18px;">
+            <i class="fa fa-save"></i>
+          </button>
+
+          <button href="#EliminarUsuario" data-toggle="modal" type="button" style="margin-right:4%;" class="btn btn-danger">
+            <i class="fa fa-times"></i>
+          </button>
+
+          <button type="button" (click)="generarClave()" class="btn btn-danger">
+            <i class="fa fa-key"></i> Generar Clave
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8 col-md-offset-4">
+          <hr />
+        </div>
+      </div>
+
+      <div class="row" style="margin: 5px;"></div>
+      <div class="row">
+        <div class="col-md-3 col-md-offset-1">
+          <label class="form-group">Usuario</label>
+        </div>
+        <div class="col-md-8">
+          
+          <input type="text" id="_Usuario" value="" style="width: 144px;" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 col-md-offset-1">
+          <label class="form-group">País</label>
+        </div>
+        <div class="col-md-8">
+          <select class="pais" id="_PaisUsuario" style="width: 360px;">
+            <option value="" selected>Seleccion el país</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 col-md-offset-1">
+          <label class="form-group">Identificación</label>
+        </div>
+        <div class="col-md-8">
+          <input type="text" id="_Identificacion" value=""
+                 style="width: 144px;" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 col-md-offset-1">
+          <label class="form-group">Nombre</label>
+        </div>
+        <div class="col-md-8">
+          <input type="text" value="" id="_Nombre" style="width: 360px;" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 col-md-offset-1">
+          <label class="form-group">Departamento</label>
+        </div>
+        <div class="col-md-8">
+          <input type="text" id="_Departamento" value=""
+                 style="width: 360px;" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 col-md-offset-1">
+          <label class="form-group">Teléfono</label>
+        </div>
+        <div class="col-md-8">
+          <input id="_Telefono" type="text" value="" style="width: 144px;" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 col-md-offset-1">
+          <label class="form-group">Correo</label>
+        </div>
+        <div class="col-md-8">
+          <input id="_Correo" type="text" value="" style="width: 360px;" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 col-md-offset-1">
+          <label class="form-group">Perfil</label>
+        </div>
+        <div class="col-md-8">
+          <select class="perfil" id="_perfilesSelect" style="width: 360px;" sele>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 col-md-offset-1">
+          <label class="form-group">Estado</label>
+        </div>
+        <div class="col-md-8">
+          <select class="estado" id="_estadosSelect" style="width: 360px;">
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 col-md-offset-1">
+          <label class="form-group"></label>
+        </div>
+        <div class="col-md-8">
+          <span>
+            <input type="checkbox" id="_RequierePassword"> Requiere Cambiar
+            Password
+          </span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 col-md-offset-1">
+          <label for="actual">Foto</label>
+        </div>
+        <div class="col-md-8">
+          <input type="file" class="form-control"
+                 placeholder="Fotografía">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 col-md-offset-4">
+          <div class="avatar" id="_AvatarDiv" style="background-image: url(./img/user-unknown.png)"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<input type="text" hidden id="editarHidden" value="" />
+
+<a id="btnModalMensaje" hidden href="#ModalMensajes" data-toggle="modal">content</a>
+<!--Modal para Mensajes-->
+<div id="ModalMensajes" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center" id="headerBodyClientes">
+        <div class="icon-box">
+          <i class="material-icons" id="iconBoxBodyClientes">help</i>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body text-center">
+        <h4>Jetbox Clientes</h4>
+        <div id="bodyModalContainerClientes">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Modal para eliminar-->
+<a id="btnEliminarCliente" hidden >content</a>
+<div id="EliminarUsuario" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center" style="background-color:grey;">
+        <div class="icon-box">
+          <i class="material-icons" id="">help</i>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body text-center">
+        <h4>Jetbox Clientes</h4>
+        <div id="bodyEliminar">
+          <p id="">Desea eliminar este usuario?</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" id="BtnCerrarModal" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+          </div>
+          <div class="col-md-2 col-md-offset-2" id="footerEliminar">
+            <button type="button" (click)="eliminarUsuario()" data-dismiss="modal" class="btn btn-primary">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

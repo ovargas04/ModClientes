@@ -1,0 +1,44 @@
+<div class="container">
+  <div id="content">
+    <router-outlet>
+    </router-outlet>
+  </div>
+</div>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container">
+    <app-nav-menu></app-nav-menu>
+  </div>
+</div>
+
+<div class="container">
+  <app-footer></app-footer>
+</div>
+
+<app-overlay></app-overlay>
+<app-notification></app-notification>
+<app-message></app-message>
+
+<div hidden class="text-center">
+  <!-- Button HTML (to Trigger Modal) -->
+  <a style="font-size:10em;" href="#Modal" id="BtnMostrarModal" class="trigger-btn" data-toggle="modal"></a>
+</div>
+
+<!-- Modal HTML -->
+<div id="Modal" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center" id="headerBody">
+        <div class="icon-box">
+          <i class="material-icons" id="iconBoxBody"></i>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body text-center">
+        <h4>Jetbox Clientes</h4>
+        <div id="bodyModalContainer">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

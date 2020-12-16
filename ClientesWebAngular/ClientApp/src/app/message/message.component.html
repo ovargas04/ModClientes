@@ -1,0 +1,28 @@
+<div *ngIf="messageService.messages.length">
+  <div class="dhtmlx_message_area" style="top: 63px;">
+    <div *ngFor='let message of messageService.messages'>
+      <div *ngIf="message.type === 'Warning'">
+        <div class="dhtmlx-info dhtmlx-warning" (click)="messageService.clear()">
+          {{message.text}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="messageService.message">
+  <div *ngIf="messageService.message.type === 'Alert'">
+    <div class="overlay"></div>
+    <div class="dhtmlx_modal_box dhtmlx-alert" dhxbox="1" style="top: 267px; left: 530px;">
+      <div class="dhtmlx_popup_text">
+        <span>{{messageService.message.text}}</span>
+      </div>
+      <div class="dhtmlx_popup_controls">
+        <div class="dhtmlx_popup_button" result="ok">
+          <div (click)="messageService.closeMessage()">
+            OK
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

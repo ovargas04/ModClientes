@@ -1,0 +1,240 @@
+<h1 style="text-align:center;">Mantenimiento de Contratos</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-md-2 col-md-offset-8">
+      <a class="btn" (click)="levantarModalContratos()" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="btn-primary fa fa-plus"></i> Agregar Contrato</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <ngx-datatable [rows]="empresas"
+                     [columns]="columnsEmpresa"
+                     [columnMode]="ColumnMode.force"
+                     [loadingIndicator]="loadingIndicator"
+                     [summaryPosition]="'bottom'"
+                     [limit]="10"
+                     rowHeight="auto"
+                     [reorderable]="reorderable"
+                     [headerHeight]="50"
+                     [footerHeight]="50"
+                     class="bootstrap striped expandable"
+                     style="width:100%">
+
+        <ngx-datatable-column name="ID">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{ value }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="name">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{ value }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Editar" [width]="100">
+          <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+            <button class="btn btn-success" (click)="editarContrato(row)" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="glyphicon glyphicon-edit"></i></button>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Eliminar" [width]="100">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <a role="button" href="#ModalEliminar" class="btn btn-warning" (click)="cargarDataeliminarContrato(row)" data-toggle="modal"><i class="glyphicon glyphicon-remove"></i></a>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+</div>
+
+<div class="page_dlg modal fade bs-example-modal-lg" id="agregarZonaModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Ventana Contrato</h4>
+      </div>
+      <div class="modal-body">
+
+        <form class="form-horizontal" [formGroup]="contratosForm">
+          <div class="form-group">
+            <label class="col-md-2 control-label">Contrato</label>
+            <div class="col-md-2" id="contrato-edit">
+              <input readonly="readonly" style="opacity:3;" type="text" placeholder="0" class="input-md form-control" value="{{objContrato.contrato_id}}" formControlName="contrato_id">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-2 control-label">Empresa</label>
+            <div class="col-md-8">
+              <select class="empresa input-md form-control" selectedIndex="{{objContrato.empresa}}" formControlName="empresa">
+                <option *ngFor="let empresa of EmpresaSelect" [value]="empresa.id">
+                  {{ empresa.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-2 control-label">Descripción</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="Contrato" class="input-md form-control" value="{{objContrato.nombre}}" formControlName="nombre">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-2 control-label">País</label>
+            <div class="col-md-8">
+              <select class="paises input-md form-control" selectedIndex="{{objContrato.pais_id}}" formControlName="pais_id">
+                <option *ngFor="let pais of paises" [value]="pais.id">
+                  {{ pais.nombre }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-2 control-label">Tipo</label>
+            <div class="col-md-3">
+              <select class="tipo input-md form-control" selectedIndex="{{objContrato.tipo}}" formControlName="tipo">
+                <option value="1">Aereo</option>
+                <option value="2">Marítimo</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">Cupo</label>
+            <div class="col-md-3">
+              <input type="text" class="monetario input-md form-control" value="{{objContrato.cupo}}" formControlName="cupo">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">Peso Mínimo</label>
+            <div class="col-md-3">
+              <input type="text" class="monetario form-control input-md" value="{{objContrato.pesoMinimo}}" formControlName="pesoMinimo">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">Monto Mensual</label>
+            <div class="col-md-3">
+              <input type="text" class="monetario form-control input-md" value="{{objContrato.montoMensual}}" formControlName="montoMensual">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">Kilo Adicional</label>
+            <div class="col-md-3">
+              <input type="text" class="monetario form-control input-md" value="{{objContrato.kiloAdicional}}" formControlName="kiloAdicional">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">Contado</label>
+            <div class="col-md-1">
+              <input type="checkbox" class="form-control input-md" checked="{{objContrato.contado}}" formControlName="contado">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">Usa Jumping</label>
+            <div class="col-md-1">
+              <input type="checkbox" class="form-control input-md" checked="{{objContrato.usaJumping}}" formControlName="usaJumping">
+            </div>
+            <label class="col-md-3 col-md-offset-1 control-label">Cargar desde ms excel</label>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 control-label">Publicado</label>
+            <div class="col-md-1">
+              <input type="checkbox" class="form-control input-md" checked="{{objContrato.publicado}}" formControlName="publicado">
+            </div>
+            <div class="col-md-6 col-md-offset-1 file_upload-div">
+              <input type="file" class="form-control input-md" (change)="addfile($event)" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" formControlName="data_excel">
+            </div>
+          </div>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <ngx-datatable (activate)='onUserEvent($event)' id="ContratosTable"
+                           [rows]="contratos"
+                           [columns]="columnsContrato"
+                           [columnMode]="ColumnMode.force"
+                           [loadingIndicator]="loadingIndicator"
+                           [summaryPosition]="'bottom'"
+                           [limit]="10"
+                           rowHeight="auto"
+                           [reorderable]="reorderable"
+                           [headerHeight]="50"
+                           [footerHeight]="50"
+                           class="bootstrap striped expandable"
+                           style="width:100%">
+              <!--<ngx-datatable-column name="ID">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                  {{ value }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="name">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                  {{ value }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Editar" [width]="100">
+                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                  <button class="btn btn-success" (click)="editarSucursal(row)" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="glyphicon glyphicon-edit"></i></button>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Eliminar" [width]="100">
+                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                  <button class="btn btn-warning" (click)="eliminarSucursal(row)"><i class="glyphicon glyphicon-remove"></i></button>
+                </ng-template>
+              </ngx-datatable-column>-->
+            </ngx-datatable>
+          </div>
+
+          <div class="form-group" style="margin: 18px 0; border: 0; background: #333; background-image: linear-gradient(to right, #ccc, #333, #ccc);">
+            <div class="col-md-12">
+              <hr />
+            </div>
+          </div>
+        </form>
+
+
+
+        <div class="modal-footer">
+          <div class="form-group">
+            <div class="col-md-2 col-md-offset-2">
+              <button type="reset" id="BtnCerrarModal" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i>Cerrar</button>
+            </div>
+            <div class="col-md-2 col-md-offset-2">
+              <button type="button" (click)="actualizarContratos(contratosForm);" class="btn btn-primary"><i class="fa fa-save"></i> Actualizar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal para eliminar-->
+<div id="ModalEliminar" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center" style="background-color:grey;">
+        <div class="icon-box">
+          <i class="material-icons" id="">help</i>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body text-center">
+        <h4>Jetbox Clientes</h4>
+        <div id="bodyEliminar">
+          <p>Desea eliminar el contrato {{objContrato.nombre}} ?</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" id="BtnCerrarModal" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+          </div>
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" (click)="eliminar()" data-dismiss="modal" class="btn btn-primary">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

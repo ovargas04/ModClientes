@@ -1,0 +1,107 @@
+<h1 style="text-align:center;">Consulta de Bitácoras</h1>
+
+  <div class="container" id="divPrincipal" style="display:block">
+    <div class="row">
+      <div class="form-horizontal" [formGroup]="zonaForm">
+
+        <div class="form-group">
+          <label class="col-md-3 control-label">Cliente</label>
+          <div class="col-md-6">
+            <input type="text" placeholder="Cuenta" class="form-control input-md" value="{{ bitacoraObject.cuenta}}" formControlName="bitacoraCuenta">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-3 control-label">Usuario</label>
+          <div class="col-md-6">
+            <select id="paisnombre" selectedIndex="{{bitacoraObject.usuario}}" class="form-control input-md" formControlName="paisnombre">
+              <option *ngFor="let pais of paises" [value]="pais.id">
+                {{ pais.nombre }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-3 control-label">Actividades</label>
+          <div class="col-md-6">
+            <select id="paisnombre" selectedIndex="{{bitacoraObject.actividades}}" class="form-control input-md" formControlName="paisnombre">
+              <option value="_-actualizar">Actualizaciones</option>
+              <option value="_-borrar">Borrados</option>
+              <option value="_/clientes/_">Clientes</option>
+              <option value="_/reportes/_">Reportes</option>
+              <option value="_/parametros/_">Parámetros</option>
+              <option value="_/login/_">Login</option>
+              <option value="_/seguridad/_">Seguridad</option>
+              <option value="_/usuario/_">Usuario</option>
+              <option value="_">Bitácora completa</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-3 control-label">Desde</label>
+          <div class="col-md-6">
+            <input type="date" class="form-control input-md" value="{{ bitacoraObject.fechadesde}}" formControlName="bitacoraDesde">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-3 control-label">Hasta</label>
+          <div class="col-md-6">
+            <input type="date" class="form-control" id="alianzaDescuento" value="{{bitacoraObject.fechahasta}}" formControlName="bitacoraHasta" /> 
+          </div>
+        </div>
+
+          <div class="form-group">
+            <div class="col-md-2 col-md-offset-2">
+              <button type="button" class="btn btn-primary" id="btnConsultar" (click)="Consultar()" data-dismiss="modal"> Consultar</button>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="container" id="divDos" style="display:none">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <ngx-datatable [rows]="bitacoras"
+                       [columns]="columnsBitacora"
+                       [columnMode]="ColumnMode.force"
+                       [loadingIndicator]="loadingIndicator"
+                       [summaryPosition]="'bottom'"
+                       [limit]="10"
+                       rowHeight="auto"
+                       [reorderable]="reorderable"
+                       [headerHeight]="50"
+                       [footerHeight]="50"
+                       class="bootstrap striped expandable"
+                       style="width:100%">
+
+          <ngx-datatable-column name="id">
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{ value }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="fecha">
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{ value }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Editar" [width]="100">
+            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+              <button class="btn btn-success" (click)="editarAlianza(row)" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="glyphicon glyphicon-edit"></i></button>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Eliminar" [width]="100">
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <a role="button" href="#ModalEliminar" class="btn btn-warning" (click)="cargarDataeliminarContrato(row)" data-toggle="modal"><i class="glyphicon glyphicon-remove"></i></a>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+    </div>
+  </div>
+

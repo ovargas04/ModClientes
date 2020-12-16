@@ -1,0 +1,43 @@
+<h1 style="text-align:center;">Consulta de Tarjetas</h1>
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="modal-body">
+        <div class="form-horizontal" [formGroup]="tarjetaForm">
+
+          <div class="form-group">
+            <label class="col-md-3 control-label">Código Cliente</label>
+            <div class="col-md-6">
+              <input type="text" placeholder="Cuenta" class="form-control input-md" value="{{ tarjetaObject.cuenta}}" formControlName="tarjetaCuenta">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-3 control-label">Desde</label>
+            <div class="col-md-6">
+              <input type="date" placeholder="Desde" class="form-control input-md" value="{{ tarjetaObject.desde}}" formControlName="tarjeraDesde">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-3 control-label">Hasta</label>
+            <div class="col-md-6">
+              <input type="date" placeholder="Hasta" class="form-control input-md" value="{{ tarjetaObject.hasta}}" formControlName="tarjeraHasta">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="form-group">
+            <div class="col-md-2 col-md-offset-2">
+              <button type="button" id="BtnCerrarModal" class="btn btn-primary" data-dismiss="modal">Consultar</button>
+            </div>
+            <div class="col-md-2 col-md-offset-2">
+              <button type="button" class="btn btn-info" (click)="guardarAlianza(tarjetaObject)"><i class="fa fa-file-excel-o"></i> MS Excel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

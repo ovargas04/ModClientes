@@ -1,0 +1,37 @@
+<div class="login-panel">
+  <div class="container">
+    <div class="login-container">
+      <div *ngIf="clearOutput">
+        <div id="output"></div>
+      </div>
+      <div *ngIf="!clearOutput">
+        <div id="output" class="alert alert-danger animated fadeInUp">Favor ingrese el usuario y contraseña</div>
+      </div>
+      <div *ngIf="loginOutput">
+        <div id="output" class="alert alert-success animated fadeInUp">Bienvenido {{Iuser.name}}</div>
+      </div>
+      <div *ngIf="photo">
+        <img class="avatar" [src]="photo" />
+      </div>
+      <div *ngIf="!photo">
+        <div class="avatar"></div>
+      </div>
+      <div class="form-box">
+        <form [formGroup]="profileForm" method="post" (ngSubmit)="onSubmit()">
+          <input name="user" type="text" placeholder="usuario" formControlName="username" required>
+          <input type="password" placeholder="password" formControlName="password" required>
+          <div *ngIf="!loginOutput">
+            <button class="btn btn-info btn-block login" type="submit" [disabled]="!profileForm.valid">
+              Login
+            </button>
+          </div>
+          <div *ngIf="loginOutput">
+            <button class="btn btn-default btn-block login" type="submit" [disabled]="profileForm.valid">
+              Continuar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    </div>
+</div>

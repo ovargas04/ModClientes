@@ -1,0 +1,2784 @@
+
+<style>
+  .panel-usuarios .row {
+    margin-top: 5px;
+  }
+
+  .noHabilitado {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+</style>
+
+<div class="container">
+  <div class="row">
+
+
+    <!--MENU IZQUIERDA-->
+    <div class="col-md-3">
+      <div class="row">
+        <div class="col-md-12" style="height: 54px;">
+          <h1>Clientes</h1>
+        </div>
+      </div>
+      <div class="row" id="DivMenuIzquierda">
+        <div class="col-md-12">
+          <nav class="nav-sidebar">
+            <ul class="nav">
+              <li id="seg_clientesMostrar" class="active">
+                <a id="general_cliente" (click)="pa_Click('#seg_clientesMostrar');" href="javascript: void(0);"
+                   data-pa="#pa_cliente" style="color: maroon">
+                  <i style="color: yellow;" class="glyphicon glyphicon-asterisk btn-default"></i> Cliente
+                </a>
+              </li>
+              <li id="seg_clientesEmpresaMostrar" class="mostrar_empresa">
+                <a href="javascript: void(0);" (click)="pa_Click('#seg_clientesEmpresaMostrar')" data-pa="#pa_empresa">
+                  <i class="fa fa-building-o"></i> Empresa
+                </a>
+              </li>
+              <li id="seg_clientesPersonaMostrar" class="mostrar_persona">
+                <a href="javascript: void(0);" (click)="pa_Click('#seg_clientesPersonaMostrar')" data-pa="#pa_persona">
+                  <i class="glyphicon glyphicon-user"></i> Persona
+                </a>
+              </li>
+              <li id="seg_clientesDireccionMostrar0" class="seg_clientesDireccionMostrar0">
+                <a href="javascript: void(0);" (click)="pa_Click('#seg_clientesDireccionMostrar0')" data-pa="#pa_direccion0">
+                  <i class="glyphicon glyphicon-map-marker"></i> Dirección Fija
+                </a>
+              </li>
+              <li id="seg_clientesDireccionMostrar1" class="seg_clientesDireccionMostrar1">
+                <a href="javascript: void(0);" (click)="pa_Click('#seg_clientesDireccionMostrar1')" data-pa="#pa_direccion1">
+                  <i class="glyphicon glyphicon-map-marker"></i> Dirección
+                  Entrega #1
+                </a>
+              </li>
+              <li id="seg_clientesDireccionMostrar2" class="seg_clientesDireccionMostrar2">
+                <a href="javascript: void(0);" (click)="pa_Click('#seg_clientesDireccionMostrar2')" data-pa="#pa_direccion2">
+                  <i class="glyphicon glyphicon-map-marker"></i> Dirección Entrega #2
+                </a>
+              </li>
+              <li id="seg_clientesTarjetasMostrar" class="seg_clientesTarjetasMostrar">
+                <a href="javascript: void(0);" (click)="pa_Click('#seg_clientesTarjetasMostrar')" data-pa="#pa_tarjetas">
+                  <i class="glyphicon glyphicon-credit-card"></i> Tarjetas de Crédito
+                </a>
+              </li>
+              <li id="seg_clientesAutorizadosMostrar" class="seg_clientesAutorizadosMostrar">
+                <a href="javascript: void(0);" (click)="pa_Click('#seg_clientesAutorizadosMostrar')" data-pa="#pa_autorizados">
+                  <i class="fa fa-female"></i> Autorizados
+                </a>
+              </li>
+              <li id="seg_clientesContactosMostrar" class="seg_clientesContactosMostrar">
+                <a href="javascript: void(0);" (click)="pa_Click('#seg_clientesContactosMostrar')" data-pa="#pa_contactos">
+                  <i class="fa fa-users"></i> Contactos
+                </a>
+              </li>
+              <li class="nav-divider">
+              </li>
+              <li id="seg_clientesImagenesMostrar" class="seg_clientesImagenesMostrar">
+                <a href="javascript: void(0);" (click)="pa_Click('#seg_clientesImagenesMostrar')" data-pa="#pa_imagenes">
+                  <i class="glyphicon glyphicon-picture"></i> Imágenes
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <!--MENU IZQUIERDA-->
+
+
+
+
+
+
+
+
+
+
+
+    <div class="col-md-9">
+      <!-- HORIZONTAL MENU -->
+      <div class="row">
+        <div id="seg_clientesCrear" class="col-md-5">
+          <div style="border-style: inset; border-width: 2px; border-color: #4682B4; display: inline-block; width: 342px; padding: 9px;">
+            <div class="dropdown" style="display: inline-block">
+              <button class="btn btn-default dropdown-toggle" style="margin-right: 5px;"
+                      type="button" id="sucursales-carga" data-toggle="dropdown"
+                      aria-expanded="true">
+                <b style="color: maroon;">Nuevo</b>
+                <i style="color: green;" class="glyphicon glyphicon-globe"></i> Carga
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu open" role="menu" aria-labelledby="sucursales-carga">
+                <li role="presentation" (click)="nuevaCuenta20000()">
+                  <a href="javascript: void(0);" role="menuitem" tabindex="-1">Paquetería Empresarial</a>
+                </li>
+                <li role="presentation" (click)="nuevaCuenta70000();">
+                  <a href="javascript: void(0);" role="menuitem" tabindex="-1">
+                    Cuentas
+                    70_000
+                  </a>
+                </li>
+                <li role="presentation" (click)="nuevaCuentaCarga();">
+                  <a href="javascript: void(0);" role="menuitem" tabindex="-1">
+                    Cuentas
+                    Cuentas
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="dropdown" style="display: inline-block">
+              <button class="btn btn-default dropdown-toggle" type="button" id="sucursales-jetbox"
+                      data-toggle="dropdown" aria-expanded="true">
+                <b style="color: maroon;">Nuevo</b>
+                <i style="color: green;" class="glyphicon glyphicon-plane"></i> P.O.Box
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" id="SucursalesJetbox" role="menu" aria-labelledby="sucursales-jetbox">
+                <li role="presentation">
+                  <a href="javascript: void(0);" role="menuitem" tabindex="-1">Action</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div style="border: 2px inset #4682B4;display: inline-block; width: 99%; padding: 3px 11px">
+            <div style="display: inline; width: 5.4em;">
+              <div style="font-size: 9px; font-weight: bold; display: table">CLIENTE</div>
+              <div style="display: inline; margin: 0 11px 0 0;">
+                <input type="text" id="txtClienteBuscarsjo" (keypress)="keyPressBuscarSJO($event)" class="sjo" maxLength="9" style="width: 7.2em"
+                       value="{{model.cliente_id}}">
+              </div>
+            </div>
+            <div style="display: inline;width: 5.4em;max-width: 7.2em; position: relative; top: -4px;">
+              <button type="button" (click)="ValidarBusquedaCliente()" class="btn btn-primary"
+                      style="width: 7.2em;">
+                <i class="fa fa-search"></i> Buscar
+              </button>
+              <button hidden data-toggle="modal" data-target="#buscarClienteModal" onclick="void(0);" id="abrirModalBusqueda"></button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div style="border-style: inset; border-width: 2px; border-color: #4682B4; display: inline-block; width: 162px; padding: 9px; margin-left: 18px">
+            <button id="seg_clientesModificar" (click)="editar_guardar_click()" type="button" class="btn btn-info btn-edit-save"
+                    onclick="void(0);" style="margin: 0 2px;">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button id="seg_clientesEliminar" (click)="validarEliminarCliente()" type="button" class="btn btn-danger btn-delete"
+                    onclick="void(0);" style="margin: 0 0;">
+              <i class="fa fa-trash"></i>
+            </button>
+            <button id="_PrintButton" (click)="imprimirCliente()" type="button" class="btn btn-default btn-print"
+                    onclick="void(0);" style="margin: 0 2px;">
+              <i class="fa fa-print"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- HORIZONTAL MENU -->
+
+      <div class="row fondo_gold">
+        <div class="col-md-12">
+          <h5 style="width: 90%; color: black; margin: 9px; font-weight: bold;">
+            {{NombreSucursalGlobal}}
+          </h5>
+        </div>
+      </div>
+
+
+      <!--- PAGINA pa_cliente -->
+
+
+      <div id="pa_cliente">
+
+        <div class="row pages pa_cliente">
+          <div class="col-md-12">
+
+            <label style="margin-left: 2%;" for="_TipoCliente">Tipo Cliente</label>
+
+
+            <select id="_TipoCliente" style="width: 270px; margin-left: 8.5%;"
+                    selectedIndex="-1"
+                    (change)="cliente_tipo_change()" class="" data-ff="cliente_tipo">
+              <option value="10">Empresa</option>
+              <option value="20">Persona</option>
+            </select>
+
+
+            <input style="margin-left:5%;" class="" id="_Habilitar_TipoCliente" type="checkbox"
+                   (change)="checkboxHabilitarInhabilitar('#_TipoCliente')">
+            <span> Habilitar</span>
+
+
+            <input id="seg_clientesBotonWeb" type="button" style="margin-left:5%" onclick="void(0);"
+                   (click)="cliente_clave_web_click()" class="btn btn-success fa fa-input"
+                   value="&#xf084; Clave Web" />
+
+          </div>
+        </div>
+
+        <div class="row pages pa_cliente pa_cliente_cambio_sucursal">
+          <div class="col-md-12">
+            <hr />
+          </div>
+        </div>
+
+        <div class="row pages pa_cliente pa_cliente_cambio_sucursal">
+          <div class="col-md-12">
+
+            <label style="margin-left: 2%;" for="_CambioSucursal">Pasar a Sucursal</label>
+
+
+            <select id="_CambioSucursal" class="" style="width: 270px; margin-left: 4.8%;"
+                    selectedIndex="-1"
+                    data-ff="cliente_cambio_sucursal">
+            </select>
+
+
+            <input style="margin-left:5%;" id="_Habilitar_CambioSucursal" type="checkbox"
+                   (change)="checkboxHabilitarInhabilitar('#_CambioSucursal')">
+            <span> Habilitar</span>
+
+          </div>
+        </div>
+
+        <div class="row pages pa_cliente pa_cliente_cambio_sucursal">
+          <div class="col-md-12">
+            <hr />
+          </div>
+        </div>
+
+        <div class="row pages pa_cliente mostrar_empresa">
+          <div class="col-md-9">
+            <div class="col-md-3">
+              <label for="_NombreCliente">Nombre</label>
+            </div>
+            <div class="col-md-2">
+              <input type="text" id="_NombreCliente" style="width: 360px;"
+                     value="{{model.pa_cliente_nombre}}" class="" data-ff="cliente_nombre">
+            </div>
+          </div>
+        </div>
+
+        <div class="row pages pa_cliente mostrar_persona">
+          <div class="col-md-9">
+            <div class="col-md-3"><label for="_NombrePersona2">Nombre</label></div>
+            <div class="col-md-2">
+              <input type="text" id="_NombrePersona2" style="width: 360px;"
+                     value="{{model.pa_persona_nombre}}" data-ff="cliente_per_nombre">
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row pages pa_cliente mostrar_persona">
+          <div class="col-md-9">
+            <div class="col-md-3">
+              <label for="_PrimerApellido">Primer Apellido</label>
+            </div>
+            <div class="col-md-2">
+              <input type="text" id="_PrimerApellido" style="width: 360px;"
+                     value="{{model.pa_persona_primer_apellido}}"
+                     data-ff="cliente_per_primerApellido">
+            </div>
+          </div>
+        </div>
+
+        <div class="row pages pa_cliente mostrar_persona">
+          <div class="col-md-9">
+            <div class="col-md-3">
+              <label for="_SegundoApellido">Segundo Apellido</label>
+            </div>
+            <div class="col-md-2">
+              <input type="text" id="_SegundoApellido" style="width: 360px;"
+                     value="{{model.pa_persona_segundo_apellido}}"
+                     data-ff="cliente_per_segundoApellido">
+            </div>
+          </div>
+        </div>
+
+        <div class="row pages pa_cliente mostrar_persona" style="    margin-left: 18.5%;">
+          <div class="col-md-9">
+
+            <label for="_CuentaEmpleado"></label>
+
+
+            <input type="checkbox" id="_CuentaEmpleado"
+                   data-ff="cliente_cuenta_empleado">
+
+
+            <span>Es Cuenta Empleado</span>
+
+          </div>
+        </div>
+
+        <div class="row pages pa_cliente">
+          <div class="col-md-12">
+            <label style="margin-left:2%;" for="_FechaIngreso">Fecha Ingreso</label>
+            <input type="date" id="_FechaIngreso" style="width: 144px; height: 28px;margin-left: 7%"
+                   value=""
+                   data-ff="cliente_fecha_ingreso">
+            <label class="cliente_pobox inline" for="_CodigoPromocion" style="margin-left: 19%;">
+              Código
+              Promoción
+            </label>
+            <input class="cliente_pobox inline" type="text" id="_CodigoPromocion"
+                   value="{{model.pa_cliente_codigo_promocion}}"
+                   data-ff="cliente_codigo_promocion">
+          </div>
+        </div>
+
+        <div class="row pages pa_cliente cliente_pobox">
+          <div class="col-md-12">
+            <label style="margin-left:2%;" for="_Idioma">Idioma</label>
+            <select id="_Idioma" style="width: 180px; margin-left: 13%;"
+                    data-ff="cliente_idioma">
+              <option value="es">Español</option>
+              <option value="en">Inglés</option>
+            </select>
+            <select id="_Alianza" style="margin-left: 45px; margin-right: 18px;"
+                    data-ff="cliente_alianza">
+              <option>-- SIN Alianza Comercial</option>
+            </select>
+            <input type="checkbox" id="_AlianzaDatosCompletos"
+                   data-ff="cliente_datos_completos" />
+            <span>Datos Completos</span>
+          </div>
+        </div>
+
+        <div class="row pages pa_cliente">
+          <div class="col-md-12">
+            <hr style="color: maroon; background-color: black" />
+          </div>
+        </div>
+
+        <div class="row pages pa_cliente cliente_pobox">
+          <div class="col-md-9">
+            <div class="col-md-3">
+              <label for="_ContratoNormal">Contrato Normal</label>
+            </div>
+            <div class="col-md-2">
+              <select id="_ContratoNormal" style="width: 360px;"
+                      data-ff="cliente_contrato">
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row pages pa_cliente cliente_pobox mostrar_contrato_economy">
+          <div class="col-md-9">
+            <div class="col-md-3">
+              <label for="_ContratoEconomy">Contrato Economy</label>
+            </div>
+            <div class="col-md-2">
+              <select id="_ContratoEconomy" style="width: 360px;"
+                      data-ff="cliente_contrato_economy">
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row pages pa_cliente">
+          <div class="col-md-9">
+            <div class="col-md-3">
+              <label for="_EjecutivoCuenta">Ejecutivo(a) Cuenta</label>
+            </div>
+            <div class="col-md-2">
+              <select id="_EjecutivoCuenta" style="width: 360px;"
+                      data-ff="cliente_ejecutivo">
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row pages pa_cliente">
+          <div class="col-md-9">
+            <div class="col-md-3">
+              <label for="_RecomendadoPor">Recomendado Por</label>
+            </div>
+            <div class="col-md-2">
+              <input id="_RecomendadoPor" type="text" style="    width: 360px;"
+                     value="{{model.pa_cliente_recomendado_por}}"
+                     data-ff="cliente_recomendado">
+            </div>
+          </div>
+        </div>
+
+        <div class="row pages pa_cliente cliente_pobox " style="    margin-left: 18.5%;">
+          <div class="col-md-9">
+            <label for="_PagoTarjeta"></label>
+            <input type="checkbox" id="_PagoTarjeta"
+                   data-ff="cliente_pago_tarjeta">
+            <span>Pago Con Tarjeta</span>
+          </div>
+        </div>
+
+        <div class="row pages pa_cliente cliente_pobox " style="    margin-left: 18.5%;">
+          <div class="col-md-9">
+            <label for="_CargoMensajeria"></label>
+            <input type="checkbox" id="_CargoMensajeria"
+                   data-ff="cliente_cargo_mensajeria">
+            <span>Cargo Mensajería</span>
+          </div>
+        </div>
+
+        <div class="row pages pa_cliente" style="    margin-left: 18.5%;">
+          <div class="col-md-9">
+            <label for="_RecibidoConforme"></label>
+            <input type="checkbox" id="_RecibidoConforme"
+                   data-ff="cliente_cargo_guia">
+            <span>{{model.confeccion_guia}}</span>
+          </div>
+        </div>
+
+        <div class="row pages pa_cliente" style="    margin-left: 18.5%;">
+          <div class="col-md-9">
+            <label for="_RecogeSucursal"></label>
+            <input type="checkbox" id="_RecogeSucursal"
+                   data-ff="cliente_recoge_sucursal">
+            <span>Recoge En Sucursal</span>
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_cliente cliente_carga">
+          <div class="col-md-9">
+            <div class="col-md-3">
+              <label for="_TipoCredito">Tipo Crédito</label>
+            </div>
+            <div class="col-md-2">
+              <select id="_TipoCredito" style="width: 270px;"
+                      selectedIndex="{{model.pa_cliente_index_tipo_credito}}"
+                      data-ff="cliente_tipo_credito">
+                <option value="0">Contado</option>
+                <option value="30">Crédito 30</option>
+                <option value="45">Crédito 45</option>
+                <option value="60">Crédito 60</option>
+                <option value="90">Crédito 90</option>
+              </select>
+            </div>
+            </div>
+          </div>
+
+
+
+
+        <div class="row pages pa_cliente">
+          <div class="col-md-12">
+            <hr style="color: maroon; background-color: black" />
+          </div>
+        </div>
+        <div class="row pages pa_cliente">
+          <div class="col-md-9">
+            <div class="col-md-3">
+              <label for="_EstadoCliente">Estado</label>
+            </div>
+            <div class="col-md-2">
+              <select id="_EstadoCliente" style="width: 360px;"
+                      data-ff="cliente_estado">
+                <option value="10">Activo</option>
+                <option value="20">Moroso</option>
+                <option value="30">Cancelado</option>
+                <option value="40">Fallecido</option>
+                <option value="50">No Localizable</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row pages pa_cliente">
+          <div class="col-md-9">
+            <div class="col-md-3">
+              <label for="_NotasCliente" style="vertical-align: top;">Notas</label>
+            </div>
+            <div class="col-md-2">
+              <textarea id="_NotasCliente" style="height: 45px; width: 360px;"
+                        value="{{model.pa_cliente_notas}}" data-ff="cliente_notas"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row pages pa_cliente">
+          <div class="col-md-9">
+            <div class="col-md-3">
+              <label for="_Zona">Zona</label>
+            </div>
+            <div class="col-md-2">
+              <select id="_Zona" style="width: 180px; width: 360px;"
+                      data-ff="cliente_zona">
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row pages pa_cliente">
+          <div class="col-md-9">
+            <div class="col-md-3">
+              <label for="_NotasZona" style="vertical-align: top;">Notas Zona</label>
+            </div>
+            <div class="col-md-2">
+              <textarea id="_NotasZona" style="height: 45px; width: 360px;"
+                        value="{{model.pa_cliente_historial_zona}}"
+                        data-ff="cliente_zona_notas"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row pages pa_cliente">
+          <div class="col-md-9">
+            <div class="col-md-3">
+              <label for="_Productos" style="vertical-align: top;">Productos</label>
+            </div>
+
+            <div class="col-md-3">
+              <div id="_Productos" class="seg_productos" style="display: inline-block; border: 1px solid black; padding: 11px; width: 360px;">
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <!--- PAGINA pa_cliente -->
+      <!--PAGINA pa_persona-->
+      <div id="pa_persona">
+
+
+        <div class="row pages pa_persona">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_PersonaTipoId">Tipo Id</label>
+            </div>
+            <select id="_PersonaTipoId" style="width: 360px;"
+                    data-ff="persona_per_tipoId">
+              <option value="-1">-- No Definido</option>
+              <option value="10">Cédula</option>
+              <option value="20">Pasaporte</option>
+              <option value="30">Cédula De Residencia</option>
+            </select>
+          </div>
+        </div>
+        <div class="row pages pa_persona">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_PersonaNumeroId">Número Id</label>
+            </div>
+            <input type="text" id="_PersonaNumeroId" style="width: 360px;"
+                   value="{{model.pa_persona_identificacion}}" data-ff="persona_per_numeroId">
+          </div>
+        </div>
+        <div class="row pages pa_persona">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_NombrePersona">Nombre</label>
+            </div>
+            <input type="text" id="_NombrePersona" style="width: 360px;"
+                   value="{{model.pa_persona_nombre}}" data-ff="persona_per_nombre">
+          </div>
+        </div>
+        <div class="row pages pa_persona">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_PersonaPrimerApellido">Primer Apellido</label>
+            </div>
+            <input type="text" id="_PersonaPrimerApellido" style="width: 360px;"
+                   value="{{model.pa_persona_primer_apellido}}" data-ff="persona_per_primerApellido">
+          </div>
+        </div>
+        <div class="row pages pa_persona">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_PersonaSegundoApellido">Segundo Apellido</label>
+            </div>
+            <input type="text" id="_PersonaSegundoApellido" style="width: 360px;"
+                   value="{{model.pa_persona_segundo_apellido}}" data-ff="persona_per_segundoApellido">
+          </div>
+        </div>
+        <div class="row pages pa_persona">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_PersonaFechaNacimiento">Fecha Nacimiento</label>
+            </div>
+            <input type="date" id="_PersonaFechaNacimiento" style="width: 144px; height: 28px;"
+                   value="" data-ff="persona_per_fechaNacimiento">
+
+            <input type="checkbox" id="check_persona_per_fechaNacimientoNoDefinida"
+                   data-ff="persona_per_fechaNacimientoNoDefinida">
+            <span>No Definida</span>
+          </div>
+        </div>
+        <div class="row pages pa_persona">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_Sexo">Sexo</label>
+            </div>
+            <select id="_Sexo" style="width: 360px;"
+                    data-ff="persona_per_sexo">
+              <option value="30">-- Falta Esta Información</option>
+              <option value="10">Masculino</option>
+              <option value="20">Femenino</option>
+            </select>
+          </div>
+        </div>
+        <div class="row pages pa_persona">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_Nacionalidad">Nacionalidad</label>
+            </div>
+            <select id="_Nacionalidad" style="width: 360px;"
+                    data-ff="persona_per_nacionalidad">
+            </select>
+          </div>
+        </div>
+        <div class="row pages pa_persona">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_EstadoCivil">Estado Civil</label>
+            </div>
+            <select id="_EstadoCivil" style="width: 360px;"
+                    data-ff="persona_per_estadoCivil">
+              <option value="60">-- Falta Esta Información</option>
+              <option value="10">Soltero</option>
+              <option value="20">Casado</option>
+              <option value="30">Union Libre</option>
+              <option value="40">Viudo</option>
+              <option value="50">Divorciado</option>
+            </select>
+          </div>
+        </div>
+        <div class="row pages pa_persona">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_Profesion">Profesion</label>
+            </div>
+            <select id="_Profesion" style="width: 360px;"
+                    data-ff="persona_per_profesion">
+            </select>
+          </div>
+        </div>
+        <div class="row pages pa_persona">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_PersonaComoConocio">Cómo conoció JetBox?</label>
+            </div>
+            <select id="_PersonaComoConocio" style="width: 360px;"
+                    data-ff="persona_como_conocio">
+              <option value="0">Otro</option>
+              <option value="1">Internet</option>
+              <option value="2">Sucursal</option>
+              <option value="3">Periódico</option>
+              <option value="4">Prensa</option>
+              <option value="5">Radio</option>
+              <option value="6">Recomendación</option>
+              <option value="7">Red Social</option>
+            </select>
+          </div>
+        </div>
+        <div class="row pages pa_persona">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionCelular">
+                <i class="fa fa-mobile"
+                   style="font-size: 1.5em;"></i>
+              </label>
+            </div>
+            <input class="telefono" type="text" id="_DireccionCelular" style="width: 180px;"
+                   value="{{model.pa_persona_celular}}" data-ff="direccion_dir_celular">
+          </div>
+        </div>
+
+        <div class="row pages pa_persona">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionTTelefono0111"><i class="fa fa-phone"></i></label>
+              <select id="_DireccionTTelefono0111" style="width: 90px;" class="direccion_ttel1"
+                      data-ff="direccion_dir_ttelefono1">
+                <option value="0">-- - --</option>
+                <option value="1">Trabajo</option>
+                <option value="2">Celular</option>
+                <option value="3">Casa</option>
+                <option value="6">Central</option>
+              </select>
+            </div>
+            <input class="telefono direccion_tel1" type="text" style="width: 180px;"
+                   value="{{model.pa_persona_telefono1}}" data-ff="direccion_dir_telefono1">
+          </div>
+        </div>
+        <div class="row pages pa_persona">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionTTelefono012"><i class="fa fa-phone"></i></label>
+              <select id="_DireccionTTelefono012" style="width: 90px;" class="direccion_ttel2"
+                      data-ff="direccion_dir_ttelefono2">
+                <option value="0">-- - --</option>
+                <option value="1">Trabajo</option>
+                <option value="2">Celular</option>
+                <option value="3">Casa</option>
+                <option value="6">Central</option>
+              </select>
+            </div>
+            <input class="telefono direccion_tel2" type="text" style="width: 180px;"
+                   value="{{model.pa_persona_telefono2}}" data-ff="direccion_dir_telefono2">
+          </div>
+        </div>
+
+        <div class="row pages pa_persona">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionEmail1">Email</label>
+            </div>
+            <input class="email" id="_DireccionEmail1" type="email" style="width: 360px;"
+                   value="{{model.pa_persona_email1}}" data-ff="direccion_dir_email1" />
+          </div>
+        </div>
+        <div class="row pages pa_persona">
+          <div class="col-md-9">
+            <hr />
+          </div>
+        </div>
+        <div class="row pages pa_persona">
+          <div class="col-md-8">
+            <label for="_DeseaBoletinesElectronicos" style="width: 11px;"></label>
+            <input type="checkbox" id="_DeseaBoletinesElectronicos"
+                   checked="{{model.pa_persona_recibir_boletines_electronicos}}"
+                   data-ff="cliente_autorizaciones_01">
+            <span>Recibir notificaciones de paquetes en mis dispositivos móviles</span>
+          </div>
+        </div>
+        <div class="row pages pa_persona">
+          <div class="col-md-8">
+            <label for="_DeseaCuponesDescuento" style="width: 11px;"></label>
+            <input type="checkbox" id="_DeseaCuponesDescuento"
+                   checked="{{model.pa_persona_recibir_cupones_descuento}}"
+                   data-ff="cliente_autorizaciones_02">
+            <span>Recibir boletines electrónicos y promociones de parte de JetBox</span>
+          </div>
+        </div>
+
+
+
+
+      </div>
+      <!--PAGINA pa_persona-->
+      <!--PAGINA pa_empresa-->
+      <div id="pa_empresa">
+        <div class="row pages pa_empresa">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_EmpresaRazon">Razon Social</label>
+            </div>
+            <input type="text" id="_EmpresaRazon" style="width: 360px;"
+                   value="{{model.pa_cliente_nombre}}" data-ff="empresa_nombre" />
+          </div>
+        </div>
+        <div class="row pages pa_empresa">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_EmpresaNombreCorto">Nombre Corto</label>
+            </div>
+            <input type="text" id="_EmpresaNombreCorto" style="width: 360px;"
+                   value="{{model.pa_empresa_nombre_corto}}" data-ff="empresa_nombre_corto" />
+          </div>
+        </div>
+        <div class="row pages pa_empresa">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_EmpresaCedulaJuridica" class="mp_cedula_juridica">Cédula Jurídica</label>
+            </div>
+            <input type="text" id="_EmpresaCedulaJuridica" style="width: 360px;"
+                   value="{{model.pa_empresa_cedula_juridica}}" data-ff="empresa_cedula_juridica" />
+          </div>
+        </div>
+        <div class="row pages pa_empresa pa_empresa_direccion">
+          <hr />
+        </div>
+        <div class="row pages pa_empresa pa_empresa_direccion">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_EmpresaPais">País</label>
+            </div>
+            <select id="_EmpresaPais" style="width: 360px;"
+                    (change)="paisChange($event.target.value,'#_EmpresaProvincia','#_EmpresaCanton')"
+                    data-ff="empresa_dir_pais">
+            </select>
+          </div>
+        </div>
+        <div class="row pages pa_empresa pa_empresa_direccion">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_EmpresaProvincia" class="mp_direccion0">Provincia</label>
+            </div>
+            <select id="_EmpresaProvincia" style="width: 360px;"
+                    (change)="provinciaChange('#_EmpresaPais',$event.target.value,'#_EmpresaProvincia','#_EmpresaCanton')"
+                    data-ff="empresa_dir_division">
+            </select>
+          </div>
+        </div>
+        <div class="row pages pa_empresa pa_empresa_direccion">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_EmpresaCanton" class="mp_direccion1">Cantón</label>
+            </div>
+            <select id="_EmpresaCanton" style="width: 360px;"
+                    data-ff="empresa_dir_subdivision">
+            </select>
+          </div>
+        </div>
+        <div class="row pages pa_empresa pa_empresa_direccion">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_EmpresaDireccion" style="vertical-align: top;">Dirección</label>
+            </div>
+            <textarea id="_EmpresaDireccion" style="height: 45px; width: 360px;"
+                      value="{{model.pa_empresa_direccion}}" data-ff="empresa_dir_direccion"></textarea>
+          </div>
+        </div>
+        <div class="row pages pa_empresa pa_pobox_juridico">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_EmpresaComoConocio">Cómo conoció JetBox?</label>
+            </div>
+            <select id="_EmpresaComoConocio" style="width: 360px;"
+                    data-ff="empresa_como_conocio">
+              <option value="0">Otro</option>
+              <option value="1">Internet</option>
+              <option value="2">Sucursal</option>
+              <option value="3">Periódico</option>
+              <option value="4">Prensa</option>
+              <option value="5">Radio</option>
+              <option value="6">Recomendación</option>
+              <option value="7">Red Social</option>
+            </select>
+          </div>
+        </div>
+        <div class="row pages pa_empresa pa_pobox_juridico">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_EmpresaDireccionCelular"><i class="fa fa-mobile" style="font-size: 1.5em;"></i></label>
+            </div>
+            <input class="telefono" type="text" id="_EmpresaDireccionCelular" style="width: 180px;"
+                   value="{{model.pa_empresa_celular}}" data-ff="empresa_dir_celular">
+          </div>
+        </div>
+        <div class="row pages pa_empresa pa_empresa_direccion pa_pobox_juridico">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_EmpresaTTelefono1"><i class="fa fa-phone"></i></label>
+              <select id="_EmpresaTTelefono1" style="width: 90px;" class="direccion_ttel1"
+                      data-ff="empresa_dir_ttelefono1">
+                <option value="0">-- - --</option>
+                <option value="1">Trabajo</option>
+                <option value="2">Celular</option>
+                <option value="3">Casa</option>
+                <option value="6">Central</option>
+              </select>
+            </div>
+            <input class="telefono direccion_tel1" type="text" style="width: 180px;"
+                   value="{{model.pa_empresa_telefono1}}" data-ff="empresa_dir_telefono1">
+          </div>
+        </div>
+        <div class="row pages pa_empresa pa_empresa_direccion pa_pobox_juridico">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_EmpresaTTelefono2"><i class="fa fa-phone"></i></label>
+              <select id="_EmpresaTTelefono2" style="width: 90px;" class="direccion_ttel2"
+                      data-ff="empresa_dir_ttelefono2">
+                <option value="0">-- - --</option>
+                <option value="1">Trabajo</option>
+                <option value="2">Celular</option>
+                <option value="3">Casa</option>
+                <option value="6">Central</option>
+              </select>
+            </div>
+            <input class="telefono direccion_tel2" type="text" style="width: 180px;"
+                   value="{{model.pa_empresa_telefono2}}" data-ff="empresa_dir_telefono2">
+          </div>
+        </div>
+        <div class="row pages pa_empresa pa_empresa_direccion ">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_EmpresaTTelefono3"><i class="fa fa-phone"></i></label>
+              <select id="_EmpresaTTelefono3" style="width: 90px;" class="direccion_ttel3"
+                      data-ff="empresa_dir_ttelefono3">
+                <option value="0">-- - --</option>
+                <option value="1">Trabajo</option>
+                <option value="2">Celular</option>
+                <option value="3">Casa</option>
+                <option value="6">Central</option>
+              </select>
+            </div>
+            <input class="telefono direccion_tel3" type="text" style="width: 180px;"
+                   value="{{model.pa_empresa_telefono3}}"
+                   data-ff="empresa_dir_telefono3">
+          </div>
+        </div>
+        <div class="row pages pa_empresa pa_empresa_direccion">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_EmpresaTTelefono4"><i class="fa fa-phone"></i></label>
+              <select id="_EmpresaTTelefono4" style="width: 90px;" class="direccion_ttel4"
+                      data-ff="empresa_dir_ttelefono4">
+                <option value="0">-- - --</option>
+                <option value="1">Trabajo</option>
+                <option value="2">Celular</option>
+                <option value="3">Casa</option>
+                <option value="6">Central</option>
+              </select>
+            </div>
+            <input class="telefono direccion_tel4" type="text" style="width: 180px;"
+                   value="{{model.pa_empresa_telefono4}}" data-ff="empresa_dir_telefono4">
+          </div>
+        </div>
+        <div class="row pages pa_empresa pa_empresa_direccion pa_pobox_juridico">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_EmpresaEmail1">Email</label>
+            </div>
+            <input class="email" id="_EmpresaEmail1" type="email" style="width: 360px;"
+                   value="{{model.pa_empresa_email1}}" data-ff="empresa_dir_email1" />
+          </div>
+        </div>
+        <div class="row pages pa_empresa">
+          <div class="col-md-2">
+            <p style="position: relative; font-weight: bold; font-size: 1.2em; top: 11px; left: 11px; color: gray;">
+              Apoderado
+            </p>
+          </div>
+          <div class="col-md-10">
+            <hr style="height: 1px; background-color: lightgray;" />
+          </div>
+        </div>
+        <div class="row pages pa_empresa">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_ApoderadoTipoId">Tipo Id</label>
+            </div>
+            <select id="_ApoderadoTipoId" style="width: 360px;"
+                    data-ff="apoderado_per_tipoId">
+              <option value="-1">-- No Definido</option>
+              <option value="10">Cédula</option>
+              <option value="20">Pasaporte</option>
+              <option value="30">Cédula De Residencia</option>
+            </select>
+          </div>
+        </div>
+        <div class="row pages pa_empresa">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_ApoderadoId">Número Id</label>
+            </div>
+            <input type="text" id="_ApoderadoId" style="width: 360px;"
+                   value="{{model.pa_empresa_apoderado_id}}" data-ff="apoderado_per_numeroId">
+          </div>
+        </div>
+        <div class="row pages pa_empresa">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_ApoderadoNombre">Nombre</label>
+            </div>
+            <input type="text" id="_ApoderadoNombre" style="width: 360px;"
+                   value="{{model.pa_empresa_apoderado_nombre}}" data-ff="apoderado_per_nombre">
+          </div>
+        </div>
+        <div class="row pages pa_empresa">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_ApoderadoPrimerApellido">Primer Apellido</label>
+            </div>
+            <input type="text" id="_ApoderadoPrimerApellido" style="width: 360px;"
+                   value="{{model.pa_empresa_apoderado_primer_apellido}}"
+                   data-ff="apoderado_per_primerApellido">
+          </div>
+        </div>
+        <div class="row pages pa_empresa">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_ApoderadoSegundoApellido">Segundo Apellido</label>
+            </div>
+            <input type="text" id="_ApoderadoSegundoApellido" style="width: 360px;"
+                   value="{{model.pa_empresa_apoderado_segundo_apellido}}"
+                   data-ff="apoderado_per_segundoApellido">
+          </div>
+        </div>
+        <div class="row pages pa_empresa">
+          <div class="col-md-8">
+            <label for="_ApoderadoMismoContacto"></label>
+            <input type="checkbox" id="_ApoderadoMismoContacto"
+                   data-ff="apoderado_como_contacto">
+            <span> El apoderado funge como contacto?</span>
+          </div>
+        </div>
+      </div>
+      <!--PAGINA pa_empresa-->
+      <!--PAGINA pa_direccion0-->
+      <div id="pa_direccion0">
+        <div class="row pages pa_direccion0">
+          <div class="col-md-8">
+            <div class="col-md-3">
+
+              <label for="_DireccionPais00">País</label>
+            </div>
+            <select id="_DireccionPais00" (change)="paisChange($event.target.value,'#_DireccionProvincia00','#_DireccionCanton00')" style="width: 360px;"
+                    data-ff="direccion_dir_pais">
+            </select>
+          </div>
+        </div>
+        <div class="row pages pa_direccion0">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionProvincia00" class="mp_direccion0">Provincia</label>
+            </div>
+            <select id="_DireccionProvincia00" style="width: 360px;"
+                    selectedIndex="{{model.pa_direccion_index_provincia}}"
+                    (change)="provinciaChange('#_DireccionPais00',$event.target.value,'#_DireccionProvincia00','#_DireccionCanton00')"
+                    data-ff="direccion_dir_division">
+            </select>
+          </div>
+        </div>
+        <div class="row pages pa_direccion0">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionCanton00" class="mp_direccion1">Cantón</label>
+            </div>
+            <select id="_DireccionCanton00" style="width: 360px;"
+                    selectedIndex="{{model.pa_direccion_index_canton}}"
+                    data-ff="direccion_dir_subdivision">
+            </select>
+          </div>
+        </div>
+        <div class="row pages pa_direccion0">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionDireccion00" style="vertical-align: top;">Dirección</label>
+            </div>
+            <textarea id="_DireccionDireccion00" style="height: 45px; width: 360px;"
+                      value="{{model.pa_direccion_direccion}}"
+                      data-ff="direccion_dir_direccion"></textarea>
+          </div>
+        </div>
+        <div class="row pages pa_direccion0">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionTTelefono003"><i class="fa fa-phone"></i></label>
+
+              <select id="_DireccionTTelefono003" style="width: 90px;" class="direccion_ttel3"
+                      selectedIndex="{{model.pa_direccion_index_telefono3}}"
+                      data-ff="direccion_dir_ttelefono3">
+                <option value="0">-- - --</option>
+                <option value="1">Trabajo</option>
+                <option value="2">Celular</option>
+                <option value="3">Casa</option>
+                <option value="6">Central</option>
+              </select>
+            </div>
+            <input class="telefono direccion_tel3" type="text" style="width: 180px;"
+                   value="{{model.pa_direccion_telefono3}}" data-ff="direccion_dir_telefono3">
+          </div>
+        </div>
+        <div class="row pages pa_direccion0">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionTTelefono004"><i class="fa fa-phone"></i></label>
+              <select id="_DireccionTTelefono004" style="width: 90px;" class="direccion_ttel4"
+                      selectedIndex="{{model.pa_direccion_index_telefono4}}"
+                      data-ff="direccion_dir_ttelefono4">
+                <option value="0">-- - --</option>
+                <option value="1">Trabajo</option>
+                <option value="2">Celular</option>
+                <option value="3">Casa</option>
+                <option value="6">Central</option>
+              </select>
+            </div>
+            <input class="telefono direccion_tel4" type="text" style="width: 180px;"
+                   value="{{model.pa_direccion_telefono4}}" data-ff="direccion_dir_telefono4">
+          </div>
+        </div>
+      </div>
+      <!--PAGINA pa_direccion0-->
+      <!--PAGINA pa_direccion1-->
+      <div id="pa_direccion1">
+
+        <div class="row pages pa_direccion1">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionPrimaria01">Nombre de Referencia</label>
+            </div>
+            <input type="text" id="_DireccionPrimaria01" style="width: 360px;"
+                   data-ff="direccion_dir_nombre">
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion1">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionAutorizarDejarPaquete1">Autorizo Dejar Paquete Con</label>
+            </div>
+            <input type="text" id="_DireccionAutorizarDejarPaquete1" style="width: 360px;"
+                   data-ff="direccion_dir_autorizar_dejar_paquete">
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion1">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionRuta01">Ruta</label>
+            </div>
+            <select id="_DireccionRuta01" style="width: 360px;"
+                    data-ff="direccion_ruta_id">
+            </select>
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion1">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionPais01">País</label>
+            </div>
+            <select id="_DireccionPais01" style="width: 360px;"
+                    (change)="paisChange($event.target.value,'#_DireccionProvincia01','#_DireccionCanton01')"
+                    data-ff="direccion_dir_pais">
+            </select>
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion1">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionProvincia01" class="mp_direccion0">Provincia</label>
+            </div>
+            <select id="_DireccionProvincia01" style="width: 360px;"
+                    (change)="provinciaChange('#_DireccionPais01',$event.target.value,'#_DireccionProvincia01','#_DireccionCanton01')"
+                    data-ff="direccion_dir_division">
+            </select>
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion1">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionCanton01" class="mp_direccion1">Cantón</label>
+            </div>
+            <select id="_DireccionCanton01" style="width: 360px;"
+                    data-ff="direccion_dir_subdivision">
+            </select>
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion1">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionDireccion01" style="vertical-align: top;">Dirección</label>
+            </div>
+            <textarea id="_DireccionDireccion01" style="height: 45px; width: 360px;"
+                      data-ff="direccion_dir_direccion"></textarea>
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion1">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionCelular01"><i class="fa fa-mobile" style="font-size: 1.5em;"></i></label>
+            </div>
+            <input class="telefono" type="text" id="_DireccionCelular01" style="width: 180px;"
+                   data-ff="direccion_dir_celular">
+          </div>
+        </div>
+
+
+        <div class="row pages pa_direccion1">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionTTelefono011"><i class="fa fa-phone"></i></label>
+              <select id="_DireccionTTelefono011" style="width: 90px;" class="direccion_ttel1"
+                      data-ff="direccion_dir_ttelefono1">
+                <option value="0">-- - --</option>
+                <option value="1">Trabajo</option>
+                <option value="2">Celular</option>
+                <option value="3">Casa</option>
+                <option value="6">Central</option>
+              </select>
+            </div>
+            <input class="telefono direccion_tel1" id="direccion_tel01" type="text" style="width: 180px;"
+                   data-ff="direccion_dir_telefono1">
+          </div>
+        </div>
+
+
+
+
+        <div class="row pages pa_direccion1">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionCoordenadas01">Coordenadas Geográficas</label>
+            </div>
+            <input id="_DireccionCoordenadas01" type="text" style="width: 360px;"
+                   data-ff="direccion_dir_coordenadas" />
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion1">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label>Horario Entrega</label>
+            </div>
+            <div class="col-md-2">
+              <select style="width: 90px;" id="_selectHoraUno01"
+                      data-ff="direccion_dir_hora1">
+
+                <option value="08:00">8:00 AM</option>
+                <option value="08:30">8:30 AM</option>
+                <option value="09:00">9:00 AM</option>
+                <option value="09:30">9:30 AM</option>
+                <option value="10:00">10:00 AM</option>
+                <option value="10:30">10:30 AM</option>
+                <option value="11:00">11:00 AM</option>
+                <option value="11:30">11:30 AM</option>
+                <option value="12:00">12:00 MD</option>
+                <option value="12:30">12:30 PM</option>
+                <option value="13:00">1:00 PM</option>
+                <option value="13:30">1:30 PM</option>
+                <option value="14:00">2:00 PM</option>
+                <option value="14:30">2:30 PM</option>
+                <option value="15:00">3:00 PM</option>
+                <option value="15:30">3:30 PM</option>
+                <option value="16:00">4:00 PM</option>
+                <option value="16:30">4:30 PM</option>
+                <option value="17:00">5:00 PM</option>
+                <option value="17:30">5:30 PM</option>
+                <option value="18:00">6:00 PM</option>
+                <option value="18:30">6:30 PM</option>
+                <option value="19:00">7:00 PM</option>
+                <option value="19:30">7:30 PM</option>
+                <option value="20:00">8:00 PM</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <select style="width: 90px;" id="_selectHoraDos01"
+                      data-ff="direccion_dir_hora2">
+
+                <option value="08:30">8:30 AM</option>
+                <option value="09:00">9:00 AM</option>
+                <option value="09:30">9:30 AM</option>
+                <option value="10:00">10:00 AM</option>
+                <option value="10:30">10:30 AM</option>
+                <option value="11:00">11:00 AM</option>
+                <option value="11:30">11:30 AM</option>
+                <option value="12:00">12:00 MD</option>
+                <option value="12:30">12:30 PM</option>
+                <option value="13:00">1:00 PM</option>
+                <option value="13:30">1:30 PM</option>
+                <option value="14:00">2:00 PM</option>
+                <option value="14:30">2:30 PM</option>
+                <option value="15:00">3:00 PM</option>
+                <option value="15:30">3:30 PM</option>
+                <option value="16:00">4:00 PM</option>
+                <option value="16:30">4:30 PM</option>
+                <option value="17:00">5:00 PM</option>
+                <option value="17:30">5:30 PM</option>
+                <option value="18:00">6:00 PM</option>
+                <option value="18:30">6:30 PM</option>
+                <option value="19:00">7:00 PM</option>
+                <option value="19:30">7:30 PM</option>
+                <option value="20:00">8:00 PM</option>
+                <option value="20:30">8:30 PM</option>
+
+              </select>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion1">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label>Días</label>
+            </div>
+
+            <label style="width: auto;">
+              <input type="checkbox" id="LunesSelect01" data-ff="direccion_dir_lunes"> Lunes
+            </label>
+
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion1">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label></label>
+            </div>
+            <label style="width: auto;">
+              <input type="checkbox" id="MartesSelect01" data-ff="direccion_dir_martes"> Martes
+            </label>
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion1">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label></label>
+            </div>
+            <label style="width: auto; font-size: smaller;">
+              <input type="checkbox" id="MiercolesSelect01" data-ff="direccion_dir_miercoles"> Miércoles
+            </label>
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion1">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label></label>
+            </div>
+            <label style="width: auto;">
+              <input type="checkbox" id="JuevesSelect01" data-ff="direccion_dir_jueves"> Jueves
+            </label>
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion1">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label></label>
+            </div>
+            <label style="width: auto;">
+              <input type="checkbox" id="ViernesSelect01" data-ff="direccion_dir_viernes"> Viernes
+            </label>
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion1">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label></label>
+            </div>
+            <label style="width: auto;">
+              <input type="checkbox" id="SabadoSelect01" data-ff="direccion_dir_sabado"> Sabado
+            </label>
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion1">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label></label>
+            </div>
+            <label style="width: auto;">
+              <input type="checkbox" id="DomingoSelect01" data-ff="direccion_dir_domingo"> Domingo
+            </label>
+          </div>
+        </div>
+
+
+        <!--<div class="row pages pa_direccion1">
+          <div class="col-md-4 col-md-offset-2">
+            <img id="_DireccionImagen01" style="width: 250px; height: 250px;"
+                 _src="{{model.pa_direccion_imagen}}" data-ff="direccion_dir_imagen">
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion1">
+          <div class="col-md-2 col-md-offset-2 control-label">
+            <label>Foto</label>
+          </div>
+          <div class="col-md-5">
+            <input type="file"  placeholder="Fotografía">
+          </div>
+        </div>-->
+
+
+
+      </div>
+      <!--PAGINA pa_direccion1-->
+      <!--PAGINA pa_direccion2-->
+      <div id="pa_direccion2">
+
+        <div class="row pages pa_direccion2">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionPrimaria02">Nombre de Referencia</label>
+            </div>
+            <input type="text" id="_DireccionPrimaria02" style="width: 360px;"
+                   data-ff="direccion_dir_nombre">
+          </div>
+        </div>
+
+
+        <div class="row pages pa_direccion2">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionAutorizarDejarPaquete2">Autorizo Dejar Paquete Con</label>
+            </div>
+            <input type="text" id="_DireccionAutorizarDejarPaquete2" style="width: 360px;"
+                   data-ff="direccion_dir_autorizar_dejar_paquete">
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion2">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionRuta02">Ruta</label>
+            </div>
+            <select id="_DireccionRuta02" style="width: 360px;"
+                    data-ff="direccion_ruta_id">
+            </select>
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion2">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionPais02">País</label>
+            </div>
+            <select id="_DireccionPais02" style="width: 360px;"
+                    (change)="paisChange($event.target.value,'#_DireccionProvincia02','#_DireccionCanton02')"
+                    data-ff="direccion_dir_pais">
+            </select>
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion2">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionProvincia02" class="mp_direccion0">Provincia</label>
+            </div>
+            <select id="_DireccionProvincia02" style="width: 360px;"
+                    (change)="provinciaChange('#_DireccionPais02',$event.target.value,'#_DireccionProvincia02','#_DireccionCanton02')"
+                    data-ff="direccion_dir_division">
+            </select>
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion2">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionCanton02" class="mp_direccion1">Cantón</label>
+            </div>
+            <select id="_DireccionCanton02" style="width: 360px;"
+                    data-ff="direccion_dir_subdivision">
+            </select>
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion2">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionDireccion02" style="vertical-align: top;">Dirección</label>
+            </div>
+            <textarea id="_DireccionDireccion02" style="height: 45px; width: 360px;"
+                      data-ff="direccion_dir_direccion"></textarea>
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion2">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionCelular02"><i class="fa fa-mobile" style="font-size: 1.5em;"></i></label>
+            </div>
+            <input class="telefono" type="text" id="_DireccionCelular02" style="width: 180px;"
+                   data-ff="direccion_dir_celular">
+          </div>
+        </div>
+
+
+        <div class="row pages pa_direccion2">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionTTelefono021"><i class="fa fa-phone"></i></label>
+              <select id="_DireccionTTelefono021" style="width: 90px;" class="direccion_ttel1"
+                      data-ff="direccion_dir_ttelefono1">
+                <option value="0">-- - --</option>
+                <option value="1">Trabajo</option>
+                <option value="2">Celular</option>
+                <option value="3">Casa</option>
+                <option value="6">Central</option>
+              </select>
+            </div>
+            <input class="telefono direccion_tel1" id="direccion_tel02" type="text" style="width: 180px;"
+                   data-ff="direccion_dir_telefono1">
+          </div>
+        </div>
+
+
+
+
+        <div class="row pages pa_direccion2">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label for="_DireccionCoordenadas02">Coordenadas Geográficas</label>
+            </div>
+            <input id="_DireccionCoordenadas02" type="text" style="width: 360px;"
+                   value="{{model.pa_direccion_coordenadas}}" data-ff="direccion_dir_coordenadas" />
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion2">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label>Horario Entrega</label>
+            </div>
+            <div class="col-md-2">
+              <select style="width: 90px;" id="_selectHoraUno02"
+                      data-ff="direccion_dir_hora1">
+                <option value="08:00">8:00 AM</option>
+                <option value="08:30">8:30 AM</option>
+                <option value="09:00">9:00 AM</option>
+                <option value="09:30">9:30 AM</option>
+                <option value="10:00">10:00 AM</option>
+                <option value="10:30">10:30 AM</option>
+                <option value="11:00">11:00 AM</option>
+                <option value="11:30">11:30 AM</option>
+                <option value="12:00">12:00 MD</option>
+                <option value="12:30">12:30 PM</option>
+                <option value="13:00">1:00 PM</option>
+                <option value="13:30">1:30 PM</option>
+                <option value="14:00">2:00 PM</option>
+                <option value="14:30">2:30 PM</option>
+                <option value="15:00">3:00 PM</option>
+                <option value="15:30">3:30 PM</option>
+                <option value="16:00">4:00 PM</option>
+                <option value="16:30">4:30 PM</option>
+                <option value="17:00">5:00 PM</option>
+                <option value="17:30">5:30 PM</option>
+                <option value="18:00">6:00 PM</option>
+                <option value="18:30">6:30 PM</option>
+                <option value="19:00">7:00 PM</option>
+                <option value="19:30">7:30 PM</option>
+                <option value="20:00">8:00 PM</option>
+
+              </select>
+            </div>
+            <div class="col-md-2">
+              <select style="width: 90px;" id="_selectHoraDos02"
+                      data-ff="direccion_dir_hora2">
+
+                <option value="08:30">8:30 AM</option>
+                <option value="09:00">9:00 AM</option>
+                <option value="09:30">9:30 AM</option>
+                <option value="10:00">10:00 AM</option>
+                <option value="10:30">10:30 AM</option>
+                <option value="11:00">11:00 AM</option>
+                <option value="11:30">11:30 AM</option>
+                <option value="12:00">12:00 MD</option>
+                <option value="12:30">12:30 PM</option>
+                <option value="13:00">1:00 PM</option>
+                <option value="13:30">1:30 PM</option>
+                <option value="14:00">2:00 PM</option>
+                <option value="14:30">2:30 PM</option>
+                <option value="15:00">3:00 PM</option>
+                <option value="15:30">3:30 PM</option>
+                <option value="16:00">4:00 PM</option>
+                <option value="16:30">4:30 PM</option>
+                <option value="17:00">5:00 PM</option>
+                <option value="17:30">5:30 PM</option>
+                <option value="18:00">6:00 PM</option>
+                <option value="18:30">6:30 PM</option>
+                <option value="19:00">7:00 PM</option>
+                <option value="19:30">7:30 PM</option>
+                <option value="20:00">8:00 PM</option>
+                <option value="20:30">8:30 PM</option>
+
+              </select>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion2">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label>Días</label>
+            </div>
+
+            <label style="width: auto;">
+              <input type="checkbox" id="LunesSelect02" data-ff="direccion_dir_lunes"> Lunes
+            </label>
+
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion2">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label></label>
+            </div>
+            <label style="width: auto;">
+              <input type="checkbox" id="MartesSelect02" data-ff="direccion_dir_martes"> Martes
+            </label>
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion2">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label></label>
+            </div>
+            <label style="width: auto; font-size: smaller;">
+              <input type="checkbox" id="MiercolesSelect02" data-ff="direccion_dir_miercoles"> Miércoles
+            </label>
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion2">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label></label>
+            </div>
+            <label style="width: auto;">
+              <input type="checkbox" id="JuevesSelect02" data-ff="direccion_dir_jueves"> Jueves
+            </label>
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion2">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label></label>
+            </div>
+            <label style="width: auto;">
+              <input type="checkbox" id="ViernesSelect02" data-ff="direccion_dir_viernes"> Viernes
+            </label>
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion2">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label></label>
+            </div>
+            <label style="width: auto;">
+              <input type="checkbox" id="SabadoSelect02" data-ff="direccion_dir_sabado"> Sabado
+            </label>
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion2">
+          <div class="col-md-8">
+            <div class="col-md-3">
+              <label></label>
+            </div>
+            <label style="width: auto;">
+              <input type="checkbox" id="DomingoSelect02" data-ff="direccion_dir_domingo"> Domingo
+            </label>
+          </div>
+        </div>
+
+
+        <!--<div class="row pages pa_direccion2">
+          <div class="col-md-4 col-md-offset-2">
+            <img id="_DireccionImagen02" style="width: 250px; height: 250px;"
+                 src="{{model.pa_direccion_imagen}}" data-ff="direccion_dir_imagen">
+          </div>
+        </div>
+
+
+
+        <div class="row pages pa_direccion2">
+          <div class="col-md-2 col-md-offset-2 control-label">
+            <label>Foto</label>
+          </div>
+          <div class="col-md-5">
+            <input type="file" class="form-control" placeholder="Fotografía">
+          </div>
+        </div>-->
+
+
+
+
+
+
+      </div>
+      <!--PAGINA pa_direccion2-->
+      <!--PAGINA pa_tarjetas-->
+      <div id="pa_tarjetas">
+        <div class="col-md-8">
+          <table class="table table-striped table-bordered table-hover table-condensed">
+            <thead>
+              <tr class="success">
+                <th width="144px">Tarjeta</th>
+                <th width="144px">Número</th>
+                <th width="56px" style="text-align: center;">Borrar</th>
+              </tr>
+            </thead>
+            <tbody id="pa_tarjetas_bodyTable">
+            </tbody>
+          </table>
+        </div>
+        <div hidden class="trButton">
+          <tr class="default" data-id="-1"><td colspan="3"><button href="#tarjetasModal" id="btnAgregarTarjeta" data-toggle="modal" class="btn btn-info" style="position: relative; left: 36%;">Agregar Tarjeta <i class="fa fa-plus-square-o" style="color: green;"></i></button></td></tr>
+        </div>
+
+      </div>
+      <!--PAGINA pa_tarjetas-->
+      <!--PAGINA pa_autorizados-->
+      <div id="pa_autorizados">
+        <div class="col-md-8">
+          <table class="table table-striped table-bordered table-hover table-condensed">
+            <thead>
+              <tr class="success">
+                <th width="144px">Tipo</th>
+                <th width="144px">Nombre</th>
+                <th width="56px" style="text-align: center;">Borrar</th>
+              </tr>
+            </thead>
+            <tbody id="pa_autorizados_bodyTable">
+            </tbody>
+          </table>
+        </div>
+        <div hidden class="trButton">
+          <tr class="default" data-id="-1"><td colspan="3"><button href="#autorizados_modal" data-toggle="modal" class="btn btn-info" style="position: relative; left: 36%;">Agregar Autorizado <i class="fa fa-plus-square-o" style="color: green;"></i></button></td></tr>
+        </div>
+      </div>
+
+
+
+
+      <!--PAGINA pa_autorizados-->
+      <!--PAGINA pa_contactos-->
+      <div id="pa_contactos">
+        <div class="col-md-8">
+          <table class="table table-striped table-bordered table-hover table-condensed">
+            <thead>
+              <tr class="success">
+                <th width="144px">Departamento</th>
+                <th width="144px">Nombre</th>
+                <th width="56px" style="text-align: center;">Borrar</th>
+              </tr>
+            </thead>
+            <tbody id="pa_contactos_bodyTable"></tbody>
+          </table>
+        </div>
+        <div hidden class="trButton">
+          <tr class="default" data-id="-1"><td colspan="3"><button href="#contactos_modal" data-toggle="modal" class="btn btn-info" style="position: relative; left: 36%;">Agregar Contacto <i class="fa fa-plus-square-o" style="color: green;"></i></button></td></tr>
+        </div>
+      </div>
+      <!--PAGINA pa_contactos-->
+      <!--PAGINA pa_imagenes-->
+      <div id="pa_imagenes">
+        <div class="col-md-8">
+          <table class="table table-striped table-bordered table-hover table-condensed">
+            <thead>
+              <tr class="success">
+                <th width="144px">Tipo</th>
+                <th width="288px">Detalle</th>
+                <th width="56px" style="text-align: center;">Borrar</th>
+              </tr>
+            </thead>
+            <tbody id="pa_imagenes_bodyTable">
+            </tbody>
+          </table>
+        </div>
+        <div hidden class="trButton">
+          <tr class="default" data-id="-1"><td colspan="3"><button href="#imagenes_modal" data-toggle="modal" class="btn btn-info" style="position: relative; left: 36%;">Agregar Imagen <i class="fa fa-plus-square-o" style="color: green;"></i></button></td></tr>
+        </div>
+      </div>
+      <!--PAGINA pa_imagenes-->
+
+
+
+    </div>
+
+
+  </div>
+</div>
+
+
+<!--MODALES PARA INTERACCIONES-->
+<!--Modal para busqueda-->
+
+
+
+<div class="page_dlg modal fade bs-example-modal-lg-two" id="buscarClienteModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Buscar cliente</h4>
+      </div>
+      <div class="modal-body">
+
+
+        <div class="row">
+          <div class="col-md-2">
+            <div class="search-tipo_busqueda" style="width: 100%;">
+              <select id="Busqueda_TipoBusqueda_Select" class="form-control" style="width: 100%; font-size: 1.08em; height: 34px;">
+                <option value="true" selected>Buscar Clientes</option>
+                <option value="false">Buscar Autorizados</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="search-tipo" style="width: 100%;">
+              <select (change)="cambiarTipoBusqueda($event);" id="TipoFiltroBusqueda" class="form-control" style="width: 100%; font-size: 1.08em; height: 34px;">
+                <option value="110" selected>SJO</option>
+                <option value="130">Nombre</option>
+                <option value="140">Nombre Corto</option>
+                <option value="120">Cédula</option>
+                <option value="210">Tipo</option>
+                <option value="220">Zona</option>
+                <option value="230">Empresa</option>
+                <option value="240">Sucursal</option>
+                <option value="150">Email</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <input type="text" id="txtContenidoBuscar" class="style-search-text search-text" style="width: 100%; display: inline-block; margin: 0px; padding: 4px;">
+
+            <div id="select_TipoClienteBuscar" class="search-combobox" style="width: 100%; display: inline-block; margin: 0px; padding: 4px;">
+              <select id="select_TipoClienteBuscar_Select" class="form-control">
+                <option>Persona</option>
+                <option selected>Empresa</option>
+              </select>
+            </div>
+
+
+            <div id="Busqueda_Zonas" class="search-combobox" style="width: 100%; display: inline-block; margin: 0px; padding: 4px;">
+              <select id="Busqueda_Zonas_Select" class="form-control">
+              </select>
+            </div>
+
+            <div id="Busqueda_Sucursales" class="search-combobox" style="width: 100%; display: inline-block; margin: 0px; padding: 4px;">
+              <select class="form-control" id="Busqueda_Sucursales_Select">
+              </select>
+            </div>
+
+          </div>
+          <div class="col-md-2">
+            <button type="button" class="btn btn-primary pa_button_buscar" (click)="buscarCliente();" onclick="void(0);"
+                    style="margin: 0 18px; position: relative;">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+          <div class="col-md-2">
+            <button type="button" id="btnCerrarModalBusqueda" class="btn btn-primary" data-dismiss="modal" onclick="void(0);"
+                    style="margin: 0 18px;">
+              <i class="fa fa-close"></i>
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12" id="TablaClientesResultado">
+            <table class="table table-striped table-bordered table-condensed search_table"
+                   style="width: 100%; margin: 5px; height: 630px; overflow-y: scroll; overflow-x: hidden">
+              <thead>
+                <tr class="active">
+                  <th width="6%">SJO</th>
+                  <th width="20%">Nombre</th>
+                  <th width="12%">Nombre Corto</th>
+                  <th width="4%">Tipo</th>
+                  <th width="20%">Sucursal</th>
+                  <th width="12%">Cédula</th>
+                  <th width="18%">Email</th>
+                  <th width="4%">Zona</th>
+                </tr>
+              </thead>
+              <tbody id="contenidoClientesTabla">
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+      </div>
+      <!--<div class="modal-footer">
+        <div class="form-group">
+          <div class="col-md-2 col-md-offset-2 centered">
+            <button type="button" id="BtnCerrarModal" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i>Cerrar</button>
+          </div>
+        </div>
+      </div>-->
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="page_dlg modal fade bs-example-modal-lg-two" id="buscarClienteModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Buscar cliente</h4>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <div class="form-group">
+          <div class="col-md-2 col-md-offset-2 centered">
+            <button type="button" id="BtnCerrarModal" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i>Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal" id="tarjetasModal"
+     role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal root -->
+      <div class="m-header">
+        <button class="close" data-dismiss="modal">
+          ×
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="inputs" style="margin: 6%;">
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="col-md-5">
+              <label for="_TarjetasTipo">Tipo Tarjeta</label>
+            </div>
+            <div class="col-md-7">
+              <select id="_TarjetasTipo" class="tarjetasModal-input" data-tarjeta="tipo"
+                      style="width: 290px; height: 27px; font-family: 'FontAwesome', Helvetica;"
+                      selectedIndex="{{model.pa_tarjeta_index_tarjeta}}">
+                <option value="1">&#xf1f0; Visa</option>
+                <option value="2">&#xf1f1; Mastercard</option>
+                <option value="3">&#xf1f3; American Express</option>
+                <option value="4">&#xf09d; Dinners</option>
+                <option value="5">&#xf1f2; Discover</option>
+                <option value="6">&#xf09d; Popular</option>
+                <option value="7">&#xf09d; Credix</option>
+                <option value="8">&#xf09d; Club Nacion</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="col-md-5">
+              <label for="_TarjetasNumero">Número</label>
+            </div>
+            <div class="col-md-7">
+              <input id="_TarjetasNumero" type="text" style="    width: 290px;"
+                     placeholder="{{model.pa_tarjeta_placeholder}}" value="{{model.pa_tarjeta_numero}}">
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="col-md-5">
+              <label for="_TarjetasNombre">Nombre Tarjeta</label>
+            </div>
+            <div class="col-md-7">
+              <input id="_TarjetasNombre" type="text" style="    width: 290px;"
+                     value="{{model.pa_tarjeta_nombre}}">
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="col-md-5">
+              <label for="_TarjetasSeguridad">Código Seguridad</label>
+            </div>
+            <div class="col-md-7">
+              <input id="_TarjetasSeguridad" type="text" style="width: 72px;" maxlength="5"
+                     value="{{model.pa_tarjeta_seguridad}}">
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="col-md-5">
+              <label for="_TarjetasExpiracionYYYY">Fecha Expiración</label>
+            </div>
+            <div class="col-md-3">
+              <select id="_TarjetasExpiracionYYYY" style="width: 72px; height: 27px;"
+                      selectedIndex="{{model.pa_tarjeta_index_valido_yyyy}}">
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+                <option value="2027">2027</option>
+                <option value="2028">2028</option>
+                <option value="2029">2029</option>
+              </select>
+            </div>
+
+            <div class="col-md-3">
+              <select id="_TarjetasExpiracionMM" style="width: 54px; height: 27px; margin-left: 11px;"
+                      selectedIndex="{{model.pa_tarjeta_index_valido_mm}}">
+                <option value="01">01</option>
+                <option value="02">02</option>
+                <option value="03">03</option>
+                <option value="04">04</option>
+                <option value="05">05</option>
+                <option value="06">06</option>
+                <option value="07">07</option>
+                <option value="08">08</option>
+                <option value="09">09</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+              </select>
+            </div>
+
+            <div class="col-md-12 centered">
+              <div class="col-md-3"></div>
+              <div id="_TarjetaValidacion" class="col-md-6 btn-danger"
+                   style="text-align: center; margin-top: 10px;">
+                {{model.pa_tarjeta_mensaje_error}}
+              </div>
+              <div class="col-md-3"></div>
+            </div>
+
+
+            <div class="col-md-12">
+              <hr />
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="footer">
+          <div class="row">
+            <div class="col-md-6">
+              <button class="btn btn-default" id="btnCerrarModalTarjeta" data-dismiss="modal" type="button" style="width: 108px;">
+                <i class="fa fa-close"></i> Cerrar
+              </button>
+            </div>
+            <div id="seg_clientesTarjetasModificar1" class="col-md-6">
+              <button class="btn btn-info" type="button" (click)="agregarTarjeta()" style="width: 108px;">
+                <i class="fa fa-refresh"></i> Actualizar
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<div class="modal" id="autorizados_modal"
+     role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal root -->
+      <div class="m-header">
+        <button class="close" data-dismiss="modal">
+          ×
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="inputs" style="margin: 6%;">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="col-md-3">
+              <label for="_AutorizadoTipoAutorizado">Tipo Autorizado</label>
+            </div>
+            <select id="_AutorizadoTipoAutorizado" style="width: 360px;"
+                    selectedIndex="{{model.pa_autorizados_index_tipo}}"
+                    data-ff="autorizado_tipo">
+              <option value="0">Autorizado de Correo</option>
+              <option value="1">Autorizado para Retirar</option>
+            </select>
+          </div>
+          <div class="col-md-12 autorizado-correo">
+            <div class="col-md-3">
+              <label for="_AutorizadoRelacion">Relación</label>
+            </div>
+            <div class="col-md-7">
+              <select id="_AutorizadoRelacion" style="width: 360px;"
+                      selectedIndex="{{model.pa_autorizados_index_relacion}}"
+                      data-ff="autorizado_relacion">
+                <option value="0">Padre</option>
+                <option value="1">Madre</option>
+                <option value="2">Hijo</option>
+                <option value="3">Esposa</option>
+                <option value="4">Hermano</option>
+                <option value="5">Suegro</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="col-md-3">
+              <label for="_AutorizadoTipoId">Tipo Id</label>
+            </div>
+            <div class="col-md-7">
+              <select id="_AutorizadoTipoId" style="width: 360px;"
+                      selectedIndex="{{model.pa_autorizados_index_tipo_id}}" data-ff="autorizado_per_tipoId">
+                <option value="-1">-- No Definido</option>
+                <option value="10">Cédula</option>
+                <option value="20">Pasaporte</option>
+                <option value="30">Cédula De Residencia</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="col-md-3">
+              <label for="_AutorizadoNumeroId">Número Id</label>
+            </div>
+            <div class="col-md-7">
+              <input type="text" id="_AutorizadoNumeroId" style="width: 360px;"
+                     value="{{model.pa_autorizados_identificacion}}" data-ff="autorizado_per_numeroId">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="col-md-3">
+              <label for="_AutorizadoPersona">Nombre</label>
+            </div>
+            <div class="col-md-7">
+              <input type="text" id="_AutorizadoPersona" style="width: 360px;"
+                     value="{{model.pa_autorizados_nombre}}" data-ff="autorizado_per_nombre">
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="col-md-3">
+              <label for="_AutorizadoPrimerApellido">Primer Apellido</label>
+            </div>
+            <div class="col-md-7">
+              <input type="text" id="_AutorizadoPrimerApellido" style="width: 360px;"
+                     value="{{model.pa_autorizados_primer_apellido}}" data-ff="autorizado_per_primerApellido">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="col-md-3">
+              <label for="_AutorizadoSegundoApellido">Segundo Apellido</label>
+            </div>
+            <div class="col-md-7">
+              <input type="text" id="_AutorizadoSegundoApellido" style="width: 360px;"
+                     value="{{model.pa_autorizados_segundo_apellido}}"
+                     data-ff="autorizado_per_segundoApellido">
+            </div>
+          </div>
+
+          <div class="col-md-12 autorizado-correo">
+            <div class="col-md-3">
+              <label for="_AutorizadoCelular">
+                <i class="fa fa-mobile" style="font-size: 1.5em;"></i>
+              </label>
+            </div>
+            <div class="col-md-7">
+              <input class="telefono" type="text" id="_AutorizadoCelular" style="width: 180px;"
+                     value="{{model.pa_autorizados_celular}}" data-ff="autorizado_dir_celular">
+            </div>
+          </div>
+
+          <div class="col-md-12 autorizado-correo">
+            <div class="col-md-3">
+              <label for="_AutorizadoTTelefono1">
+                <i class="fa fa-phone"></i>
+              </label>
+              <select id="_AutorizadoTTelefono1" style="width: 90px;"
+                      selectedIndex="{{model.pa_autorizados_index_telefono1}}"
+                      data-ff="autorizado_dir_ttelefono1">
+                <option value="0">-- - --</option>
+                <option value="1">Trabajo</option>
+                <option value="2">Celular</option>
+                <option value="3">Casa</option>
+                <option value="6">Central</option>
+              </select>
+            </div>
+            <div class="col-md-7">
+              <input class="telefono" type="text" id="autorizado_dir_telefono1Input" style="width: 180px;"
+                     value="{{model.pa_autorizados_telefono1}}" data-ff="autorizado_dir_telefono1">
+            </div>
+          </div>
+
+          <div class="col-md-12 autorizado-correo">
+            <div class="col-md-3">
+              <label for="_AutorizadoEmail1">Email</label>
+            </div>
+            <div class="col-md-7">
+              <input class="email" id="_AutorizadoEmail1" type="email" style="width: 360px;"
+                     value="{{model.pa_autorizados_email1}}" data-ff="autorizado_dir_email1" />
+            </div>
+          </div>
+
+          <div class="row autorizado-correo">
+            <div class="col-md-2">
+              <p>Autorizaciones</p>
+            </div>
+            <div class="col-md-9">
+              <hr />
+            </div>
+          </div>
+
+          <div class="row autorizado-correo">
+            <div class="col-md-8">
+              <label for="_Autorizado_DeseaBoletinesElectronicos" style="width: 11px;"></label>
+              <input type="checkbox" id="_Autorizado_DeseaBoletinesElectronicos"
+                     data-ff="autorizado_autorizaciones_04">
+              <span>Recibir notificaciones de paquetes en mis dispositivos móviles</span>
+            </div>
+          </div>
+          <div class="row autorizado-correo">
+            <div class="col-md-8">
+              <label for="_Autorizado_DeseaCuponesDescuento" style="width: 11px;"></label>
+              <input type="checkbox" id="_Autorizado_DeseaCuponesDescuento"
+                     data-ff="autorizado_autorizaciones_02">
+              <span>Recibir boletines electrónicos y promociones de parte de JetBox</span>
+            </div>
+          </div>
+
+          <div class="col-md-12 centered">
+            <div class="col-md-3"></div>
+            <div id="_AutorizadoValidacion" class="col-md-6 btn-danger"
+                 style="text-align: center; margin-top: 10px;">
+              {{model.pa_autorizados_mensaje_error}}
+            </div>
+            <div class="col-md-3"></div>
+          </div>
+
+          <div class="row ">
+            <div class="col-md-12">
+              <hr />
+            </div>
+          </div>
+
+          <!-- Modal footer -->
+          <div class="footer">
+            <div class="row">
+              <div class="col-md-6">
+                <button class="btn btn-default" id="btnCerrarModalAutorizado" data-dismiss="modal" type="button" style="width: 108px;">
+                  <i class="fa fa-close"></i> Cerrar
+                </button>
+              </div>
+              <div id="seg_clientesTarjetasModificar1" class="col-md-6">
+                <button class="btn btn-info" (click)="agregarAutorizado()" type="button" style="width: 108px;">
+                  <i class="fa fa-refresh"></i> Actualizar
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="modal" id="contactos_modal"
+     role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal root -->
+      <div class="m-header">
+        <button class="close" data-dismiss="modal">
+          ×
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="inputs" style="margin: 6%;">
+
+        <div class="row">
+
+          <div class="col-md-12"></div>
+
+          <div class="col-md-12">
+            <div class="col-md-3">
+              <label for="_ContactoPersona">Nombre</label>
+            </div>
+            <div class="col-md-7">
+              <input type="text" id="_ContactoPersona" style="width: 360px;"
+                     value="{{model.pa_contactos_nombre}}" data-ff="contacto_per_nombre">
+            </div>
+            </div>
+
+          <div class="col-md-12">
+            <div class="col-md-3">
+              <label for="_ContactoPrimerApellido">Primer Apellido</label>
+            </div>
+            <div class="col-md-7">
+              <input type="text" id="_ContactoPrimerApellido" style="width: 360px;"
+                     value="{{model.pa_contactos_primer_apellido}}" data-ff="contacto_per_primerApellido">
+            </div>
+            </div>
+
+          <div class="col-md-12">
+            <div class="col-md-3">
+              <label for="_ContactoSegundoApellido">Segundo Apellido</label>
+            </div>
+            <div class="col-md-7">
+              <input type="text" id="_ContactoSegundoApellido" style="width: 360px;"
+                     value="{{model.pa_contactos_segundo_apellido}}" data-ff="contacto_per_segundoApellido">
+            </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="col-md-3">
+                <label for="_ContactoPuesto">Puesto</label>
+              </div>
+              <div class="col-md-7">
+                <input id="_ContactoPuesto" type="text" style="width: 360px;"
+                       value="{{model.pa_contactos_puesto}}" data-ff="contacto_puesto" />
+              </div>
+              </div>
+
+            <div class="col-md-12">
+              <div class="col-md-3">
+                <label for="_ContactoDepartamento">Departamento</label>
+              </div>
+              <div class="col-md-7">
+                <input id="_ContactoDepartamento" type="text" style="width: 360px;"
+                       value="{{model.pa_contactos_departamento}}" data-ff="contacto_departamento" />
+              </div>
+              </div>
+
+            <div class="col-md-12">
+              <div class="col-md-3">
+                <label for="_ContactoNotas">Notas</label>
+              </div>
+              <div class="col-md-7">
+                <textarea id="_ContactoNotas" style="height: 45px; width: 360px;"
+                          value="{{model.pa_contactos_notas}}" data-ff="contacto_notas"></textarea>
+              </div>
+              </div>
+
+            <div class="col-md-12">
+              <div class="col-md-3">
+                <label for="_ContactoPais">País</label>
+              </div>
+              <div class="col-md-7">
+                <select id="_ContactoPais" style="width: 360px;"
+                        selectedIndex="{{model.pa_contactos_index_pais}}"
+                        (change)="paisChange($event.target.value,'#_ContactoProvincia','#_ContactoCanton')"
+                        data-ff="contacto_dir_pais">
+                </select>
+              </div>
+              </div>
+
+            <div class="col-md-12">
+              <div class="col-md-3">
+                <label for="_ContactoProvincia" class="mp_direccion0">Provincia</label>
+              </div>
+              <div class="col-md-7">
+                <select id="_ContactoProvincia" style="width: 360px;"
+                        selectedIndex="{{model.pa_contactos_index_provincia}}"
+                        (change)="provinciaChange('#_ContactoPais',$event.target.value,'#_ContactoProvincia','#_ContactoCanton')"
+                        data-ff="contacto_dir_division">
+                </select>
+              </div>
+              </div>
+
+            <div class="col-md-12">
+              <div class="col-md-3">
+                <label for="_ContactoCanton" class="mp_direccion1">Cantón</label>
+              </div>
+              <div class="col-md-7">
+                <select id="_ContactoCanton" style="width: 360px;"
+                        selectedIndex="{{model.pa_contactos_index_canton}}" data-ff="contacto_dir_subdivision">
+                </select>
+              </div>
+              </div>
+
+            <div class="col-md-12">
+              <div class="col-md-3">
+                <label for="_ContactoDireccion" style="vertical-align: top;">Dirección</label>
+              </div>
+              <div class="col-md-7">
+                <textarea id="_ContactoDireccion" style="height: 45px; width: 360px;"
+                          value="{{model.pa_contactos_direccion}}" data-ff="contacto_dir_direccion"></textarea>
+              </div>
+              </div>
+
+            <div class="col-md-12">
+              <div class="col-md-3">
+                <label for="_ContactoCelular">
+                  <i class="fa fa-mobile" style="font-size: 1.5em;"></i>
+                </label>
+              </div>
+              <div class="col-md-7">
+                <input class="telefono" type="text" id="_ContactoCelular" style="width: 180px;"
+                       value="{{model.pa_contactos_celular}}" data-ff="contacto_dir_celular">
+              </div>
+              </div>
+
+
+            <div class="col-md-12">
+              <div class="col-md-3">
+                <label for="_ContactoTTelefono1"><i class="fa fa-phone"></i></label>
+                <select id="_ContactoTTelefono1" style="width: 90px;"
+                        selectedIndex="{{model.pa_contactos_index_telefono1}}"
+                        data-ff="contacto_dir_ttelefono1">
+                  <option value="0">-- - --</option>
+                  <option value="1">Trabajo</option>
+                  <option value="5">Celular</option>
+                  <option value="2">Casa</option>
+                  <option value="6">Central</option>
+                  <option value="3">Fax</option>
+                  <option value="4">Beep</option>
+                </select>
+              </div>
+              <div class="col-md-7">
+                <input class="telefono" type="text" style="width: 180px;"
+                       value="{{model.pa_contactos_telefono1}}" data-ff="contacto_dir_telefono1">
+              </div>
+              </div>
+
+
+            <div class="col-md-12">
+              <div class="col-md-3">
+                <label for="_ContactoTTelefono2"><i class="fa fa-phone"></i></label>
+                <select id="_ContactoTTelefono2" style="width: 90px;"
+                        selectedIndex="{{model.pa_contactos_index_telefono2}}"
+                        data-ff="contacto_dir_ttelefono2">
+                  <option value="0">-- - --</option>
+                  <option value="1">Trabajo</option>
+                  <option value="5">Celular</option>
+                  <option value="2">Casa</option>
+                  <option value="6">Central</option>
+                  <option value="3">Fax</option>
+                  <option value="4">Beep</option>
+                </select>
+              </div>
+              <div class="col-md-7">
+                <input class="telefono" type="text" style="width: 180px;"
+                       value="{{model.pa_contactos_telefono2}}"
+                       data-ff="contacto_dir_telefono2">
+              </div>
+              </div>
+
+
+            <div class="col-md-12">
+              <div class="col-md-3">
+                <label for="_ContactoTTelefono3"><i class="fa fa-phone"></i></label>
+                <select id="_ContactoTTelefono3" style="width: 90px;"
+                        selectedIndex="{{model.pa_contactos_index_telefono3}}"
+                        data-ff="contacto_dir_ttelefono3">
+                  <option value="0">-- - --</option>
+                  <option value="1">Trabajo</option>
+                  <option value="5">Celular</option>
+                  <option value="2">Casa</option>
+                  <option value="6">Central</option>
+                  <option value="3">Fax</option>
+                  <option value="4">Beep</option>
+                </select>
+              </div>
+              <div class="col-md-7">
+                <input class="telefono" type="text" style="width: 180px;"
+                       value="{{model.pa_contactos_telefono3}}"
+                       data-ff="contacto_dir_telefono3">
+              </div>
+              </div>
+
+            <div class="col-md-12">
+              <div class="col-md-3">
+                <label for="_ContactoTTelefono4"><i class="fa fa-phone"></i></label>
+                <select id="_ContactoTTelefono4" style="width: 90px;"
+                        selectedIndex="{{model.pa_contactos_index_telefono4}}"
+                        data-ff="contacto_dir_ttelefono4">
+                  <option value="0">-- - --</option>
+                  <option value="1">Trabajo</option>
+                  <option value="5">Celular</option>
+                  <option value="2">Casa</option>
+                  <option value="6">Central</option>
+                  <option value="3">Fax</option>
+                  <option value="4">Beep</option>
+                </select>
+              </div>
+              <div class="col-md-7">
+                <input class="telefono" type="text" style="width: 180px;"
+                       value="{{model.pa_contactos_telefono4}}" data-ff="contacto_dir_telefono4">
+              </div>
+              </div>
+
+            <div class="col-md-12">
+              <div class="col-md-3">
+                <label for="_ContactoEmail1">Email</label>
+              </div>
+              <div class="col-md-7">
+                <input class="email" id="_ContactoEmail1" type="email" style="width: 360px;"
+                       value="{{model.pa_contactos_email1}}" data-ff="contacto_dir_email1" />
+              </div>
+              </div>
+
+            <div class="col-md-12 centered">
+              <div class="col-md-3"></div>
+              <div id="_ContactoValidacion" class="col-md-6 btn-danger"
+                   style="text-align: center; margin-top: 10px;">
+                {{model.pa_contactos_mensaje_error}}
+              </div>
+              <div class="col-md-3"></div>
+            </div>
+              <div class="col-md-12">
+                <hr />
+              </div>
+
+
+            </div>
+
+
+        <!-- Modal footer -->
+        <!-- Modal footer -->
+        <div class="footer">
+          <div class="row">
+            <div class="col-md-6">
+              <button class="btn btn-default" id="btnCerrarModalContacto" data-dismiss="modal" type="button" style="width: 108px;">
+                <i class="fa fa-close"></i> Cerrar
+              </button>
+            </div>
+            <div id="seg_clientesTarjetasModificar1" class="col-md-6">
+              <button class="btn btn-info" (click)="agregarContacto()" type="button" style="width: 108px;">
+                <i class="fa fa-refresh"></i> Actualizar
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal" id="imagenes_modal"
+     role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+  <div class="modal-dialog" style="width:40%">
+    <div class="modal-content">
+
+      <!-- Modal root -->
+      <div class="m-header">
+        <button class="close" data-dismiss="modal">
+          ×
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="inputs" style="margin: 6%;">
+
+        <div class="row">
+          <div class="col-md-12">
+            <label for="_ImagenTipo">
+              <i class="fa fa-picture"> Tipo</i>
+            </label>
+            <select id="_ImagenTipo" style="width: 360px; margin-left:4%" selectedIndex="{{model.pa_imagenes_index_tipo}}">
+              <option value="1">Foto Apoderado</option>
+              <option value="2">Documento Identificación</option>
+              <option value="3">Confirmación de Domicilio</option>
+              <option value="4">Formulario Afiliación</option>
+              <option value="5">Tarjeta Crédito o Débito</option>
+              <option value="6">Otro</option>
+            </select>
+          </div>
+          <div class="col-md-12">
+            <label for="_ImagenNotas" style="vertical-align: top;">Notas</label>
+            <textarea id="_ImagenNotas" style="height: 45px; width: 360px; margin-left:2%;"
+                      value="{{model.pa_imagenes_notas}}"></textarea>
+          </div>
+          <div class="col-md-12" style="width: 657px; height: 513px; margin: 5px;">
+            <div class="imagen-bgd" style="height: 100%; width: 100%;">
+              <img id="_ImagenImagen"
+                   style="height: 100%; width: 100%; border:1px dashed DarkSlateBlue;" />
+            </div>
+          </div>
+
+          <div class="col-md-12 centered">
+            <div class="col-md-3"></div>
+            <div id="_ImagenValidacion" class="col-md-6 btn-danger"
+                 style="text-align: center; margin: 1rem;">
+              {{model.pa_imagenes_mensaje_error}}
+            </div>
+            <div class="col-md-3"></div>
+          </div>
+
+
+          </div>
+
+
+          <!-- Modal footer -->
+          <div class="footer">
+            <div class="row">
+              <div class="col-md-2">
+                <button class="btn btn-default" id="btnCerrarModalImagenes" type="button" data-dismiss="modal" style="width: 108px;">
+                  <i class="fa fa-close"></i> Cerrar
+                </button>
+              </div>
+              <div id="seg_clientesImagenesModificar1" class="col-md-4">
+                <input type="file" class="form-control" id="FileUploadImagenSeccion" (change)="image_readImage($event)" placeholder="Fotografia">
+              </div>
+              <div id="seg_clientesImagenesModificar2" class="col-md-3">
+                <button id="_ImagenActualizar" (click)="guardarImagen()" class="btn btn-info" type="button" style="width: 100%;">
+                  <i class="fa fa-refresh"></i> Actualizar
+                </button>
+              </div>
+              <div class="col-md-3">
+                <button class="btn btn-info" type="button" style="width: 100%;">
+                  Descargar <i class="fa fa-download"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+    </div>
+  </div>
+</div>
+
+
+
+<a id="LevantarModalEliminarGenerico" hidden href="#ModalEliminarGenerico" data-toggle="modal">content</a>
+
+<!--Modal para eliminar-->
+<div id="ModalEliminarGenerico" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center" style="background-color:grey;">
+        <div class="icon-box">
+          <i class="material-icons" id="">help</i>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body text-center">
+        <h4>Jetbox Clientes</h4>
+        <div id="bodyEliminar">
+          <p id="textoEliminar"></p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" id="BtnCerrarModal" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+          </div>
+          <div class="col-md-2 col-md-offset-2" id="footerEliminar">
+            <button style="display:none" type="button" id="tarjeta_eliminar" (click)="eliminarGenerico('tarjeta')" data-dismiss="modal" class="btn btn-primary">Eliminar</button>
+            <button style="display:none" type="button" id="contactos_eliminar" (click)="eliminarGenerico('contactos')" data-dismiss="modal" class="btn btn-primary">Eliminar</button>
+            <button style="display:none" type="button" id="autorizados_eliminar" (click)="eliminarGenerico('autorizados')" data-dismiss="modal" class="btn btn-primary">Eliminar</button>
+            <button style="display:none" type="button" id="imagenes_eliminar" (click)="eliminarGenerico('imagenes')" data-dismiss="modal" class="btn btn-primary">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<a id="btnModalMensaje" hidden href="#ModalMensajes" data-toggle="modal">content</a>
+<!--Modal para Mensajes-->
+<div id="ModalMensajes" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center" id="headerBodyClientes">
+        <div class="icon-box">
+          <i class="material-icons" id="iconBoxBodyClientes">help</i>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body text-center">
+        <h4>Jetbox Clientes</h4>
+        <div id="bodyModalContainerClientes">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal para eliminar-->
+<a id="btnEliminarCliente" hidden href="#EliminarCliente" data-toggle="modal">content</a>
+<div id="EliminarCliente" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center" style="background-color:grey;">
+        <div class="icon-box">
+          <i class="material-icons" id="">help</i>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body text-center">
+        <h4>Jetbox Clientes</h4>
+        <div id="bodyEliminar">
+          <p id="">Desea eliminar este cliente?</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" id="BtnCerrarModal" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+          </div>
+          <div class="col-md-2 col-md-offset-2" id="footerEliminar">
+            <button type="button" (click)="eliminarCliente()" data-dismiss="modal" class="btn btn-primary">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

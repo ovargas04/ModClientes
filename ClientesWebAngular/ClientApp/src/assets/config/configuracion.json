@@ -1,0 +1,74 @@
+{
+  "server": "http://localhost:9001/ClientesWeb/webapi/",
+
+  "server_localhost": "http://localhost:9001/ClientesWeb/webapi/",
+  "server_jetbox": "https://www.jetbox.com/ClientesWeb/webapi/",
+
+
+  "app_name": "Jetbox Clientes",
+
+
+  "pais_suffix": "FALTA",
+  "pais_name": "FALTA PAIS",
+  "pais_flag": "no-pais.png",
+  "pais_tarjetas": [ "Visa", "MasterCard", "AmericanExpress", "Dinners", "Discover" ],
+
+
+  "cookies_expiration": 1,
+  "contrato_gold": -1,
+  "producto_pobox": -1,
+  "producto_agencia_aduanal": -1,
+
+  "division0": "Provincia",
+  "division1": "Cantón",
+  "cedula_juridica": "Cédula Jurídica",
+  "zonas_bloqueadas": [],
+
+  "contrato_default": 5000,
+  "contrato_economy_default": 6000,
+  "mostrar_contrato_economy": true,
+
+  "paises": {
+    "188": {
+      "pais_suffix": "SJO",
+      "pais_name": "Costa Rica",
+      "pais_flag": "costa-rica.png",
+
+      "cookies_expiration": 7,
+      "contrato_gold": 1000,
+      "producto_pobox": 10,
+      "producto_agencia-aduanal": 1,
+      "zonas_bloqueadas": [ 33 ]
+    },
+    "591": {
+      "pais_suffix": "PTY",
+      "pais_name": "Panamá",
+      "pais_flag": "panama.png",
+      "pais_tarjetas": [ "Visa", "MasterCard", "AmericanExpress", "Dinners", "Discover" ],
+
+      "cookies_expiration": 7,
+      "contrato_gold": 1,
+      "producto_pobox": 10,
+      "producto_agencia-aduanal": 1,
+
+      "division1": "Distrito",
+      "cedula_juridica": "RUK",
+      "mostrar-contrato-economy": false
+    },
+    "990": {
+      "pais_suffix": "TOC",
+      "pais_name": "Toc Toc",
+      "pais_flag": "toc-toc.png",
+      "pais_tarjetas": [ "Visa", "MasterCard", "AmericanExpress", "Dinners", "D                                                                               iscover" ],
+
+      "cookies_expiration": 7,
+      "contrato_gold": 1,
+      "producto_pobox": 10,
+      "producto_agencia-aduanal": 1,
+
+      "division1": "Distrito",
+      "cedula_juridica": "Cedula Juridica",
+      "mostrar-contrato-economy": false
+    }
+  }
+}

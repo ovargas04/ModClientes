@@ -1,0 +1,173 @@
+<h1 style="text-align:center;">Configuración</h1>
+<div class="row">
+  <div class="col-md-2">
+    <h2>Preferencias</h2>
+  </div>
+  <div class="col-md-8">
+    <hr style="position: relative; height: 1px; background-color: rgb(103, 146, 182); top: 15px;" />
+  </div>
+</div>
+
+
+
+
+<form [formGroup]="preferenciasForm">
+
+  <div class="row">
+    <div class="col-md-5">
+      <label for="tiempo_inactividad_cliente"
+             style="width: 450px; text-align: right;">
+        Tiempo de
+        inactividad en el cliente (segundos)
+      </label>
+    </div>
+    <div class="col-md-5">
+      <input class="form-control" id="tiempo_inactividad_cliente" type="number"
+             style="width: 108px;" formControlName="clientTimeOut" value="{{preferenciasObject.clientTimeOut}}">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <label for="tiempo_inactividad_server"
+             style="width: 450px; text-align: right;">
+        Tiempo de
+        inactividad sesión en el servidor (segundos)
+      </label>
+    </div>
+    <div class="col-md-5">
+      <input class="form-control" id="tiempo_inactividad_server" type="number"
+             style="width: 108px;" formControlName="serverTimeOut" value="{{preferenciasObject.serverTimeOut}}">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <label for="largo_minimo_clave"
+             style="width: 450px; text-align: right;">
+        Largo mínimo de
+        la clave
+      </label>
+    </div>
+    <div class="col-md-5">
+      <input class="form-control" id="largo_minimo_clave" formControlName="largoMinimoClave" type="number" style="width: 108px;"
+             value="{{preferenciasObject.largoMinimoClave}}">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <label for="largo_maximo_clave"
+             style="width: 450px; text-align: right;">
+        Largo máximo de
+        la clave
+      </label>
+    </div>
+    <div class="col-md-5">
+      <input class="form-control" id="largo_maximo_clave" formControlName="largoMaximoClave" type="number" style="width: 108px;"
+             value="{{preferenciasObject.largoMaximoClave}}">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <label for="cantidad_dias_cambio_clave"
+             style="width: 450px; text-align: right;">
+        Cantidad de
+        días entre cambio de clave
+      </label>
+    </div>
+    <div class="col-md-5">
+      <input class="form-control" formControlName="cantidadDiasEntreCambioDeClave" id="cantidad_dias_cambio_clave" type="number"
+             style="width: 108px;" value="{{preferenciasObject.cantidadDiasEntreCambioDeClave}}">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <label for="cantidad_dias_inactividad"
+             style="width: 450px; text-align: right;">
+        Cantidad de
+        días de inactividad permitida a los usuarios
+      </label>
+    </div>
+    <div class="col-md-5">
+      <input class="form-control" formControlName="cantidadDiasInactividadPermitido" id="cantidad_dias_inactividad" type="number"
+             style="width: 108px;" value="{{preferenciasObject.cantidadDiasInactividadPermitido}}">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <h2>Información del servidor de correo</h2>
+    </div>
+    <div class="col-md-5">
+      <hr style="position: relative; height: 1px; background-color: rgb(103, 146, 182); top: 15px;" />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <label for="servidor_correo"
+             style="width: 450px; text-align: right;">
+        Servidor de
+        correo
+      </label>
+    </div>
+    <div class="col-md-5">
+      <input class="form-control" formControlName="servidorEmail" id="servidor_correo" type="text" style="width: 450px;"
+             value="{{preferenciasObject.servidorEmail}}">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <label for="cuenta_correo"
+             style="width: 450px; text-align: right;">
+        Cuenta de
+        correo de soporte
+      </label>
+    </div>
+    <div class="col-md-5">
+      <input class="form-control" formControlName="userEmail" id="cuenta_correo" type="text" style="width: 450px;"
+             value="{{preferenciasObject.userEmail}}">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <label for="clave_correo" style="width: 450px; text-align: right;">
+        Clave
+        de la cuenta de correo de soporte
+      </label>
+    </div>
+    <div class="col-md-5">
+      <input class="form-control" formControlName="claveEmail" id="clave_correo" type="password" style="width: 450px;"
+             value="{{preferenciasObject.claveEmail}}">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <label for="confirmacion_clave_correo"
+             style="width: 450px; text-align: right;">
+        Reconfirmación
+        de la clave de la cuenta de correo de soporte
+      </label>
+    </div>
+    <div class="col-md-5">
+      <input class="form-control" formControlName="confirmacionClaveEmail" id="confirmacion_clave_correo" type="password"
+             style="width: 450px;" value="{{preferenciasObject.confirmacionClaveEmail}}">
+    </div>
+  </div>
+
+</form>
+
+
+<div class="row">
+  <div style="width: 180px; margin: 11px auto;">
+    <button type="button" (click)="actualizarPreferencias()" class="btn btn-info">
+      Actualizar <i class="fa fa-floppy-o"></i>
+    </button>
+  </div>
+</div>

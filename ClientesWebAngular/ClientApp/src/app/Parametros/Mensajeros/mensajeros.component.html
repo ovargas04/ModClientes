@@ -1,0 +1,169 @@
+<h1 style="text-align:center;">Mensajeros</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-md-2 col-md-offset-8">
+      <a class="btn" (click)="levantarModalZona()" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="btn-primary fa fa-plus"></i> Agregar Mensajero</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <ngx-datatable [rows]="empresas"
+                     [columns]="columnsEmpresa"
+                     [columnMode]="ColumnMode.force"
+                     [loadingIndicator]="loadingIndicator"
+                     [summaryPosition]="'bottom'"
+                     [limit]="10"
+                     rowHeight="auto"
+                     [reorderable]="reorderable"
+                     [headerHeight]="50"
+                     [footerHeight]="50"
+                     class="bootstrap striped expandable"
+                     style="width:100%">
+
+        <ngx-datatable-column name="ID">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{ value }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="name">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{ value }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Editar" [width]="100">
+          <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+            <button class="btn btn-success" (click)="editarMensajero(row)" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="glyphicon glyphicon-edit"></i></button>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Eliminar" [width]="100">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <a role="button" href="#ModalEliminar" class="btn btn-warning" (click)="cargarDataeliminarMensajero(row)" data-toggle="modal"><i class="glyphicon glyphicon-remove"></i></a>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+</div>
+
+<div class="page_dlg modal fade bs-example-modal-lg" id="agregarZonaModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Agregar Mensajero</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal" [formGroup]="zonaForm">
+
+          <div class="form-group">
+            <label class="col-md-3 control-label">Usuario</label>
+            <div class="col-md-6">
+              <!--<input type="text" formControlName="" class="form-control input-md">{{zonaObject.mensajeroUsuario}}>-->
+              <input type="text" placeholder="Usuario" class="form-control input-md" value="{{ zonaObject.mensajeroUsuario}}" formControlName="zonaId">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-3 control-label">País</label>
+            <div class="col-md-6">
+              <select selectedIndex="{{zonaObject.mensajeroPais}}" id="_PaisSelect" class="form-control input-md" formControlName="paisnombre">
+                <option *ngFor="let pais of paises" [value]="pais.id">
+                  {{ pais.nombre }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-3 control-label">Nombre</label>
+            <div class="col-md-6">
+              <input type="text" placeholder="Nombre" class="form-control input-md" value="{{ zonaObject.mensajeroNombre }}" formControlName="zonaNombre">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">Clave</label>
+            <div class="col-md-6">
+              <!--<textarea class="form-control" rows="5" id="comentarios" formControlName="descripcionZona">{{zonaObject.mensajeroClave}}</textarea>-->
+              <input type="password" name="name" rows="5" class="form-control" id="comentarios" formControlName="descripcionZona" value="{{zonaObject.mensajeroClave}}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">Reconfirmar</label>
+            <div class="col-md-6">
+              <!--<textarea class="form-control" rows="5" id="comentarios" formControlName="descripcionZona">{{zonaObject.mensajeroReconfirmarClave}}</textarea>-->
+              <input type="password" name="name" rows="5" class="form-control" id="comentarios" formControlName="mensajeroReconfirmar" value="{{zonaObject.mensajeroReconfirmarClave}}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">Cédula</label>
+            <div class="col-md-6">
+              <input type="text" name="name" rows="5" class="form-control" id="comentarios" formControlName="mensajeroCedula" value="{{zonaObject.mensajeroCed}}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">Licencia</label>
+            <div class="col-md-6">
+              <input type="text" name="name" rows="5" class="form-control" id="comentarios" formControlName="mensajeroLic" value="{{zonaObject.mensajeroLicencia}}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">Placa</label>
+            <div class="col-md-6">
+              <input type="text" name="name" rows="5" class="form-control" id="comentarios" formControlName="mensajeroPl" value="{{zonaObject.mensajeroPlaca}}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">Ruta</label>
+            <div class="col-md-6">
+              <select selectedIndex="{{zonaObject.mensajeroRuta}}" class="form-control input-md" formControlName="rutanombre">
+                <option *ngFor="let ruta of rutas" [value]="ruta.id">
+                  {{ ruta.nombre }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="form-group">
+            <div class="col-md-2 col-md-offset-2">
+              <button type="button" id="BtnCerrarModal" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i>Cerrar</button>
+            </div>
+            <div class="col-md-2 col-md-offset-2">
+              <button type="button" class="btn btn-primary" (click)="guardarMensajero(zonaObject)"><i class="fa fa-save"></i> Guardar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal para eliminar-->
+<div id="ModalEliminar" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center" style="background-color:grey;">
+        <div class="icon-box">
+          <i class="material-icons" id="">help</i>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body text-center">
+        <h4>Jetbox Clientes</h4>
+        <div id="bodyEliminar">
+          <p>Desea eliminar el mensajero {{zonaObject.mensajeroNombre}} ?</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" id="BtnCerrarModal" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+          </div>
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" (click)="eliminar()" data-dismiss="modal" class="btn btn-primary">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

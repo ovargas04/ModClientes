@@ -1,0 +1,224 @@
+<style>
+  .panel-usuarios .row {
+    margin-top: 5px;
+  }
+
+  .child-check {
+    margin-left: 15px;
+    display: none;
+  }
+
+    .child-check.active {
+      display: block;
+    }
+
+  .noHabilitado {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+</style>
+<h1>Perfiles de Seguridad</h1>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 list-perfiles">
+      <div class="list-group" id="listboxPerfil" style="height: 450px; overflow-y: auto; overflow-x: hidden;">
+      </div>
+    </div>
+    <div class="col-md-8 panel-perfiles">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-4">
+          <!-- Standard button -->
+          <button type="button" id="btnNuevo" (click)="nuevoPerfil()" class="btn btn-primary">
+            <i class="fa fa-plus-circle"></i>
+          </button>
+
+          <!-- Indicates a successful or positive action -->
+          <!--<button type="button" id="btnEditar" (click)="" class="btn btn-primary" style="margin: 0 18px;">
+            <i class="fa fa-pencil"></i>
+          </button>-->
+
+          <button type="button" (click)="guardarEditarPerfil()" class="btn btn-primary" style="margin: 0 18px;">
+            <i class="fa fa-save"></i>
+          </button>
+
+          <button type="button" (click)="eliminarModal()" class="btn btn-danger">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8 col-md-offset-4">
+          <hr />
+        </div>
+      </div>
+
+      <div class="row" style="margin-top: 5px;">
+        <div class="col-md-8 col-md-offset-4">
+          <hr />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2 col-md-2 col-md-offset-1">
+          <label>País</label>
+        </div>
+        <div class="col-md-8">
+          <select class="paises input-md" id="_PaisPerfil" selectedIndex="" data-ff="pais_id">
+            <option>Pais</option>
+          </select>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-md-2 col-md-offset-1">
+          <label>Nombre</label>
+        </div>
+        <div class="col-md-8">
+          <input type="text" id="_NombrePerfil" value="" style="width: 360px;" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2 col-md-offset-1">
+          <label>Menu</label>
+        </div>
+        <div id="perfil_tree" class="col-md-9">
+
+
+          <div class='parent-check'>
+            <input type='checkbox' id='Nivel_0'><label>Opciones del Sistema</label>
+            <div class='child-check'>
+              <input type='checkbox' data-codigoMenu='MNU_PAR' id='Nivel_1'><label>Parámetros</label>
+              <div class='child-check'><input type='checkbox' data-id='5' data-parent='1' data-codigoMenu='PAR_Empresas' id='Nivel_1_5'><label>Empresas</label></div>
+              <div class='child-check'><input type='checkbox' data-id='6' data-parent='1' data-codigoMenu='PAR_Productos' id='Nivel_1_6'><label>Productos</label></div>
+              <div class='child-check'><input type='checkbox' data-id='7' data-parent='1' data-codigoMenu='PAR_Zonas' id='Nivel_1_7'><label>Zonas</label></div>
+              <div class='child-check'><input type='checkbox' data-id='8' data-parent='1' data-codigoMenu='PAR_Ejecutivos' id='Nivel_1_8'><label>Ejecutivos</label></div>
+              <div class='child-check'><input type='checkbox' data-id='9' data-parent='1' data-codigoMenu='PAR_Contratos' id='Nivel_1_9'><label>Contratos</label></div>
+              <div class='child-check'><input type='checkbox' data-id='10' data-parent='1' data-codigoMenu='PAR_Alianzas' id='Nivel_1_10'><label>Alianzas</label></div>
+              <div class='child-check'><input type='checkbox' data-id='11' data-parent='1' data-codigoMenu='PAR_Paises' id='Nivel_1_11'><label>Paises</label></div>
+              <div class='child-check'><input type='checkbox' data-id='12' data-parent='1' data-codigoMenu='PAR_Preferencias' id='Nivel_1_12'><label>Preferencias</label></div>
+              <div class='child-check'><input type='checkbox' data-id='39' data-parent='1' data-codigoMenu='PAR_Rutas' id='Nivel_1_39'><label>Rutas</label></div>
+              <div class='child-check'><input type='checkbox' data-id='40' data-parent='1' data-codigoMenu='PAR_Mensajeros' id='Nivel_1_40'><label>Mensajeros</label></div>
+              <div class='child-check'><input type='checkbox' data-id='43' data-parent='1' data-codigoMenu='PAR_MultiPais' id='Nivel_1_43'><label>Multi-Pais</label></div>
+              <div class='child-check'><input type='checkbox' data-id='45' data-parent='1' data-codigoMenu='PAR_Manejos' id='Nivel_1_45'><label>Tabla Manejos</label></div>
+            </div>
+            <div class='child-check'>
+              <input type='checkbox' data-codigoMenu='MNU_SEG' id='Nivel_2'><label>Seguridad</label>
+              <div class='child-check'><input type='checkbox' data-id='13' data-parent='2' data-codigoMenu='SEG_Usuarios' id='Nivel_2_13'><label>Usuarios</label></div>
+              <div class='child-check'><input type='checkbox' data-id='14' data-parent='2' data-codigoMenu='SEG_Perfiles' id='Nivel_2_14'><label>Perfiles</label></div>
+            </div>
+            <div class='child-check'>
+              <input type='checkbox' data-codigoMenu='MNU_CLI' id='Nivel_3'><label>Clientes</label>
+              <div class='child-check'><input type='checkbox' data-id='15' data-parent='3' data-codigoMenu='CLI_mostrar' id='Nivel_3_15'><label>Clientes - Mostrar</label></div>
+              <div class='child-check'><input type='checkbox' data-id='16' data-parent='3' data-codigoMenu='CLI_crear' id='Nivel_3_16'><label>Clientes - Crear</label></div>
+              <div class='child-check'><input type='checkbox' data-id='17' data-parent='3' data-codigoMenu='CLI_modificar' id='Nivel_3_17'><label>Clientes - Modificar</label></div>
+              <div class='child-check'><input type='checkbox' data-id='18' data-parent='3' data-codigoMenu='CLI_eliminar' id='Nivel_3_18'><label>Clientes - Eliminar</label></div>
+              <div class='child-check'><input type='checkbox' data-id='19' data-parent='3' data-codigoMenu='CLI_boton_web' id='Nivel_3_19'><label>Clientes - Clave Web</label></div>
+              <div class='child-check'><input type='checkbox' data-id='20' data-parent='3' data-codigoMenu='CLI_persona_mostrar' id='Nivel_3_20'><label>Persona - Mostrar</label></div>
+              <div class='child-check'><input type='checkbox' data-id='21' data-parent='3' data-codigoMenu='CLI_persona_modificar' id='Nivel_3_21'><label>Persona - Modificar</label></div>
+              <div class='child-check'><input type='checkbox' data-id='22' data-parent='3' data-codigoMenu='CLI_empresa_mostrar' id='Nivel_3_22'><label>Empresa - Mostrar</label></div>
+              <div class='child-check'><input type='checkbox' data-id='23' data-parent='3' data-codigoMenu='CLI_empresa_modificar' id='Nivel_3_23'><label>Empresa - Modificar</label></div>
+              <div class='child-check'><input type='checkbox' data-id='24' data-parent='3' data-codigoMenu='CLI_direccion_mostrar' id='Nivel_3_24'><label>Direccion - Mostrar</label></div>
+              <div class='child-check'><input type='checkbox' data-id='25' data-parent='3' data-codigoMenu='CLI_direccion_modificar' id='Nivel_3_25'><label>Direccion - Modificar</label></div>
+              <div class='child-check'><input type='checkbox' data-id='26' data-parent='3' data-codigoMenu='CLI_tarjetas_mostrar' id='Nivel_3_26'><label>Tarjetas - Mostrar</label></div>
+              <div class='child-check'><input type='checkbox' data-id='27' data-parent='3' data-codigoMenu='CLI_tarjetas_modificar' id='Nivel_3_27'><label>Tarjetas - Modificar</label></div>
+              <div class='child-check'><input type='checkbox' data-id='28' data-parent='3' data-codigoMenu='CLI_autorizados_mostrar' id='Nivel_3_28'><label>Autorizados - Mostrar</label></div>
+              <div class='child-check'><input type='checkbox' data-id='29' data-parent='3' data-codigoMenu='CLI_autorizados_modificar' id='Nivel_3_29'><label>Autorizados - Modificar</label></div>
+              <div class='child-check'><input type='checkbox' data-id='30' data-parent='3' data-codigoMenu='CLI_contactos_mostrar' id='Nivel_3_30'><label>Contactos - Mostrar</label></div>
+              <div class='child-check'><input type='checkbox' data-id='31' data-parent='3' data-codigoMenu='CLI_contactos_modificar' id='Nivel_3_31'><label>Contactos - Modificar</label></div>
+              <div class='child-check'><input type='checkbox' data-id='32' data-parent='3' data-codigoMenu='CLI_imagenes_mostrar' id='Nivel_3_32'><label>Imagenes - Mostrar</label></div>
+              <div class='child-check'><input type='checkbox' data-id='33' data-parent='3' data-codigoMenu='CLI_imagenes_modificar' id='Nivel_3_33'><label>Imagenes - Modificar</label></div>
+              <div class='child-check'><input type='checkbox' data-id='41' data-parent='3' data-codigoMenu='CLI_cascaron' id='Nivel_3_41'><label>Clientes - Cascaron</label></div>
+              <div class='child-check'><input type='checkbox' data-id='42' data-parent='3' data-codigoMenu='CLI_productos' id='Nivel_3_42'><label>Clientes - Productos</label></div>
+            </div>
+            <div class='child-check'>
+              <input type='checkbox' data-codigoMenu='MNU_RPT' id='Nivel_4'><label>Reportes</label>
+              <div class='child-check'><input type='checkbox' data-id='34' data-parent='4' data-codigoMenu='RPT_Clientes_pobox' id='Nivel_4_34'><label>Clientes POBox</label></div>
+              <div class='child-check'><input type='checkbox' data-id='35' data-parent='4' data-codigoMenu='RPT_Clientes_carga' id='Nivel_4_35'><label>Clientes Carga</label></div>
+              <div class='child-check'><input type='checkbox' data-id='36' data-parent='4' data-codigoMenu='RPT_Tarjetas' id='Nivel_4_36'><label>Tarjetas</label></div>
+              <div class='child-check'><input type='checkbox' data-id='37' data-parent='4' data-codigoMenu='RPT_Graficas' id='Nivel_4_37'><label>Gráficas</label></div>
+              <div class='child-check'><input type='checkbox' data-id='38' data-parent='4' data-codigoMenu='RPT_Bitacoras' id='Nivel_4_38'><label>Bitácoras</label></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" style="margin: 5px;">
+        <div class="col-md-5 col-md-offset-1">
+          <label>Sucursales Disponibles</label>
+        </div>
+        <div class="col-md-5 col-md-offset-1">
+          <label>Sucursales Asignadas</label>
+        </div>
+      </div>
+
+      <div class="row" style="margin: 5px;">
+        <select id="_Disponibles" class="col-md-5 col-md-offset-1" style="height: 207px;" multiple="multiple">
+        </select>
+        <div class="col-md-1" style="height: 144px;">
+          <button style="margin-top: 18px;" (click)="asignar()"><i class="fa fa-arrow-circle-right fa-2x"></i></button>
+          <button style="margin-top: 18px;" (click)="desasignar()"><i class="fa fa-arrow-circle-left fa-2x"></i></button>
+        </div>
+        <select id="_Asignados" class="col-md-5" style="height: 207px;" multiple="multiple" data-ff="sucursales">
+        </select>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<!--Modal para eliminar-->
+<a id="btnEliminarPerfil" href="#EliminarPerfil" data-toggle="modal" hidden>content</a>
+<div id="EliminarPerfil" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center" style="background-color:grey;">
+        <div class="icon-box">
+          <i class="material-icons" id="">help</i>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body text-center">
+        <h4>Jetbox Clientes</h4>
+        <div id="bodyEliminar">
+          <p id="">Desea eliminar este perfil?</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" id="BtnCerrarModal" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+          </div>
+          <div class="col-md-2 col-md-offset-2" id="footerEliminar">
+            <button type="button" (click)="eliminarPerfil()" data-dismiss="modal" class="btn btn-primary">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<a id="btnModalMensaje" hidden href="#ModalMensajes" data-toggle="modal">content</a>
+<!--Modal para Mensajes-->
+<div id="ModalMensajes" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center" id="headerBodyClientes">
+        <div class="icon-box">
+          <i class="material-icons" id="iconBoxBodyClientes">help</i>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body text-center">
+        <h4>Jetbox Clientes</h4>
+        <div id="bodyModalContainerClientes">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

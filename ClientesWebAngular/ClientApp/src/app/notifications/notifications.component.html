@@ -1,0 +1,14 @@
+<div *ngIf="_notification.isShowError === true">
+  <div class="btn-group dropup notification" (click)="onClick(_notification)" hidden>
+    <button type="button" class="btn btn-danger">Ver Errores</button>
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+      <span class="caret"></span>
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <div *ngIf="_notification.isShowingErrors === true">
+      <ul class="dropdown-menu" role="menu" style="display: block;"></ul>
+    </div>
+  </div>
+</div>
+
+

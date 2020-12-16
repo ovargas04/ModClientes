@@ -1,0 +1,1505 @@
+<h1>Mantenimiento de Empresas</h1>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-2 col-md-offset-8">
+      <a class="btn" (click)="empresaAgregar()"><i class="btn-primary fa fa-plus"></i> Agregar Empresa</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <ngx-datatable [rows]="empresas"
+                     [columns]="columnsEmpresa"
+                     [columnMode]="ColumnMode.force"
+                     [loadingIndicator]="loadingIndicator"
+                     [summaryPosition]="'bottom'"
+                     [limit]="10"
+                     rowHeight="auto"
+                     [reorderable]="reorderable"
+                     [selectionType]="SelectionType.single"
+                     (select)="selectEmpresa($event)"
+                     class="bootstrap striped expandable"
+                     style="width:100%">
+        <ngx-datatable-column name="ID">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{ value }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="name">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{ value }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Editar" [width]="100">
+          <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+            <button class="btn btn-success" (click)="editarEmpresa(row)"><i class="glyphicon glyphicon-edit"></i></button>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Eliminar" [width]="100">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <button class="btn btn-warning" (click)="eliminarEmpresa(empresa)"><i class="glyphicon glyphicon-remove"></i></button>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 col-md-offset-8">
+      <a class="btn" (click)="empresaAgregar()" data-toggle="modal" data-target="#agregarSucursalModal"><i class="btn-primary fa fa-plus"></i> Agregar Sucursal</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <ngx-datatable [rows]="sucursales"
+                     [columns]="columnsSucursal"
+                     [columnMode]="ColumnMode.force"
+                     [loadingIndicator]="loadingIndicator"
+                     [summaryPosition]="'bottom'"
+                     [limit]="10"
+                     rowHeight="auto"
+                     [reorderable]="reorderable"
+                     [headerHeight]="50"
+                     [footerHeight]="50"
+                     class="bootstrap striped expandable"
+                     style="width:100%">
+        <ngx-datatable-column name="ID">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{ value }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="descripcion">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{ value }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Editar" [width]="100">
+          <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+            <a role="button" href="#editarSucursalModal" class="btn btn-success" (click)="editarSucursal(row)" data-toggle="modal"><i class="glyphicon glyphicon-edit"></i></a>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Eliminar" [width]="100">
+          <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+            <a role="button" href="#ModalEliminar" class="btn btn-warning" (click)="cargarDataeliminarSucursal(row)" data-toggle="modal"><i class="glyphicon glyphicon-remove"></i></a>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+</div>
+
+
+<a style="display:none;" id="levantarAgregarEmpresaModal" class="btn" data-toggle="modal" data-target="#agregarEmpresaModal"><i class="btn-primary fa fa-plus"></i> levantarPopUpOculto</a>
+<a style="display:none;" id="levantareEdicionEmpresaModal" class="btn" data-toggle="modal" data-target="#EdicionEmpresaModal"><i class="btn-primary fa fa-plus"></i> levantarPopUpOculto</a>
+<div class="page_dlg modal fade bs-example-modal-lg" id="EdicionEmpresaModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Edicion de Empresas</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal" [formGroup]="empresaForm">
+          <div class="form-group">
+            <label class="col-md-3 control-label">Empresa</label>
+            <div class="col-md-1">
+              <input class="form-control input-md limpiarText" id="empresaid" type="text" value="{{empresa.id}}" formControlName="empresaid">
+            </div>
+            <div class="col-md-6 col-md-offset-1">
+              <input type="text" placeholder="Nombre empresa" id="empresanombre" class="form-control input-md limpiarText" value="{{empresa.name}}" formControlName="empresanombre">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-3 control-label">Elaboración de guía $</label>
+            <div class="col-md-2">
+              <input class="monetario form-control input-md limpiarText" id="empresacostoElaboracionGuia" type="text" value="{{empresa.costoElaboracionGuia}}" formControlName="empresacostoElaboracionGuia">
+            </div>
+            <div class="col-md-6">
+              <input type="text" placeholder="Descripcion elaboración guía" id="empresadescripcionCostoElaboracionGuia"
+                     class="form-control input-md limpiarText" value="{{empresa.descripcionCostoElaboracionGuia}}" formControlName="empresadescripcionCostoElaboracionGuia">
+            </div>
+          </div>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-3 control-label">Porcentaje cargo fuel %</label>
+            <div class="col-md-2">
+              <input class="monetario form-control input-md limpiarText" type="text" id="empresacargoFuel"
+                     placeholder="" value="{{empresa.cargoFuel}}" formControlName="empresacargoFuel">
+            </div>
+            <label class="col-md-3 control-label">Excepciones manejo primero $</label>
+            <div class="col-md-2">
+              <input class="monetario form-control input-md limpiarText" id="empresaexcepcionImpuesto"
+                     type="text" placeholder="" value="{{empresa.excepcionImpuesto}}" formControlName="empresaexcepcionImpuesto">
+            </div>
+          </div>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-3 control-label">Cargo por tarjeta %</label>
+            <div class="col-md-2">
+              <input class="monetario form-control input-md limpiarText" type="text" id="empresacargoTarjeta"
+                     placeholder="" value="{{empresa.cargoTarjeta}}" formControlName="empresacargoTarjeta">
+            </div>
+            <label class="col-md-3 control-label">Excepciones manejo siguientes $</label>
+            <div class="col-md-2">
+              <input class="monetario form-control input-md limpiarText" type="text" placeholder="" id="empresaexcepcionImpuestoAdicional"
+                     value="{{empresa.excepcionImpuestoAdicional}}" formControlName="empresaexcepcionImpuestoAdicional">
+            </div>
+          </div>
+        </div>
+
+        <div class="container-fluid" style="margin: 0 1em;">
+          <!-- Table headers-->
+          <div class="row">
+            <div class="col-sm-6"><label style="width: 100%; margin: 1rem; background-color: #85b2cb; text-align: center; font-weight: bold">Costo Mercadería Kg</label></div>
+            <div class="col-sm-6"><label style="width: 100%; margin: 1rem; background-color: #85b2cb; text-align: center; font-weight: bold;">Manejo de Aduana</label></div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="pull-right">
+                <a class="btn btn-success" data-toggle="modal" data-target="#modificarMercaderiaModal"><i class="fa fa-plus"></i></a>
+              </div>
+              <!--<bwu-datagrid id='tabla-mensajeria' style="margin: 1rem; width: 100%; height:270px;"></bwu-datagrid>-->
+              <ngx-datatable id="MercaderiaTable"
+                             [rows]="mercaderias"
+                             [columns]="columnsMercaderia"
+                             [columnMode]="ColumnMode.force"
+                             [loadingIndicator]="loadingIndicator"
+                             [summaryPosition]="'bottom'"
+                             [limit]="10"
+                             rowHeight="auto"
+                             [reorderable]="reorderable"
+                             [headerHeight]="50"
+                             [footerHeight]="50"
+                             class="bootstrap striped expandable"
+                             style="width:100%">
+                <ngx-datatable-column name="desde">
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    {{ value }}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="hasta">
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    {{ value }}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="costo">
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    {{ value }}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="valor">
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    {{ value }}
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
+            </div>
+            <div class="col-sm-6">
+              <div class="pull-right">
+                <a class="btn btn-success" (click)="MercaderiaAgregar()" data-toggle="modal" data-target="#modificarManejoAduanasModalUno"><i class="fa fa-plus"></i></a>
+              </div>
+              <ngx-datatable id="ManejosTable"
+                             [rows]="manejos"
+                             [columns]="columnsManejo"
+                             [columnMode]="ColumnMode.force"
+                             [loadingIndicator]="loadingIndicator"
+                             [summaryPosition]="'bottom'"
+                             [limit]="10"
+                             rowHeight="auto"
+                             [reorderable]="reorderable"
+                             [headerHeight]="50"
+                             [footerHeight]="50"
+                             class="bootstrap striped expandable"
+                             style="width:100%">
+                <!--<ngx-datatable-column name="ID">
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    {{ value }}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="name">
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    {{ value }}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Editar" [width]="100">
+                  <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                    <button class="btn btn-success" (click)="editarSucursal(row)" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="glyphicon glyphicon-edit"></i></button>
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Eliminar" [width]="100">
+                  <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                    <button class="btn btn-warning" (click)="eliminarSucursal(row)"><i class="glyphicon glyphicon-remove"></i></button>
+                  </ng-template>
+                </ngx-datatable-column>-->
+              </ngx-datatable>
+              <!--<bwu-datagrid id='tabla-manejos' style="margin: 1rem; width: 100%; height:270px;"></bwu-datagrid>-->
+              <!--<table datatable id="ManejosTable" [dtOptions]="dtOptionsManejos" [dtTrigger]="dtTriggerManejos" class="table table-striped table-bordered table-hover table-responsive" style="width:100%">
+                <thead>
+                  <tr>
+                    <th>Desde</th>
+                    <th>Hasta</th>
+                    <th>Costo</th>
+                    <th>[%]</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let manejo of manejos">
+                    <td><span (keyup)="changeValue(manejo.id, 'desde', $event)" (blur)="updateList(manejo.id, 'desde', $event,manejos,'manejos')" contenteditable="true">{{ manejo.desde }}</span></td>
+                    <td><span (keyup)="changeValue(manejo.id, 'hasta', $event)" (blur)="updateList(manejo.id, 'hasta', $event,manejos,'manejos')" contenteditable="true">{{ manejo.hasta }}</span></td>
+                    <td><span (keyup)="changeValue(manejo.id, 'costo', $event)" (blur)="updateList(manejo.id, 'costo', $event,manejos,'manejos')" contenteditable="true">{{ manejo.costo }}</span></td>
+                    <td><input (keyup)="changeValue(manejo.id, 'valor', $event)" (blur)="updateList(manejo.id, 'valor', $event,manejos,'manejos')" type="checkbox" [checked]="manejo.valor" /></td>
+                    <td><span (keyup)="changeValue(manejo.id, 'valor', $event)" (blur)="updateList(manejo.id, 'valor', $event,manejos)" contenteditable="true">{{ manejo.valor }}</span></td>
+                  </tr>
+                </tbody>
+              </table>-->
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6"><label style="width: 100%; margin: 1rem; background-color: #85b2cb; text-align: center; font-weight: bold;">Manejo2 de Aduana</label></div>
+            <div class="col-sm-6"><label style="width: 100%; margin: 1rem; background-color: #85b2cb; text-align: center; font-weight: bold;">Seguro de Mercadería</label></div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="pull-right">
+                <a class="btn btn-success" (click)="MercaderiaAgregar()" data-toggle="modal" data-target="#modificarManejoAduanasDosModal"><i class="fa fa-plus"></i></a>
+              </div>
+              <ngx-datatable id="ManejosTable2"
+                             [rows]="manejos2"
+                             [columns]="columnsManejo2"
+                             [columnMode]="ColumnMode.force"
+                             [loadingIndicator]="loadingIndicator"
+                             [summaryPosition]="'bottom'"
+                             [limit]="10"
+                             rowHeight="auto"
+                             [reorderable]="reorderable"
+                             [headerHeight]="50"
+                             [footerHeight]="50"
+                             class="bootstrap striped expandable"
+                             style="width:100%">
+                <!--<ngx-datatable-column name="ID">
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    {{ value }}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="name">
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    {{ value }}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Editar" [width]="100">
+                  <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                    <button class="btn btn-success" (click)="editarSucursal(row)" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="glyphicon glyphicon-edit"></i></button>
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Eliminar" [width]="100">
+                  <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                    <button class="btn btn-warning" (click)="eliminarSucursal(row)"><i class="glyphicon glyphicon-remove"></i></button>
+                  </ng-template>
+                </ngx-datatable-column>-->
+              </ngx-datatable>
+              <!--<bwu-datagrid id='tabla-manejos2' style="margin: 1rem; width: 100%; height:270px;"></bwu-datagrid>-->
+              <!--<table datatable id="ManejosTable2" [dtOptions]="dtOptionsManejos2" [dtTrigger]="dtTriggerManejos2" class="table table-striped table-bordered table-hover table-responsive" style="width:100%">
+                <thead>
+                  <tr>
+                    <th>Desde</th>
+                    <th>Hasta</th>
+                    <th>Costo</th>
+                    <th>[%]</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let manejo2 of manejos2">
+                    <td><span (keyup)="changeValue(manejo2.id, 'desde', $event)" (blur)="updateList(manejo2.id, 'desde', $event,manejos2,'manejos2')" contenteditable="true">{{ manejo2.desde }}</span></td>
+                    <td><span (keyup)="changeValue(manejo2.id, 'hasta', $event)" (blur)="updateList(manejo2.id, 'hasta', $event,manejos2,'manejos2')" contenteditable="true">{{ manejo2.hasta }}</span></td>
+                    <td><span (keyup)="changeValue(manejo2.id, 'costo', $event)" (blur)="updateList(manejo2.id, 'costo', $event,manejos2,'manejos2')" contenteditable="true">{{ manejo2.costo }}</span></td>
+                    <td><input (keyup)="changeValue(manejo2.id, 'valor', $event)" (blur)="updateList(manejo2.id, 'valor', $event,manejos2,'manejos2')" type="checkbox" [checked]="manejo2.valor" /></td>
+                  </tr>
+                </tbody>
+              </table>-->
+            </div>
+            <div class="col-sm-6">
+              <div class="pull-right">
+                <a class="btn btn-success" (click)="MercaderiaAgregar()" data-toggle="modal" data-target="#modificarMercaderiaSegurosModal"><i class="fa fa-plus"></i></a>
+              </div>
+              <!--<ngx-datatable id="SegurosTable"
+                 [rows]="seguros"
+                 [columns]="columnsSeguros"
+                 [columnMode]="ColumnMode.force"
+                 [loadingIndicator]="loadingIndicator"
+                 [summaryPosition]="'bottom'"
+                 [limit]="10"
+                 rowHeight="auto"
+                 [reorderable]="reorderable"
+                 [headerHeight]="50"
+                 [footerHeight]="50"
+                 class="bootstrap striped expandable"
+                 style="width:100%">
+
+  </ngx-datatable>-->
+
+              <table id="SeguroMercaderia" class="table table-striped table-bordered table-hover table-responsive" style="width:100%">
+                <thead>
+                  <tr>
+                    <th>Desde</th>
+                    <th>Hasta</th>
+                    <th>Costo</th>
+                    <th>[%]</th>
+                  </tr>
+                </thead>
+                <tbody id="tbodySeguroMercaderia_Edicion">
+                </tbody>
+              </table>
+
+
+            </div>
+          </div>
+
+          <div class="row" style="margin: 18px 0; border: 0; /*height: 1px;*/ background: #333; background-image: linear-gradient(to right, #ccc, #333, #ccc);">
+            <div class="col-md-12">
+              <hr />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i> Cerrar</button>
+          </div>
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" class="btn btn-primary" (click)="guardarEmpresa(empresa)"><i class="fa fa-save"></i> Actualizar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="page_dlg modal fade bs-example-modal-lg-two" id="agregarEmpresaModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Agregar Empresas</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-horizontal" [formGroup]="empresaForm">
+          <div class="form-group">
+            <label class="col-md-3 control-label">Empresa</label>
+            <div class="col-md-1">
+              <input class="form-control input-md" type="text" value="{{empresa.id}}" name="empresa_id" formControlName="empresaid">
+            </div>
+            <div class="col-md-6 col-md-offset-1">
+              <input type="text" placeholder="Nombre empresa" class="form-control input-md" name="name" value="{{empresa.name}}" formControlName="empresanombre">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-3 control-label">Elaboración de guía $</label>
+            <div class="col-md-2">
+              <input class="monetario form-control input-md" type="text" name="costoElaboracionGuia" value="{{empresa.costoElaboracionGuia}}" formControlName="empresacostoElaboracionGuia">
+            </div>
+            <div class="col-md-6">
+              <input type="text" placeholder="Descripcion elaboración guía" name="descripcionCostoElaboracionGuia" class="form-control input-md" value="{{empresa.descripcionCostoElaboracionGuia}}" formControlName="empresadescripcionCostoElaboracionGuia">
+            </div>
+          </div>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-3 control-label">Porcentaje cargo fuel %</label>
+            <div class="col-md-2">
+              <input class="monetario form-control input-md" type="text" name="cargoFuel" placeholder="" value="{{empresa.cargoFuel}}" formControlName="empresacargoFuel">
+            </div>
+            <label class="col-md-3 control-label">Excepciones manejo primero $</label>
+            <div class="col-md-2">
+              <input class="monetario form-control input-md" name="excepcionImpuesto" type="text" placeholder="" value="{{empresa.excepcionImpuesto}}" formControlName="empresaexcepcionImpuesto">
+            </div>
+          </div>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-3 control-label">Cargo por tarjeta %</label>
+            <div class="col-md-2">
+              <input class="monetario form-control input-md" type="text" placeholder="" name="cargoTarjeta" value="{{empresa.cargoTarjeta}}" formControlName="empresacargoTarjeta">
+            </div>
+            <label class="col-md-3 control-label">Excepciones manejo siguientes $</label>
+            <div class="col-md-2">
+              <input class="monetario form-control input-md" type="text" placeholder="" name="excepcionImpuestoAdicional" value="{{empresa.excepcionImpuestoAdicional}}" formControlName="empresaexcepcionImpuestoAdicional">
+            </div>
+          </div>
+        </div>
+
+        <div class="container-fluid" style="margin: 0 1em;">
+          <!-- Table headers-->
+          <div class="row">
+            <div class="col-sm-6"><label style="width: 100%; margin: 1rem; background-color: #85b2cb; text-align: center; font-weight: bold">Costo Mercadería Kg</label></div>
+            <div class="col-sm-6"><label style="width: 100%; margin: 1rem; background-color: #85b2cb; text-align: center; font-weight: bold;">Manejo de Aduana</label></div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="pull-right">
+                <!--<button type="button" class="btn btn-success" (click)="add('mercaderias','#MercaderiaTable','dtTriggerMercaderia')"><i class="fa fa-plus"></i></button>-->
+                <a class="btn btn-success" (click)="MercaderiaAgregar()" data-toggle="modal" data-target="#agregarMercaderiaModal"><i class="fa fa-plus"></i></a>
+              </div>
+              <!--<bwu-datagrid id='tabla-mensajeria' style="margin: 1rem; width: 100%; height:270px;"></bwu-datagrid>-->
+              <ngx-datatable id="MercaderiaTable"
+                             [rows]="mercaderias"
+                             [columns]="columnsMercaderia"
+                             [columnMode]="ColumnMode.force"
+                             [loadingIndicator]="loadingIndicator"
+                             [summaryPosition]="'bottom'"
+                             [limit]="10"
+                             rowHeight="auto"
+                             [reorderable]="reorderable"
+                             [headerHeight]="50"
+                             [footerHeight]="50"
+                             class="bootstrap striped expandable"
+                             style="width:100%">
+                <ngx-datatable-column name="desde">
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    {{ value }}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="hasta">
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    {{ value }}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="costo">
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    {{ value }}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="valor">
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    {{ value }}
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
+            </div>
+            <div class="col-sm-6">
+              <div class="pull-right">
+                <a class="btn btn-success" (click)="MercaderiaAgregar()" data-toggle="modal" data-target="#agregarManejoAduanasModalUno"><i class="fa fa-plus"></i></a>
+              </div>
+              <ngx-datatable id="ManejosTable"
+                             [rows]="manejos"
+                             [columns]="columnsManejo"
+                             [columnMode]="ColumnMode.force"
+                             [loadingIndicator]="loadingIndicator"
+                             [summaryPosition]="'bottom'"
+                             [limit]="10"
+                             rowHeight="auto"
+                             [reorderable]="reorderable"
+                             [headerHeight]="50"
+                             [footerHeight]="50"
+                             class="bootstrap striped expandable"
+                             style="width:100%">
+                <!--<ngx-datatable-column name="ID">
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    {{ value }}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="name">
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    {{ value }}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Editar" [width]="100">
+                  <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                    <button class="btn btn-success" (click)="editarSucursal(row)" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="glyphicon glyphicon-edit"></i></button>
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Eliminar" [width]="100">
+                  <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                    <button class="btn btn-warning" (click)="eliminarSucursal(row)"><i class="glyphicon glyphicon-remove"></i></button>
+                  </ng-template>
+                </ngx-datatable-column>-->
+              </ngx-datatable>
+              <!--<bwu-datagrid id='tabla-manejos' style="margin: 1rem; width: 100%; height:270px;"></bwu-datagrid>-->
+              <!--<table datatable id="ManejosTable" [dtOptions]="dtOptionsManejos" [dtTrigger]="dtTriggerManejos" class="table table-striped table-bordered table-hover table-responsive" style="width:100%">
+                <thead>
+                  <tr>
+                    <th>Desde</th>
+                    <th>Hasta</th>
+                    <th>Costo</th>
+                    <th>[%]</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let manejo of manejos">
+                    <td><span (keyup)="changeValue(manejo.id, 'desde', $event)" (blur)="updateList(manejo.id, 'desde', $event,manejos,'manejos')" contenteditable="true">{{ manejo.desde }}</span></td>
+                    <td><span (keyup)="changeValue(manejo.id, 'hasta', $event)" (blur)="updateList(manejo.id, 'hasta', $event,manejos,'manejos')" contenteditable="true">{{ manejo.hasta }}</span></td>
+                    <td><span (keyup)="changeValue(manejo.id, 'costo', $event)" (blur)="updateList(manejo.id, 'costo', $event,manejos,'manejos')" contenteditable="true">{{ manejo.costo }}</span></td>
+                    <td><input (keyup)="changeValue(manejo.id, 'valor', $event)" (blur)="updateList(manejo.id, 'valor', $event,manejos,'manejos')" type="checkbox" [checked]="manejo.valor" /></td>
+                    <td><span (keyup)="changeValue(manejo.id, 'valor', $event)" (blur)="updateList(manejo.id, 'valor', $event,manejos)" contenteditable="true">{{ manejo.valor }}</span></td>
+                  </tr>
+                </tbody>
+              </table>-->
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6"><label style="width: 100%; margin: 1rem; background-color: #85b2cb; text-align: center; font-weight: bold;">Manejo2 de Aduana</label></div>
+            <div class="col-sm-6"><label style="width: 100%; margin: 1rem; background-color: #85b2cb; text-align: center; font-weight: bold;">Seguro de Mercadería</label></div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="pull-right">
+                <a class="btn btn-success" (click)="MercaderiaAgregar()" data-toggle="modal" data-target="#agregarManejoAduanasDosModal"><i class="fa fa-plus"></i></a>
+              </div>
+              <ngx-datatable id="ManejosTable2"
+                             [rows]="manejos2"
+                             [columns]="columnsManejo2"
+                             [columnMode]="ColumnMode.force"
+                             [loadingIndicator]="loadingIndicator"
+                             [summaryPosition]="'bottom'"
+                             [limit]="10"
+                             rowHeight="auto"
+                             [reorderable]="reorderable"
+                             [headerHeight]="50"
+                             [footerHeight]="50"
+                             class="bootstrap striped expandable"
+                             style="width:100%">
+                <!--<ngx-datatable-column name="ID">
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    {{ value }}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="name">
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    {{ value }}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Editar" [width]="100">
+                  <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                    <button class="btn btn-success" (click)="editarSucursal(row)" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="glyphicon glyphicon-edit"></i></button>
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Eliminar" [width]="100">
+                  <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                    <button class="btn btn-warning" (click)="eliminarSucursal(row)"><i class="glyphicon glyphicon-remove"></i></button>
+                  </ng-template>
+                </ngx-datatable-column>-->
+              </ngx-datatable>
+              <!--<bwu-datagrid id='tabla-manejos2' style="margin: 1rem; width: 100%; height:270px;"></bwu-datagrid>-->
+              <!--<table datatable id="ManejosTable2" [dtOptions]="dtOptionsManejos2" [dtTrigger]="dtTriggerManejos2" class="table table-striped table-bordered table-hover table-responsive" style="width:100%">
+                <thead>
+                  <tr>
+                    <th>Desde</th>
+                    <th>Hasta</th>
+                    <th>Costo</th>
+                    <th>[%]</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let manejo2 of manejos2">
+                    <td><span (keyup)="changeValue(manejo2.id, 'desde', $event)" (blur)="updateList(manejo2.id, 'desde', $event,manejos2,'manejos2')" contenteditable="true">{{ manejo2.desde }}</span></td>
+                    <td><span (keyup)="changeValue(manejo2.id, 'hasta', $event)" (blur)="updateList(manejo2.id, 'hasta', $event,manejos2,'manejos2')" contenteditable="true">{{ manejo2.hasta }}</span></td>
+                    <td><span (keyup)="changeValue(manejo2.id, 'costo', $event)" (blur)="updateList(manejo2.id, 'costo', $event,manejos2,'manejos2')" contenteditable="true">{{ manejo2.costo }}</span></td>
+                    <td><input (keyup)="changeValue(manejo2.id, 'valor', $event)" (blur)="updateList(manejo2.id, 'valor', $event,manejos2,'manejos2')" type="checkbox" [checked]="manejo2.valor" /></td>
+                  </tr>
+                </tbody>
+              </table>-->
+            </div>
+            <div class="col-sm-6">
+              <div class="pull-right">
+                <a class="btn btn-success" (click)="MercaderiaAgregar()" data-toggle="modal" data-target="#agregarMercaderiaSegurosModal"><i class="fa fa-plus"></i></a>
+              </div>
+              <!--<ngx-datatable id="SegurosTable"
+                             [rows]="seguros"
+                             [columns]="columnsSeguros"
+                             [columnMode]="ColumnMode.force"
+                             [loadingIndicator]="loadingIndicator"
+                             [summaryPosition]="'bottom'"
+                             [limit]="10"
+                             rowHeight="auto"
+                             [reorderable]="reorderable"
+                             [headerHeight]="50"
+                             [footerHeight]="50"
+                             class="bootstrap striped expandable"
+                             style="width:100%">
+              </ngx-datatable>-->
+              <!--<bwu-datagrid id='tabla-seguros' style="margin: 1rem; width: 100%; height:270px;"></bwu-datagrid>-->
+              <table datatable id="SegurosTable" [dtOptions]="dtOptionsSeguros" [dtTrigger]="dtTriggerSeguros" class="table table-striped table-bordered table-hover table-responsive" style="width:100%">
+                <thead>
+                  <tr>
+                    <th>Desde</th>
+                    <th>Hasta</th>
+                    <th>Costo</th>
+                    <th>[%]</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let seguro of seguros">
+                    <td>100</td>
+                    <td>100</td>
+                    <td>100</td>
+                    <td>true</td>
+                    <!--<td><span (keyup)="changeValue(seguro.id, 'desde', $event)" (blur)="updateList(seguro.id, 'desde', $event,seguros,'seguros')" contenteditable="true">{{ seguro.desde }}</span></td>
+                    <td><span (keyup)="changeValue(seguro.id, 'hasta', $event)" (blur)="updateList(seguro.id, 'hasta', $event,seguros,'seguros')" contenteditable="true">{{ seguro.hasta }}</span></td>
+                    <td><span (keyup)="changeValue(seguro.id, 'costo', $event)" (blur)="updateList(seguro.id, 'costo', $event,seguros,'seguros')" contenteditable="true">{{ seguro.costo }}</span></td>
+                    <td><input (keyup)="changeValue(seguro.id, 'valor', $event)" (blur)="updateList(seguro.id, 'valor', $event,seguros,'seguros')" type="checkbox" [checked]="seguro.valor" /></td>-->
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="row" style="margin: 18px 0; border: 0; /*height: 1px;*/ background: #333; background-image: linear-gradient(to right, #ccc, #333, #ccc);">
+            <div class="col-md-12">
+              <hr />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i> Cerrar</button>
+          </div>
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" class="btn btn-primary" (click)="guardarEmpresa(empresa)"><i class="fa fa-save"></i> Actualizar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page_dlg modal fade bs-example-modal-lg-two" id="editarSucursalModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Edicion Sucursal</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal" [formGroup]="sucursalForm">
+
+          <div class="row">
+            <label class="col-md-3 control-label">Codigo</label>
+            <div class="col-md-6">
+              <input class="form-control input-md" value="{{objSucursal.id}}" type="text" formControlName="sucursalid">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Descripcion</label>
+            <div class="col-md-6">
+              <input type="text" placeholder="Descripcion" class="form-control input-md" value="{{objSucursal.descripcion}}" formControlName="sucursalnombre">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Activa</label>
+            <div class="col-md-6">
+              <input type="checkbox" formControlName="sucursalActiva">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Fecha de apertura</label>
+            <div class="col-md-6">
+              <input class="form-control input-md" type="date" placeholder="" value="{{objSucursal.fecha}}" formControlName="sucursalFechaApertura">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Email</label>
+            <div class="col-md-6">
+              <input class="form-control input-md" type="email" value="{{objSucursal.email}}" placeholder="" formControlName="sucursalEmail">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Codigo 3 letras</label>
+            <div class="col-md-6">
+              <input class="form-control input-md" type="text" placeholder="" formControlName="sucursalCodigoLetras">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Zona x defecto</label>
+            <div class="col-md-6">
+              <select id="zonanombre" selectedIndex="{{objSucursal.Zona}}" class="form-control input-md" formControlName="sucursalZona">
+                <option *ngFor="let zona of zonas" [value]="zona.id">
+                  {{ zona.nombre }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Pais</label>
+            <div class="col-md-6">
+              <select id="paisnombre" (change)="changePais()" selectedIndex="{{objSucursal.pais}}" class="form-control input-md" formControlName="sucursalPais">
+                <option *ngFor="let pais of paises" [value]="pais.id">
+                  {{ pais.nombre }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Provincia</label>
+            <div class="col-md-6">
+              <select id="provincianombre" (change)="changeProvincia()" selectedIndex="{{objSucursal.provincia}}" class="form-control input-md" formControlName="sucursalProvincia">
+                <option *ngFor="let provincia of provincias" [value]="provincia.id">
+                  {{ provincia.nombre }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Canton</label>
+            <div class="col-md-6">
+              <select id="cantonnombre" selectedIndex="{{objSucursal.canton}}" class="form-control input-md" formControlName="sucursalCanton">
+                <option *ngFor="let canton of cantones" [value]="canton.id">
+                  {{ canton.nombre }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Direccion</label>
+            <div class="col-md-6">
+              <textarea class="form-control input-md" type="text" value="{{objSucursal.direccion}}" placeholder="" formControlName="sucursalDireccion"></textarea>
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Telefono</label>
+            <div class="col-md-6">
+              <input class="form-control input-md" type="tel" value="{{objSucursal.telefono}}" placeholder="" formControlName="sucursalTelefono">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Coordenadas</label>
+            <div class="col-md-6">
+              <input class="form-control input-md" type="text" value="{{objSucursal.coordenadas}}" placeholder="" formControlName="sucursalCordenadas">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Email</label>
+            <div class="col-md-6">
+              <input class="form-control input-md" type="email" value="{{objSucursal.email2}}" placeholder="" formControlName="sucursalEmaildos">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Direccion IPs</label>
+            <div class="col-md-6">
+              <input class="form-control input-md" type="text" value="{{objSucursal.direccionIps}}" placeholder="" formControlName="sucursalIps">
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-md-3 control-label">Horario</label>
+            <div class="col-md-6">
+              <textarea class="form-control input-md" type="text" value="{{objSucursal.horario}}" formControlName="sucursalHorario"></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-md-3 control-label">Foto</label>
+            <div class="col-md-6">
+              <input class="form-control input-md" type="file" formControlName="sucursalFoto">
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-md-3 control-label">imgFoto</label>
+            <div class="col-md-6">
+              <img />
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-md-3 control-label">Mapa</label>
+            <div class="col-md-6">
+              <input class="form-control input-md" type="file" formControlName="sucursalMapa">
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-md-3 control-label">imgMapa</label>
+            <div class="col-md-6">
+              <img />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="form-group">
+            <div class="col-md-2 col-md-offset-2">
+              <button type="button" id="BtnCerrarModal" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i>Cerrar</button>
+            </div>
+            <div class="col-md-2 col-md-offset-2">
+              <button type="button" class="btn btn-primary" (click)="guardarSucursal(objSucursal)"><i class="fa fa-save"></i> Actualizar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page_dlg modal fade bs-example-modal-lg-two" id="agregarSucursalModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Agregar Sucursal</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal" [formGroup]="sucursalForm">
+
+          <div class="row">
+            <label class="col-md-3 control-label">Codigo</label>
+            <div class="col-md-6">
+              <input disabled class="form-control input-md" value="{{objSucursal.id}}" type="text" formControlName="sucursalid">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Descripcion</label>
+            <div class="col-md-6">
+              <input type="text" placeholder="Descripcion" class="form-control input-md" value="{{objSucursal.descripcion}}" formControlName="sucursalnombre">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Activa</label>
+            <div class="col-md-6">
+              <input type="checkbox" formControlName="sucursalActiva">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Fecha de apertura</label>
+            <div class="col-md-6">
+              <input class="form-control input-md" type="date" placeholder="" value="{{objSucursal.fecha}}" formControlName="sucursalFechaApertura">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Email</label>
+            <div class="col-md-6">
+              <input class="form-control input-md" type="email" value="{{objSucursal.email}}" placeholder="" formControlName="sucursalEmail">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Codigo 3 letras</label>
+            <div class="col-md-6">
+              <input class="form-control input-md" type="text" placeholder="" formControlName="sucursalCodigoLetras">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Zona x defecto</label>
+            <div class="col-md-6">
+              <select id="zonanombre" selectedIndex="{{objSucursal.Zona}}" class="form-control input-md" formControlName="sucursalZona">
+                <option *ngFor="let zona of zonas" [value]="zona.id">
+                  {{ zona.nombre }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Pais</label>
+            <div class="col-md-6">
+              <select id="paisAddnombre" (change)="changePais()" selectedIndex="{{objSucursal.pais}}" class="form-control input-md" formControlName="sucursalPais">
+                <option *ngFor="let pais of paises" [value]="pais.id">
+                  {{ pais.nombre }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Provincia</label>
+            <div class="col-md-6">
+              <select id="provinciaAddnombre" (change)="changeProvincia()" selectedIndex="{{objSucursal.provincia}}" class="form-control input-md" formControlName="sucursalProvincia">
+                <option *ngFor="let provincia of provincias" [value]="provincia.id">
+                  {{ provincia.nombre }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Canton</label>
+            <div class="col-md-6">
+              <select id="cantonAddnombre" selectedIndex="{{objSucursal.canton}}" class="form-control input-md" formControlName="sucursalCanton">
+                <option *ngFor="let canton of cantones" [value]="canton.id">
+                  {{ canton.nombre }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Direccion</label>
+            <div class="col-md-6">
+              <textarea class="form-control input-md" type="text" value="{{objSucursal.direccion}}" placeholder="" formControlName="sucursalDireccion"></textarea>
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Telefono</label>
+            <div class="col-md-6">
+              <input class="form-control input-md" type="tel" value="{{objSucursal.telefono}}" placeholder="" formControlName="sucursalTelefono">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Coordenadas</label>
+            <div class="col-md-6">
+              <input class="form-control input-md" type="text" value="{{objSucursal.coordenadas}}" placeholder="" formControlName="sucursalCordenadas">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Email</label>
+            <div class="col-md-6">
+              <input class="form-control input-md" type="email" value="{{objSucursal.email2}}" placeholder="" formControlName="sucursalEmaildos">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Direccion IPs</label>
+            <div class="col-md-6">
+              <input class="form-control input-md" type="text" value="{{objSucursal.direccionIps}}" placeholder="" formControlName="sucursalIps">
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-md-3 control-label">Horario</label>
+            <div class="col-md-6">
+              <textarea class="form-control input-md" type="text" value="{{objSucursal.horario}}" formControlName="sucursalHorario"></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-md-3 control-label">Foto</label>
+            <div class="col-md-6">
+              <input class="form-control input-md" type="file" formControlName="sucursalFoto">
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-md-3 control-label">imgFoto</label>
+            <div class="col-md-6">
+              <img />
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-md-3 control-label">Mapa</label>
+            <div class="col-md-6">
+              <input class="form-control input-md" type="file" formControlName="sucursalMapa">
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-md-3 control-label">imgMapa</label>
+            <div class="col-md-6">
+              <img />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="form-group">
+            <div class="col-md-2 col-md-offset-2">
+              <button type="button" id="BtnCerrarModal" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i>Cerrar</button>
+            </div>
+            <div class="col-md-2 col-md-offset-2">
+              <button type="button" class="btn btn-primary" (click)="guardarSucursal(objSucursal)"><i class="fa fa-save"></i> Actualizar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page_dlg modal fade bs-example-modal-lg-two" id="agregarMercaderiaModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Agregar Mercaderia Kg</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal" [formGroup]="mercaderiaKgForm">
+
+          <div class="row">
+            <label class="col-md-3 control-label">Desde</label>
+            <div class="col-md-6">
+              <input id="mercaderiaKgDesde" class="form-control input-md" type="text" formControlName="mercaderiaKgDesde">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Hasta</label>
+            <div class="col-md-6">
+              <input id="mercaderiaKgHasta" type="text" placeholder="" class="form-control input-md" formControlName="mercaderiaKgHasta">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Costo</label>
+            <div class="col-md-6">
+
+              <input id="mercaderiaKgCosto" class="form-control input-md" type="text" placeholder="" formControlName="mercaderiaKgCosto">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">[%]</label>
+            <div class="col-md-6">
+              <input id="mercaderiaKgValor" type="checkbox" formControlName="mercaderiaKgValor">
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <div class="form-group">
+              <div class="col-md-2 col-md-offset-2">
+                <button type="button" id="BtnCerrarModal2" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i>Cerrar</button>
+              </div>
+              <div class="col-md-2 col-md-offset-2">
+                <button type="button" class="btn btn-primary" (click)="guardarMercaderiaKg()"><i class="fa fa-save"></i> Agregar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page_dlg modal fade bs-example-modal-lg-two" id="agregarManejoAduanasModalUno" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Agregar Manejo de Aduanas</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal" [formGroup]="aduanasForm">
+
+          <div class="row">
+            <label class="col-md-3 control-label">Desde</label>
+            <div class="col-md-6">
+              <input id="manejosDesde" class="form-control input-md" type="text" formControlName="mercaderiaKgDesde">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Hasta</label>
+            <div class="col-md-6">
+              <input id="manejosHasta" type="text" placeholder="" class="form-control input-md" formControlName="mercaderiaKgHasta">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Costo</label>
+            <div class="col-md-6">
+
+              <input id="manejosCosto" class="form-control input-md" type="text" placeholder="" formControlName="mercaderiaKgCosto">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">[%]</label>
+            <div class="col-md-6">
+              <input id="manejosValor" type="checkbox" formControlName="mercaderiaKgValor">
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <div class="form-group">
+              <div class="col-md-2 col-md-offset-2">
+                <button type="button" id="BtnCerrarModal2" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i>Cerrar</button>
+              </div>
+              <div class="col-md-2 col-md-offset-2">
+                <button type="button" class="btn btn-primary" (click)="guardarManejos()"><i class="fa fa-save"></i> Agregar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page_dlg modal fade bs-example-modal-lg-two" id="agregarManejoAduanasDosModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Agregar Manejo de Aduanas 2</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal" [formGroup]="aduanasDosForm">
+
+          <div class="row">
+            <label class="col-md-3 control-label">Desde</label>
+            <div class="col-md-6">
+              <input id="manejosDosDesde" class="form-control input-md" type="text" formControlName="mercaderiaKgDesde">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Hasta</label>
+            <div class="col-md-6">
+              <input id="manejosDosHasta" type="text" placeholder="" class="form-control input-md" formControlName="mercaderiaKgHasta">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Costo</label>
+            <div class="col-md-6">
+
+              <input id="manejosDosCosto" class="form-control input-md" type="text" placeholder="" formControlName="mercaderiaKgCosto">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">[%]</label>
+            <div class="col-md-6">
+              <input id="manejosDosValor" type="checkbox" formControlName="mercaderiaKgValor">
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <div class="form-group">
+              <div class="col-md-2 col-md-offset-2">
+                <button type="button" id="BtnCerrarModal2" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i>Cerrar</button>
+              </div>
+              <div class="col-md-2 col-md-offset-2">
+                <button type="button" class="btn btn-primary" (click)="guardarManejosDos()"><i class="fa fa-save"></i> Agregar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page_dlg modal fade bs-example-modal-lg-two" id="agregarMercaderiaSegurosModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Agregar Seguros de Mercaderia</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal" [formGroup]="segurosMercaderiaForm">
+
+          <div class="row">
+            <label class="col-md-3 control-label">Desde</label>
+            <div class="col-md-6">
+              <input id="segurosDesde" class="form-control input-md" type="text" formControlName="mercaderiaKgDesde">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Hasta</label>
+            <div class="col-md-6">
+              <input id="segurosDesdeHasta" type="text" placeholder="" class="form-control input-md" formControlName="mercaderiaKgHasta">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Costo</label>
+            <div class="col-md-6">
+
+              <input id="segurosDesdeCosto" class="form-control input-md" type="text" placeholder="" formControlName="mercaderiaKgCosto">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">[%]</label>
+            <div class="col-md-6">
+              <input id="segurosDesdeValorCheckAgregar" type="checkbox" formControlName="mercaderiaKgValor">
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <div class="form-group">
+              <div class="col-md-2 col-md-offset-2">
+                <button type="button" id="BtnCerrarModal2" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i>Cerrar</button>
+              </div>
+              <div class="col-md-2 col-md-offset-2">
+                <button type="button" class="btn btn-primary" (click)="guardarSeguros()"><i class="fa fa-save"></i> Agregar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="page_dlg modal fade bs-example-modal-lg-two" id="modificarMercaderiaModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Agregar Mercaderia Kg</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal" [formGroup]="mercaderiaKgForm">
+
+          <div class="row">
+            <label class="col-md-3 control-label">Desde</label>
+            <div class="col-md-6">
+              <input id="mercaderiaKgDesde" class="form-control input-md" type="text" formControlName="mercaderiaKgDesde">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Hasta</label>
+            <div class="col-md-6">
+              <input id="mercaderiaKgHasta" type="text" placeholder="" class="form-control input-md" formControlName="mercaderiaKgHasta">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Costo</label>
+            <div class="col-md-6">
+
+              <input id="mercaderiaKgCosto" class="form-control input-md" type="text" placeholder="" formControlName="mercaderiaKgCosto">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">[%]</label>
+            <div class="col-md-6">
+              <input id="mercaderiaKgValor" type="checkbox" formControlName="mercaderiaKgValor">
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <div class="form-group">
+              <div class="col-md-2 col-md-offset-2">
+                <button type="button" id="BtnCerrarModal2" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i>Cerrar</button>
+              </div>
+              <div class="col-md-2 col-md-offset-2">
+                <button type="button" class="btn btn-primary" (click)="guardarMercaderiaKg()"><i class="fa fa-save"></i> Agregar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page_dlg modal fade bs-example-modal-lg-two" id="modificarManejoAduanasModalUno" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Agregar Manejo de Aduanas</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal" [formGroup]="aduanasForm">
+
+          <div class="row">
+            <label class="col-md-3 control-label">Desde</label>
+            <div class="col-md-6">
+              <input id="manejosDesde" class="form-control input-md" type="text" formControlName="mercaderiaKgDesde">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Hasta</label>
+            <div class="col-md-6">
+              <input id="manejosHasta" type="text" placeholder="" class="form-control input-md" formControlName="mercaderiaKgHasta">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Costo</label>
+            <div class="col-md-6">
+
+              <input id="manejosCosto" class="form-control input-md" type="text" placeholder="" formControlName="mercaderiaKgCosto">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">[%]</label>
+            <div class="col-md-6">
+              <input id="manejosValor" type="checkbox" formControlName="mercaderiaKgValor">
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <div class="form-group">
+              <div class="col-md-2 col-md-offset-2">
+                <button type="button" id="BtnCerrarModal2" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i>Cerrar</button>
+              </div>
+              <div class="col-md-2 col-md-offset-2">
+                <button type="button" class="btn btn-primary" (click)="guardarManejos()"><i class="fa fa-save"></i> Agregar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page_dlg modal fade bs-example-modal-lg-two" id="modificarManejoAduanasDosModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Agregar Manejo de Aduanas 2</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal" [formGroup]="aduanasDosForm">
+
+          <div class="row">
+            <label class="col-md-3 control-label">Desde</label>
+            <div class="col-md-6">
+              <input id="manejosDosDesde" class="form-control input-md" type="text" formControlName="mercaderiaKgDesde">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Hasta</label>
+            <div class="col-md-6">
+              <input id="manejosDosHasta" type="text" placeholder="" class="form-control input-md" formControlName="mercaderiaKgHasta">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Costo</label>
+            <div class="col-md-6">
+
+              <input id="manejosDosCosto" class="form-control input-md" type="text" placeholder="" formControlName="mercaderiaKgCosto">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">[%]</label>
+            <div class="col-md-6">
+              <input id="manejosDosValor" type="checkbox" formControlName="mercaderiaKgValor">
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <div class="form-group">
+              <div class="col-md-2 col-md-offset-2">
+                <button type="button" id="BtnCerrarModal2" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i>Cerrar</button>
+              </div>
+              <div class="col-md-2 col-md-offset-2">
+                <button type="button" class="btn btn-primary" (click)="guardarManejosDos()"><i class="fa fa-save"></i> Agregar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page_dlg modal fade bs-example-modal-lg-two" id="modificarMercaderiaSegurosModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Agregar Seguros de Mercaderia</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal" [formGroup]="segurosMercaderiaForm">
+
+          <div class="row">
+            <label class="col-md-3 control-label">Desde</label>
+            <div class="col-md-6">
+              <input id="segurosDesde" class="form-control input-md" type="text" formControlName="mercaderiaKgDesde">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Hasta</label>
+            <div class="col-md-6">
+              <input id="segurosDesdeHasta" type="text" placeholder="" class="form-control input-md" formControlName="mercaderiaKgHasta">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">Costo</label>
+            <div class="col-md-6">
+
+              <input id="segurosDesdeCosto" class="form-control input-md" type="text" placeholder="" formControlName="mercaderiaKgCosto">
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-md-3 control-label">[%]</label>
+            <div class="col-md-6">
+              <input id="segurosDesdeValorAgregar" type="checkbox" formControlName="mercaderiaKgValor">
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <div class="form-group">
+              <div class="col-md-2 col-md-offset-2">
+                <button type="button" id="BtnCerrarModal2" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i>Cerrar</button>
+              </div>
+              <div class="col-md-2 col-md-offset-2">
+                <button type="button" class="btn btn-primary" (click)="guardarSeguros()"><i class="fa fa-save"></i> Agregar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!--Modal para eliminar-->
+<div id="ModalEliminar" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center" style="background-color:grey;">
+        <div class="icon-box">
+          <i class="material-icons" id="">help</i>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body text-center">
+        <h4>Jetbox Clientes</h4>
+        <div id="bodyEliminar">
+          <p>Desea eliminar la sucursal {{objSucursal.descripcion}} ?</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" id="BtnCerrarModal" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+          </div>
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" (click)="eliminar()" data-dismiss="modal" class="btn btn-primary">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

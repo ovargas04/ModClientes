@@ -1,0 +1,308 @@
+<style>
+  .noHabilitado {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+</style>
+
+<h1 style="text-align:center;">Configuración Multi País</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-md-2 col-md-offset-8">
+      <a class="btn" (click)="levantarModalZona()" data-toggle="modal" data-target="#modalMultiPais"><i class="btn-primary fa fa-plus"></i> Configurar nuevo país</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <ngx-datatable [rows]="empresas"
+                     [columns]="columnsEmpresa"
+                     [columnMode]="ColumnMode.force"
+                     [loadingIndicator]="loadingIndicator"
+                     [summaryPosition]="'bottom'"
+                     [limit]="10"
+                     rowHeight="auto"
+                     [reorderable]="reorderable"
+                     [headerHeight]="50"
+                     [footerHeight]="50"
+                     class="bootstrap striped expandable"
+                     style="width:100%">
+
+        <ngx-datatable-column name="ID">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{ value }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="name">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{ value }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Editar" [width]="100">
+          <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+            <button class="btn btn-success" (click)="editarMultiPais(row)"><i class="glyphicon glyphicon-edit"></i></button>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Eliminar" [width]="100">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <button class="btn btn-warning" (click)="LevantarPopUpEliminar(row)"><i class="glyphicon glyphicon-remove"></i></button>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+</div>
+
+
+<a href="#" data-toggle="modal" hidden id="buttonEditarMultiPais" data-target="#modalMultiPais"></a>
+
+<div class="page_dlg modal fade bs-example-modal-lg" id="modalMultiPais" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Multipais Modal</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal" id="ContentModal">
+          <div class="row pais">
+            <div class="form-group">
+              <label class="col-md-3 control-label">País</label>
+              <select class="input-md col-md-8 paises" id="_PaisSelect" selectedIndex="0"
+                      data-ff="pais">
+                <option>Seleccione Pais</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label class="col-md-3 control-label">Codigo</label>
+              <input type="text" id="sufijo" placeholder="SJO, PTY, etc" class="input-md col-md-1" value=""
+                     data-ff="suffix">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label class="col-md-3 control-label">Tarjetas</label>
+              <div class="input-md col-md-8">
+                <label><input style="margin-right: 3px;" type="checkbox" id="Visa" data-ff="tarjeta-visa">Visa</label>
+                <label><input style="margin-right: 3px;" type="checkbox" id="MasterCard" data-ff="tarjeta-master">MasterCard</label>
+                <label><input style="margin-right: 3px;" type="checkbox" id="AmericanExpress" data-ff="tarjeta-american">AmericanExpress</label>
+                <label>
+                  <input style="margin-right: 3px;" type="checkbox" id="Dinners" data-ff="tarjeta-dinners">Dinners
+                </label>
+                <label><input type="checkbox" id="Discover" data-ff="tarjeta-discovery">Discovery</label>
+              </div>
+            </div>
+          </div>
+          <div class="row pais-nuevo">
+            <div class="form-group">
+              <label class="col-md-3 control-label">Contrato Aéreo</label>
+              <select class="input-md col-md-8 contrato-aereo" selectedIndex=""
+                      data-ff="contrato-aereo" id="contratoAereoSelect">
+              </select>
+            </div>
+          </div>
+          <div class="row pais-nuevo">
+            <div class="form-group">
+              <label class="col-md-3 control-label">Contrato Economy</label>
+              <select class="input-md col-md-8 contrato-economy"
+                      selectedIndex="" id="contratoEconomySelect" data-ff="contrato-economy">
+              </select>
+            </div>
+          </div>
+          <div class="row pais-nuevo">
+            <div class="form-group">
+              <label class="col-md-3 control-label">Contrato Gold</label>
+              <select class="input-md col-md-8 contrato-gold" id="contratoGoldSelect" selectedIndex=""
+                      data-ff="contrato-gold">
+              </select>
+            </div>
+          </div>
+          <div class="row pais-nuevo">
+            <div class="form-group">
+              <label class="col-md-8 col-md-offset-3">
+                <input class="input-md " id="mostrarContratoEconomy" type="checkbox" data-ff="mostrar-contrato-economy"
+                       checked="">Mostrar Contrato Economy
+              </label>
+            </div>
+          </div>
+          <div class="row pais-nuevo">
+            <div class="form-group">
+              <label class="col-md-3 control-label">Tabla Manejo</label>
+              <select class="input-md col-md-8 manejo" id="manejoDefaultSelect" selectedIndex=""
+                      data-ff="manejo-default">
+              </select>
+            </div>
+          </div>
+          <div class="row pais-nuevo">
+            <div class="form-group">
+              <label class="col-md-3 control-label">Producto P.O.Box</label>
+              <select class="input-md col-md-8 pobox" id="productoPOBoxSelect" selectedIndex=""
+                      data-ff="producto-pobox">
+              </select>
+            </div>
+          </div>
+          <div class="row pais-nuevo">
+            <div class="form-group">
+              <label class="col-md-3 control-label">Producto Agencia Aduanal</label>
+              <select class="input-md col-md-8 agencia" id="productoAgenciaAduanalSelect" selectedIndex=""
+                      data-ff="producto-agencia">
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label class="col-md-3 control-label">Texto Division</label>
+              <input class="input-md col-md-8" id="textoDivision0" type="text" placeholder="Provincia, Departamento, Estado, etc"
+                     value="" data-ff="division0">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label class="col-md-3 control-label">Texto Sub-división</label>
+              <input class="input-md col-md-8" type="text" id="textoDivision1" placeholder="Cantón, Distrito, Municipio, etc"
+                     value="" data-ff="division1">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label class="col-md-3 control-label">Texto Fiscal</label>
+              <input class="input-md col-md-8" type="text" id="textoCedulaJuridica" placeholder="RUK, Cédula Jurídica, etc"
+                     value="" data-ff="cedula-juridica">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label class="col-md-3 control-label">Zonas Bloqueadas</label>
+              <input class="input-md col-md-8" type="text" id="zonasBloqueadas" placeholder="ejemplo: 12, 24 - Separar con coma."
+                     value="" data-ff="zonas-bloqueadas">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label class="col-md-3 control-label">Miami1 Dirección #1</label>
+              <input class="input-md col-md-8" id="miamiDireccion1" type="text" value=""
+                     data-ff="miami-dir1">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label class="col-md-3 control-label">Miami Dirección #1 Alt</label>
+              <input type="text" class="input-md col-md-8" id="miamiDireccion1A" value=""
+                     data-ff="miami-dir1A">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label class="col-md-3 control-label">Miami1 Dirección #2</label>
+              <input class="input-md col-md-8" id="miamiDireccion2" type="text" value=""
+                     data-ff="miami-dir2">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label class="col-md-3 control-label">Campañas - Usuario</label>
+              <input class="input-md col-md-8" type="text" id="campanaUsuario" value=""
+                     data-ff="campana-usuario">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label class="col-md-3 control-label">Campañas - Contraseña</label>
+              <input class="input-md col-md-8" id="campanaPassword" type="text" value=""
+                     data-ff="campana-password">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label class="col-md-3 control-label">Campañas - Servidor</label>
+              <input class="input-md col-md-8" id="campanaServer" type="text" value=""
+                     data-ff="campana-server">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label class="col-md-3 control-label">Campañas - API Key</label>
+              <input class="input-md col-md-8" id="campanaApiKey" type="text" value=""
+                     data-ff="campana-apikey">
+            </div>
+          </div>
+
+          <div class="row pais-nuevo"
+               style="margin: 18px 0; border: 0; /*height: 1px;*/ background: #333; background-image: linear-gradient(to right, #ccc, #333, #ccc);">
+            <div class="col-md-12">
+              <hr />
+            </div>
+          </div>
+          <div class="row pais-nuevo">
+            <div class="col-md-3">
+              <div id="_Photo" class="avatar"></div>
+              <!-- <img style="width: 144px; height: 144px;" /> -->
+            </div>
+            <label class="col-md-2 control-label"
+                   style="padding-right: 0px; margin-right: 0px;">Foto</label>
+            <div class="col-md-6">
+              <input type="file" class="form-control" placeholder="Cargar Foto">
+            </div>
+          </div>
+
+          <div class="form-group"
+               style="margin: 18px 0; border: 0; /*height: 1px;*/ background: #333; background-image: linear-gradient(to right, #ccc, #333, #ccc);">
+            <div class="col-md-12">
+              <hr />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="form-group">
+            <div class="col-md-2 col-md-offset-2">
+              <button type="button" id="BtnCerrarModal" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i>Cerrar</button>
+            </div>
+            <div class="col-md-2 col-md-offset-2">
+              <button type="button" (click)="actualizarMultiPais()" class="btn btn-primary"><i class="fa fa-save"></i> Actualizar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Modal para eliminar-->
+<a id="btnEliminarMultiPais" hidden href="#EliminarMultiPais" data-toggle="modal"></a>
+<div id="EliminarMultiPais" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center" style="background-color:grey;">
+        <div class="icon-box">
+          <i class="material-icons" id="">help</i>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body text-center">
+        <h4>Jetbox Clientes</h4>
+        <div id="bodyEliminar">
+          <p id="">Desea eliminar este registro?</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" id="BtnCerrarModalEliminar" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+          </div>
+          <div class="col-md-2 col-md-offset-2" id="footerEliminar">
+            <button type="button" (click)="eliminarMultiPais()" data-dismiss="modal" class="btn btn-primary">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+

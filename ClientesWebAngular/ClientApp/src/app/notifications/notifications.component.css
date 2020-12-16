@@ -1,0 +1,10 @@
+.notification {
+  position: fixed;
+  width: 240px;
+  height: 29px;
+  top: 18px;
+  left: 88%;
+  z-index: 2080;
+  display: block;
+  font-size: 0.72em;
+}

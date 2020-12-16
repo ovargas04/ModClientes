@@ -1,0 +1,229 @@
+<h1>Mantenimiento de Productos</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-md-2 col-md-offset-8">
+      <a class="btn" (click)="productoAgregar()" ><i class="btn-primary fa fa-plus"></i> Agregar Producto</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <ngx-datatable [rows]="productos"
+                     [columns]="columnsProducto"
+                     [columnMode]="ColumnMode.force"
+                     [loadingIndicator]="loadingIndicator"
+                     [summaryPosition]="'bottom'"
+                     [limit]="10"
+                     rowHeight="auto"
+                     [reorderable]="reorderable"
+                     [headerHeight]="50"
+                     [footerHeight]="50"
+                     [selectionType]="SelectionType.single"
+                     (select)="selectProducto($event)"
+                     class="bootstrap striped expandable"
+                     style="width:100%">
+        <ngx-datatable-column name="ID">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{ value }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="nombre">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{ value }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Editar" [width]="100">
+          <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+            <button class="btn btn-success" (click)="editarEmpresa(row)" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="glyphicon glyphicon-edit"></i></button>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Eliminar" [width]="100">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <a role="button" href="#ModalEliminar" class="btn btn-warning" (click)="cargarDataeliminarProducto(row)" data-toggle="modal"><i class="glyphicon glyphicon-remove"></i></a>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+
+
+</div>
+
+
+
+<a href="#" id="levantarPopUpProductos" data-toggle="modal" data-target="#agregarProductoModal">content</a>
+<div class="page_dlg modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Edicion de Productos</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal" [formGroup]="productoForm">
+          <div class="form-group">
+            <label class="col-md-3 control-label">Producto</label>
+            <div class="col-md-1">
+              <label class="form-control input-md" formControlName="productoid">{{producto.id}}</label>
+              <!--<input class="form-control input-md" type="text" value="{{producto.id}}" formControlName="productoid">-->
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-3 control-label">País</label>
+            <div class="col-md-6">
+              <select selectedIndex="{{producto_index_pais}}" class="form-control input-md" formControlName="paisnombre" type="number">
+                <option *ngFor="let brand of brands" [value]="brand.id">{{brand.nombre}}</option>
+              </select>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <label class="col-md-3 control-label">Empresa</label>
+            <div class="col-md-6">
+              <select selectedIndex="{{producto_index_empresa}}" class="form-control input-md" id="empresa" formControlName="empresanombre" type="number">
+                <option *ngFor="let empresa of empresas" [value]="empresa.id">{{empresa.name}}</option>
+              </select>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <label class="col-md-3 control-label">Multi País</label>
+            <div class="col-md-6">
+              <input type="checkbox" placeholder="Multi País" class="form-control input-md" id="multiPais" formControlName="multipais">
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <label class="col-md-3 control-label">Descripcion</label>
+            <div class="col-md-6">
+              <input type="text" placeholder="Nombre Producto" class="form-control input-md" value="{{producto.nombre}}" formControlName="productonombre">
+            </div>
+          </div>
+
+          <div class="row" style="margin: 18px 0; border: 0; /*height: 1px;*/ background: #333; background-image: linear-gradient(to right, #ccc, #333, #ccc);">
+            <div class="col-md-12">
+              <hr />
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" id="BtnCerrarModal" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i>Cerrar</button>
+          </div>
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" class="btn btn-primary" (click)="guardarProducto(producto)"><i class="fa fa-save"></i> Actualizar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page_dlg modal fade bs-example-modal-lg-two" id="agregarProductoModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Agregar Producto</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal" [formGroup]="productoForm">
+          <div class="form-group">
+            <label class="col-md-3 control-label">Producto</label>
+            <div class="col-md-1">
+              <label class="form-control input-md" formControlName="productoid"></label>
+              <!--<input class="form-control input-md" type="text" value="{{producto.id}}" formControlName="productoid">-->
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-3 control-label">País</label>
+            <div class="col-md-6">
+              <select selectedIndex="{{producto_index_pais}}" class="form-control input-md" formControlName="paisnombre" type="number">
+                <option *ngFor="let brand of brands" [value]="brand.id">{{brand.nombre}}</option>
+              </select>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <label class="col-md-3 control-label">Empresa</label>
+            <div class="col-md-6">
+              <select selectedIndex="{{producto_index_empresa}}" class="form-control input-md" formControlName="empresanombre" type="number">
+                <option *ngFor="let empresa of empresas" [value]="empresa.id">{{empresa.name}}</option>
+              </select>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <label class="col-md-3 control-label">Multi País</label>
+            <div class="col-md-6">
+              <input type="checkbox" placeholder="Multi País" class="form-control input-md" checked="{{multi_pais}}" formControlName="multipais">
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <label class="col-md-3 control-label">Descripcion</label>
+            <div class="col-md-6">
+              <input type="text" placeholder="Nombre Producto" class="form-control input-md" value="{{producto.nombre}}" formControlName="productonombre">
+            </div>
+          </div>
+
+          <div class="row" style="margin: 18px 0; border: 0; /*height: 1px;*/ background: #333; background-image: linear-gradient(to right, #ccc, #333, #ccc);">
+            <div class="col-md-12">
+              <hr />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" id="BtnCerrarModal" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i>Cerrar</button>
+          </div>
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" class="btn btn-primary" (click)="guardarProducto(producto)"><i class="fa fa-save"></i> Guardar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal para eliminar-->
+<div id="ModalEliminar" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center" style="background-color:grey;">
+        <div class="icon-box">
+          <i class="material-icons" id="">help</i>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body text-center">
+        <h4>Jetbox Clientes</h4>
+        <div id="bodyEliminar">
+          <p>Desea eliminar el producto {{producto.nombre}} ?</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" id="BtnCerrarModal" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+          </div>
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" (click)="eliminar()" data-dismiss="modal" class="btn btn-primary">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

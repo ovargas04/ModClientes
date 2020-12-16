@@ -1,0 +1,382 @@
+<h1 style="text-align:center;">Reporte de Clientes de P.O.Box</h1>
+
+
+<div class="container" id="divPrincipal" style="display:block">
+  <div class="row">
+    <div class="modal-footer">
+      <div class="form-group">
+        <div class="col-md-2 col-md-offset-2">
+          <button type="button" id="btnPreviewPrincipal" data-dismiss="modal"><i class="fa fa-chevron-circle-left"></i> Prev</button>
+        </div>
+        <div class="col-md-2 col-md-offset-2">
+          <button type="button" id="btnProximoPrincipal" (click)="MostrarDivDos()"><i class="fa fa-chevron-circle-right"></i> Prox</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="modal-body">
+        <div class="form-horizontal" [formGroup]="tarjetaFormPrincipal">
+          <div class="form-group">
+            <label class="col-md-3 control-label">Reporte</label>
+            <div class="col-md-6">
+              <select (change)="onChange($event.target.value)" id="paisnombre" class="form-control input-md" formControlName="rptoboxname">
+                <option *ngFor="let reporte of rptoboxList" [value]="reporte.id">
+                  {{ reporte.nombre }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-3 control-label">Nombre del reporte</label>
+            <div class="col-md-6">
+              <input id="txtNombreReporte" type="text" placeholder="" class="form-control input-md" value="{{rptoboxObject.nombre}}" formControlName="rptoboxnamenew">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" id="divPrincipalDos" style="display:none">
+  <div class="row">
+    <div class="modal-footer">
+      <div class="form-group">
+        <div class="col-md-2 col-md-offset-2">
+          <button type="button" id="btnPreviewDos" (click)="MostrarDivPrincipal()" data-dismiss="modal">
+            <i class="fa fa-chevron-circle-left"></i> Prev
+          </button>
+        </div>
+        <div class="col-md-2 col-md-offset-2">
+          <button type="button" id="btnProximoDos" (click)="MostrarDivTres()"><i class="fa fa-chevron-circle-right"></i> Prox</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="modal-body">
+        <div class="form-horizontal" [formGroup]="tarjetaFormDos">
+          <div class="form-group">
+
+            <div class="form-group">
+              <label class="col-md-3 control-label">Desde</label>
+              <div class="col-md-6">
+                <input type="date" placeholder="" class="form-control input-md" value="{{ rptoboxObject.fechadesde}}" formControlName="rptDesde" >
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 control-label">Hasta</label>
+              <div class="col-md-6">
+                <input type="date" placeholder="" class="form-control input-md" value="{{ rptoboxObject.fechahasta}}" formControlName="rptHasta" >
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 control-label">Codigo promocion</label>
+              <div class="col-md-6">
+                <input type="text" placeholder="" class="form-control input-md" value="{{ rptoboxObject.codigopromocion}}" formControlName="rptPromocion">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 control-label">Como conocio Jetbox</label>
+              <div class="col-md-6">
+                <ng-select [items]="objConocimientoJetbox"
+                           bindLabel="text"
+                           placeholder=""
+                           appendTo="body"
+                           multiple="true"
+                           [searchable]="true"
+                           [clearable]="true"
+                           [(ngModel)]="selectedConocio"
+                           (change)="getValuesConocio($event)" formControlName="rptConocio">
+                  <ng-option [value]="item.value" *ngFor="let item of objConocimientoJetbox">
+                    {{item.text}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 control-label">Empresas</label>
+              <div class="col-md-6">
+
+                <ng-select [items]="empresas"
+                           bindLabel="name"
+                           placeholder=""
+                           appendTo="body"
+                           multiple="true"
+                           [searchable]="true"
+                           [clearable]="true"
+                           [(ngModel)]="selectedEmpresas"
+                           (change)="getValuesEmpresas($event)" formControlName="rptEmpresa">
+                  <ng-option [value]="item.id" *ngFor="let item of empresas">
+                    {{item.name}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+
+
+
+            <div class="form-group">
+              <label class="col-md-3 control-label">Sucursales</label>
+              <div class="col-md-6">
+
+                <ng-select [items]="sucursales"
+                           bindLabel="name"
+                           placeholder=""
+                           appendTo="body"
+                           multiple="true"
+                           [searchable]="true"
+                           [clearable]="true"
+                           [(ngModel)]="selectedMultiSucursales"
+                           (change)="getValuesSucursales($event)" formControlName="rptSucursal">
+                  <ng-option [value]="item.id" *ngFor="let item of sucursales">
+                    {{item.name}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" id="divPrincipalTres" style="display:none">
+  <div class="row">
+    <div class="modal-footer">
+      <div class="form-group">
+        <div class="col-md-2 col-md-offset-2">
+          <button type="button" id="btnPreviewTres" (click)="MostrarDivDos()" data-dismiss="modal"><i class="fa fa-chevron-circle-left"></i> Prev</button>
+        </div>
+        <div class="col-md-2 col-md-offset-2">
+          <button type="button" id="btnProximoTres" (click)="MostrarDivCuatro()"><i class="fa fa-chevron-circle-right"></i> Prox</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="modal-body">
+        <div class="form-horizontal" [formGroup]="tarjetaFormTres">
+          <div class="form-group">
+
+            <div class="form-group">
+              <label class="col-md-3 control-label">Estados</label>
+              <div class="col-md-6">
+
+                <ng-select [items]="objEstados"
+                           bindLabel="text"
+                           placeholder=""
+                           appendTo="body"
+                           multiple="true"
+                           [searchable]="true"
+                           [clearable]="true"
+                           [(ngModel)]="selectedEstados"
+                           (change)="getValuesEstados($event)" formControlName="rptEstados">
+                  <ng-option [value]="item.value" *ngFor="let item of objEstados">
+                    {{item.text}}
+                  </ng-option>
+                </ng-select>
+
+
+
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 control-label">Zonas</label>
+              <div class="col-md-6">
+
+                <ng-select [items]="zonas"
+                           bindLabel="nombre"
+                           placeholder=""
+                           appendTo="body"
+                           multiple="true"
+                           [searchable]="true"
+                           [clearable]="true"
+                           [(ngModel)]="selectedZonas"
+                           (change)="getValuesZonas($event)" formControlName="rptZonas">
+                  <ng-option [value]="item.id" *ngFor="let item of zonas">
+                    {{item.nombre}}
+                  </ng-option>
+                </ng-select>
+
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 control-label">Fecha de cumpleaños</label>
+              <div class="col-md-6">
+
+                <ng-select [items]="objMeses"
+                           bindLabel="text"
+                           placeholder=""
+                           appendTo="body"
+                           multiple="true"
+                           [searchable]="true"
+                           [clearable]="true"
+                           [(ngModel)]="selectedMeses"
+                           (change)="getValuesMeses($event)" formControlName="rptMeses">
+                  <ng-option [value]="item.value" *ngFor="let item of objMeses">
+                    {{item.text}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" id="divPrincipalCuatro" style="display:none">
+  <div class="row">
+    <div class="modal-footer">
+      <div class="form-group">
+        <div class="col-md-2 col-md-offset-2">
+          <button type="button" id="btnPreviewCuatro" (click)="MostrarDivTres()" data-dismiss="modal"><i class="fa fa-chevron-circle-left"></i> Prev</button>
+        </div>
+        <div class="col-md-2 col-md-offset-2">
+          <button type="button" id="btnProximoCuatro" (click)="MostrarDivCinco()"><i class="fa fa-chevron-circle-right"></i> Prox</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="modal-body">
+        <div class="form-horizontal" [formGroup]="tarjetaFormCuatro">
+          <div class="form-group">
+
+            <div class="form-group">
+              <label class="col-md-3 control-label">Productos</label>
+              <div class="col-md-6">
+
+                <ng-select [items]="productosObj"
+                           bindLabel="nombre"
+                           placeholder=""
+                           appendTo="body"
+                           multiple="true"
+                           [searchable]="true"
+                           [clearable]="true"
+                           [(ngModel)]="selectedProductos"
+                           (change)="getValuesProductos($event)" formControlName="rptProductos">
+                  
+                  <ng-option [value]="producto.id" selectedIndex="{{selectedProductos}}" *ngFor="let producto of productosObj">
+                    {{productosObj.nombre}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 control-label">Autorizaciones</label>
+              <div class="col-md-6">
+
+                <ng-select [items]="objAutorizaciones"
+                           bindLabel="text"
+                           placeholder=""
+                           appendTo="body"
+                           multiple="true"
+                           [searchable]="true"
+                           [clearable]="true"
+                           [(ngModel)]="selectedAutorizacione"
+                           (change)="getValuesAutorizaciones($event)" formControlName="rptAutorizaciones">
+                  <ng-option [value]="item.value" *ngFor="let item of objAutorizaciones">
+                    {{item.text}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 control-label">Contratos </label>
+              <div class="col-md-6">
+
+                <ng-select [items]="contratos"
+                           bindLabel="valor"
+                           placeholder=""
+                           appendTo="body"
+                           multiple="true"
+                           [searchable]="true"
+                           [clearable]="true"
+                           [(ngModel)]="selectedContratos"
+                           (change)="getValuesContratos($event)" formControlName="rptContratos">
+                  <ng-option [value]="item.costo" *ngFor="let item of contratos">
+                    {{item.valor}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" id="divPrincipalCinco" style="display:none">
+  <div class="row">
+    <div class="modal-footer">
+      <div class="form-group">
+        <div class="col-md-2 col-md-offset-2">
+          <button type="button" id="btnPreviewCinco" (click)="MostrarDivCuatro()" data-dismiss="modal"><i class="fa fa-chevron-circle-left"></i> Prev</button>
+        </div>
+        <div class="col-md-2 col-md-offset-2">
+          <button type="button" id="btnProximoCinco"><i class="fa fa-chevron-circle-right"></i> Prox</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="modal-body">
+        <div class="form-horizontal" [formGroup]="tarjetaFormCinco">
+
+          <div class="form-group">
+            <label class="col-md-3 control-label">Columnas a mostrar </label>
+            <div class="col-md-6">
+
+              <ng-select [items]="objColumnas"
+                         bindLabel="text"
+                         placeholder=""
+                         appendTo="body"
+                         multiple="true"
+                         [searchable]="true"
+                         [clearable]="true"
+                         [(ngModel)]="selectedColumnas"
+                         (change)="getValuesColumna($event)" formControlName="rptColumnas">
+                <ng-option [value]="item.value" *ngFor="let item of objColumnas">
+                  {{item.text}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="form-group">
+            <div class="col-md-2 col-md-offset-2">
+              <button type="button" class="btn btn-warning" id="btnGuardar" (click)="generarGuardarReporte()" data-dismiss="modal"><i class="fa fa-newspaper-o"></i> Generar & Guardar Reporte</button>
+            </div>
+            <div class="col-md-2 col-md-offset-2">
+              <button type="button" class="btn btn-primary" id="btnGenerar" (click)="generarReporte()"><i class="fa fa-newspaper-o"></i>Generar Reporte</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

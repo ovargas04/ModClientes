@@ -1,0 +1,171 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <IsPackable>false</IsPackable>
+    <SpaRoot>ClientApp\</SpaRoot>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+
+    <!-- Set this to true if you enable server-side prerendering -->
+    <BuildServerSideRenderer>false</BuildServerSideRenderer>
+    <UserSecretsId>666b4d7e-ebd8-4a30-9733-3a43173863b1</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Content Remove="$(SpaRoot)**" />
+    <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ClientApp\src\app\app-configuration.service.ts" />
+    <None Remove="ClientApp\src\app\dropdownmenu.service.ts" />
+    <None Remove="ClientApp\src\app\hero.service.ts" />
+    <None Remove="ClientApp\src\app\in-memory-data.service.ts" />
+    <None Remove="ClientApp\src\app\message.service.ts" />
+    <None Remove="ClientApp\src\app\mock data\mockdata.ts" />
+    <None Remove="ClientApp\src\app\model\Parametros\Alianzas\IAlianza.ts" />
+    <None Remove="ClientApp\src\app\model\Parametros\Empresas\ISucursal.ts" />
+    <None Remove="ClientApp\src\app\model\Parametros\InterfacesParametros.ts" />
+    <None Remove="ClientApp\src\app\model\Parametros\Productos\IPais.ts" />
+    <None Remove="ClientApp\src\app\model\Parametros\Productos\IProducto.ts" />
+    <None Remove="ClientApp\src\app\model\Parametros\Productos\ProductosResponse.ts" />
+    <None Remove="ClientApp\src\app\model\Parametros\Rutas\IRutas.ts" />
+    <None Remove="ClientApp\src\app\model\Parametros\Zonas\IZona.ts" />
+    <None Remove="ClientApp\src\app\model\Reportes\Bitacoras\IRptbitacora.ts" />
+    <None Remove="ClientApp\src\app\model\Reportes\Rptobox\IRptobox.ts" />
+    <None Remove="ClientApp\src\app\model\Reportes\Tarjetas\ITarjeta.ts" />
+    <None Remove="ClientApp\src\app\notification.service.ts" />
+    <None Remove="ClientApp\src\app\overlay.service.ts" />
+    <None Remove="ClientApp\src\app\Parametros\Ejecutivos\ejecutivos.component.ts" />
+    <None Remove="ClientApp\src\app\Parametros\Productos\productos.component.ts" />
+    <None Remove="ClientApp\src\app\Parametros\Zonas\zonas.component.ts" />
+    <None Remove="ClientApp\src\app\Reportes\Bitacoras\bitacoras.component.ts" />
+    <None Remove="ClientApp\src\app\Reportes\RptCarga\rptcarga.component.ts" />
+    <None Remove="ClientApp\src\app\Reportes\RptObox\rptobox.component.ts" />
+    <None Remove="ClientApp\src\app\Reportes\Tarjetas\tarjetas.component.ts" />
+    <None Remove="ClientApp\src\app\Seguridad\Perfiles\Perfiles.component.ts" />
+    <None Remove="ClientApp\src\app\Seguridad\Usuarios.component.ts" />
+    <None Remove="ClientApp\src\app\Servicios\Login\login.service.ts" />
+    <None Remove="ClientApp\src\app\Servicios\Parametros\Alianzas\alianzas.services.ts" />
+    <None Remove="ClientApp\src\app\Servicios\Parametros\Empresas\empresas.service.ts" />
+    <None Remove="ClientApp\src\app\Servicios\Parametros\Paises\paises.service.ts" />
+    <None Remove="ClientApp\src\app\Servicios\Parametros\Productos\productos.service.ts" />
+    <None Remove="ClientApp\src\app\Servicios\Reportes\ReportePOBox\rptpobox.service.ts" />
+    <None Remove="ClientApp\src\app\usuario.service.ts" />
+    <None Remove="ClientApp\src\app\Usuarios\CambioClave\cambioclave.component.ts" />
+    <None Remove="ClientApp\src\app\Usuarios\DatosUsuario\datosusuario.component.ts" />
+    <None Remove="ClientApp\src\app\Util\util.ts" />
+    <None Remove="ClientApp\tsconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ClientApp\tsconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\in-memory-data.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\dropdownmenu.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\model\Parametros\Alianzas\IAlianza.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\model\Parametros\Empresas\ISucursal.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\model\Parametros\InterfacesParametros.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\model\Parametros\Productos\IPais.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\model\Parametros\Productos\IProducto.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\model\Parametros\Productos\ProductosResponse.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\model\Parametros\Rutas\IRutas.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\model\Parametros\Zonas\IZona.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\model\Reportes\Bitacoras\IRptbitacora.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\model\Reportes\Rptobox\IRptobox.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\model\Reportes\Tarjetas\ITarjeta.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\notification.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\app-configuration.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Parametros\Ejecutivos\ejecutivos.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Parametros\Productos\productos.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Parametros\Zonas\zonas.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Reportes\Bitacoras\bitacoras.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Reportes\RptCarga\rptcarga.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Reportes\RptObox\rptobox.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Reportes\Tarjetas\tarjetas.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Seguridad\Perfiles\Perfiles.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Seguridad\Usuarios\Usuarios.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Servicios\Parametros\Alianzas\alianzas.services.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Servicios\Parametros\Empresas\empresas.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Servicios\Parametros\Paises\paises.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Servicios\Parametros\Productos\productos.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Servicios\Reportes\ReportePOBox\rptpobox.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\usuario.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\overlay.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\message.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\hero.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\mock data\mockdata.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Servicios\Login\login.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Usuarios\CambioClave\cambioclave.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Usuarios\DatosUsuario\datosusuario.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Util\util.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\src\app\components\" />
+    <Folder Include="ClientApp\src\app\Parametros\Contratos\" />
+    <Folder Include="ClientApp\src\app\Parametros\Alianzas\" />
+    <Folder Include="ClientApp\src\app\Parametros\Mensajeros\" />
+    <Folder Include="ClientApp\src\app\Parametros\MultiPais\" />
+    <Folder Include="ClientApp\src\app\Parametros\TablaManejo\" />
+    <Folder Include="ClientApp\src\app\Parametros\Preferencias\" />
+    <Folder Include="ClientApp\src\app\Parametros\Rutas\" />
+    <Folder Include="ClientApp\src\app\Parametros\Paises\" />
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
+  <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
+    <!-- Ensure Node.js is installed -->
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+  </Target>
+
+  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
+
+    <!-- Include the newly-built files in the publish output -->
+    <ItemGroup>
+      <DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
+      <DistFiles Include="$(SpaRoot)node_modules\**" Condition="'$(BuildServerSideRenderer)' == 'true'" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptTarget>ES2015</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
+
+</Project>

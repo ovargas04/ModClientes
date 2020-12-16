@@ -1,0 +1,132 @@
+<h1>Mantenimiento de Ejecutivos</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-md-2 col-md-offset-8">
+      <a class="btn" (click)="levantarModalAgregar()" data-toggle="modal" data-target="#EjecutivosModal"><i class="btn-primary fa fa-plus"></i> Agregar Ejecutivo</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <ngx-datatable [rows]="empresas"
+                     [columns]="columnsEmpresa"
+                     [columnMode]="ColumnMode.force"
+                     [loadingIndicator]="loadingIndicator"
+                     [summaryPosition]="'bottom'"
+                     [limit]="10"
+                     rowHeight="auto"
+                     [reorderable]="reorderable"
+                     class="bootstrap striped expandable"
+                     style="width:100%">
+        <ngx-datatable-column name="ID">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{ value }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="name">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{ value }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Editar" [width]="100">
+          <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+            <button class="btn btn-success" (click)="levantarModalEditar(row)" data-toggle="modal" data-target="#EjecutivosModal"><i class="glyphicon glyphicon-edit"></i></button>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Eliminar" [width]="100">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <button class="btn btn-warning" (click)="LevantarPopUpEliminar(row)" data-toggle="modal" data-target="#EliminarEjecutivo"><i class="glyphicon glyphicon-remove"></i></button>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+
+
+</div>
+
+<div class="page_dlg modal fade bs-example-modal-lg" id="EjecutivosModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Edicion de Productos</h4>
+      </div>
+      <div class="modal-body form-horizontal" id="ContentModalEjecutivo">
+        <div class="form-group row">
+          <label class="col-md-3 control-label">Ejecutivo</label>
+          <label class="col-md-3" id="labelEjecutivoId"></label>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-3 control-label">País</label>
+          <div class="col-md-8">
+            <select class="paises input-md form-control" id="_PaisSelect" selectedIndex="" data-ff="pais_id">
+              <option>Pais</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-3 control-label">Nombre</label>
+          <div class="col-md-8">
+            <input type="text" placeholder="Nombre" id="Nombre" class="form-control input-md" value="" data-ff="nombre">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 control-label">Primer Apeliido</label>
+          <div class="col-md-8">
+            <input type="text" placeholder="Apellido" id="PrimerApellido" class="form-control input-md" value="" data-ff="primerApellido">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 control-label">Segundo Apellido</label>
+          <div class="col-md-8">
+            <input type="text" placeholder="Apellido" id="SegundoApellido" class="form-control input-md" value="" data-ff="segundoApellido">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" class="btn btn-warning" id="BtnCerrarModal" data-dismiss="modal"><i class="fa fa-close"></i> Cerrar</button>
+          </div>
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" class="btn btn-primary" (click)="actualizarEjecutivo()"><i class="fa fa-save"></i> Actualizar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Modal para eliminar-->
+<a id="btnEliminarEjecutivo" hidden href="#EliminarEjecutivo" data-toggle="modal"></a>
+<div id="EliminarEjecutivo" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center" style="background-color:grey;">
+        <div class="icon-box">
+          <i class="material-icons" id="">help</i>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body text-center">
+        <h4>Jetbox Clientes</h4>
+        <div id="bodyEliminar">
+          <p id="">Desea eliminar este registro?</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" id="BtnCerrarModalEliminar" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+          </div>
+          <div class="col-md-2 col-md-offset-2" id="footerEliminar">
+            <button type="button" (click)="eliminarEjecutivo()" data-dismiss="modal" class="btn btn-primary">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

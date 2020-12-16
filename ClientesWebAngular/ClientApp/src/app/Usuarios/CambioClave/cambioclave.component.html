@@ -1,0 +1,58 @@
+<h1 style="text-align:center">Cambio de Clave</h1>
+
+<div class="cambio-clave">
+  <form role="form" method="post" action="javascript: void(0);">
+    <div class="form-horizontal" [formGroup]="cambioClaveForm">
+
+      <div class="form-group">
+        <label class="col-md-5 control-label">Contraseña Actual</label>
+        <div class="col-md-4">
+          <input id="actual" type="password" class="form-control" placeholder="Actual" formControlName="actual">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-5 control-label">Contraseña Nueva</label>
+        <div class="col-md-4">
+          <input id="password1" type="password" class="form-control" placeholder="Nueva" formControlName="nueva">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-5 control-label">Contraseña Confirmación</label>
+        <div class="col-md-4">
+          <input id="password2" type="password" class="form-control" placeholder="Confirmación" formControlName="confirmacion">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-4 col-md-offset-4">
+          <button type="submit" class="btn btn-success" (click)="actualizar_pressed()"><i class="fa fa-refresh"> </i> Actualizar Contraseña </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<input type="text" hidden id="editarHidden" value="" />
+
+<a id="btnModalMensaje" hidden href="#ModalMensajes" data-toggle="modal">content</a>
+<!--Modal para Mensajes-->
+<div id="ModalMensajes" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center" id="headerBodyClientes">
+        <div class="icon-box">
+          <i class="material-icons" id="iconBoxBodyClientes">help</i>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body text-center">
+        <h4>Jetbox Clientes</h4>
+        <div id="bodyModalContainerClientes">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

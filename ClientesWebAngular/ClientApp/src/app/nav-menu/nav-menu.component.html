@@ -1,0 +1,155 @@
+<!-- Brand and toggle get grouped for better mobile display -->
+<div class="navbar-header">
+  <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse' [attr.aria-expanded]='isExpanded' (click)='toggle()'>
+    <span class="icon-bar"></span> <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+</div>
+<!-- Collect the nav links, forms, and other content for toggling -->
+<div class="collapse navbar-collapse">
+  <ul id="MenuBarra" class="nav navbar-nav">
+    <li class="active btn">
+      <a [routerLink]='["/"]'><img style="max-width: 30px;" [src]="bandera"> JetBox Clientes</a>
+    </li>
+    <ul class="nav navbar-nav" *ngIf="menu !== null && menu !== undefined">
+      <li class="dropdown" style="padding-top: 7px;" *ngIf="menu.Parametros !== undefined">
+        <!--<li >-->
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <i class="fa fa-asterisk pull-left fa-border"></i> Parámetros<b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li *ngIf="menu.Parametros.tieneEmpresa">
+            <a [routerLink]='["/empresas"]'>
+              <i class="fa fa-asterisk"></i> Empresas
+            </a>
+          </li>
+          <li *ngIf="menu.Parametros.tieneProductos">
+            <a [routerLink]='["/productos"]'>
+              <i class="fa fa-asterisk"></i> Productos</a>
+          </li>
+          <li *ngIf="menu.Parametros.tieneZonas">
+            <a [routerLink]='["/zonas"]'><i class="fa fa-asterisk"></i> Zonas</a>
+          </li>
+          <li *ngIf="menu.Parametros.tieneEjecutivos">
+            <a [routerLink]='["/ejecutivos"]'><i class="fa fa-asterisk"></i> Ejecutivos</a>
+          </li>
+          <li *ngIf="menu.Parametros.tieneContratos">
+            <a [routerLink]="['/contratos']"><i class="fa fa-asterisk"></i> Contratos</a>
+          </li>
+          <li *ngIf="menu.Parametros.tieneAlienzas">
+            <a [routerLink]="['/alianzas']"><i class="fa fa-asterisk"></i> Alianzas</a>
+          </li>
+          <li *ngIf="menu.Parametros.tienePaises">
+            <a [routerLink]="['/paises']"><i class="fa fa-asterisk"></i> Paises</a>
+          </li>
+          <li *ngIf="menu.Parametros.tieneRutas">
+            <a [routerLink]="['/rutas']"><i class="fa fa-asterisk"></i> Rutas</a>
+          </li>
+          <li *ngIf="menu.Parametros.tieneMensajeros">
+            <a [routerLink]="['/mensajeros']"><i class="fa fa-asterisk"></i> Mensajeros</a>
+          </li>
+          <li *ngIf="menu.Parametros.tienePreferencias">
+            <a [routerLink]="['/preferencias']"><i class="fa fa-asterisk"></i> Preferencias</a>
+          </li>
+          <li *ngIf="menu.Parametros.tieneMultiPais">
+            <a [routerLink]="['/multipais']"><i class="fa fa-asterisk"></i> Multi-País</a>
+          </li>
+          <li *ngIf="menu.Parametros.tieneManejo">
+            <a [routerLink]="['/tablamanejo']"><i class="fa fa-asterisk"></i> Tabla Manejo</a>
+          </li>
+        </ul>
+        <!--</li>-->
+      </li>
+      <li class="dropdown" style="padding-top: 7px;" *ngIf="menu.Seguridad !== undefined">
+        <!--<li class="dropdown" style="padding-top: 7px;">-->
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <i class="fa fa-lock pull-left fa-border"></i> Seguridad <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li *ngIf="menu.Seguridad.tieneUsuarios">
+            <a [routerLink]="['/usuarios']">
+              <i class="fa fa-users"></i> Usuarios
+            </a>
+          </li>
+          <li *ngIf="menu.Seguridad.tienePerfiles">
+            <a [routerLink]="['/perfiles']"><i class="fa fa-star-half-o"></i> Perfiles</a>
+          </li>
+        </ul>
+        <!--</li>-->
+      </li>
+      <li class="dropdown" style="padding-top: 7px;" *ngIf="menu.Clientes !== undefined">
+        <!--<li class="dropdown" style="padding-top: 7px;">-->
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <i class="fa fa-file-image-o pull-left fa-border"></i> Clientes <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li *ngIf="menu.Clientes.tieneClientes">
+            <a [routerLink]="['/clientes']"><i class="fa fa-file-image-o"></i> Clientes</a>
+          </li>
+        </ul>
+        <!--</li>-->
+      </li>
+      <li class="dropdown" style="padding-top: 7px;" *ngIf="menu.Reportes !== undefined">
+        <!--<li class="dropdown" style="padding-top: 7px;">-->
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <i class="fa fa-bar-chart pull-left fa-border"></i> Reportes <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li *ngIf="menu.Reportes.tieneClientePO">
+            <a [routerLink]="['/rptobox']"><i class="fa fa-file-pdf-o"></i> Clientes P.O. Box</a>
+          </li>
+          <li *ngIf="menu.Reportes.tieneClienteCarga">
+            <a [routerLink]="['/rptcarga']"><i class="fa fa-file-excel-o"></i> Clientes Carga</a>
+          </li>
+          <li *ngIf="menu.Reportes.tieneTarjetas">
+            <!--<a href="#/reportes/rtarjetas"><i class="fa fa-desktop"></i> Tarjetas</a>-->
+            <a [routerLink]="['/tarjetas']"><i class="fa fa-desktop"></i> Tarjetas</a>
+          </li>
+          <!--<li *ngIf="menu.Reportes.tieneGrafica">
+            <a href="#/reportes/rgraficas"><i class="fa fa-bar-chart"></i> Gráficas</a>
+          </li>-->
+          <li *ngIf="menu.Reportes.tieneBitacora">
+            <a [routerLink]="['/rbitacoras']"><i class="fa fa-bar-chart"></i> Bitácoras</a>
+          </li>
+        </ul>
+        <!--</li>-->
+      </li>
+    </ul>
+  </ul>
+  <!--<ul class="nav navbar-nav">
+    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+    <li><a href="#">Link</a></li>
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li><a href="#">Action</a></li>
+        <li><a href="#">Another action</a></li>
+        <li><a href="#">Something else here</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#">Separated link</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#">One more separated link</a></li>
+      </ul>
+    </li>
+  </ul>-->
+  <div *ngIf="_dropdown.show === true">
+    <ul class="nav navbar-nav pull-right">
+      <li class="dropdown" style="padding-top: 7px;">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <i class="fa fa-user pull-left fa-border"></i> Usuario <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li>
+            <a [routerLink]='["/cambioclave"]'><i class="fa fa-key"></i> Cambio Clave</a>
+          </li>
+          <li>
+            <a [routerLink]='["/datosusuario"]'><span><i class="fa fa-star-half-o"></i></span>  Datos del Usuario</a>
+          </li>
+          <li>
+            <a onclick="var url = window.location.href; var splitUrl = url.split('/'); var absoluteUrl = splitUrl[0] + '//' + splitUrl[2] + '/ClientesWeb_Jetbox'; window.location.href = absoluteUrl;"><i class="fa fa-sign-out"></i> Salir</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,146 @@
+<h1 style="text-align:center;">Mantenimiento de Rutas</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-md-2 col-md-offset-8">
+      <a class="btn" data-toggle="modal" (click)="levantarModalAgregarRuta()" data-target=".bs-example-modal-lg"><i class="btn-primary fa fa-plus"></i> Agregar Ruta</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <ngx-datatable [rows]="empresas"
+                     [columns]="columnsEmpresa"
+                     [columnMode]="ColumnMode.force"
+                     [loadingIndicator]="loadingIndicator"
+                     [summaryPosition]="'bottom'"
+                     [limit]="10"
+                     rowHeight="auto"
+                     [reorderable]="reorderable"
+                     [headerHeight]="50"
+                     [footerHeight]="50"
+                     class="bootstrap striped expandable"
+                     style="width:100%">
+
+        <ngx-datatable-column name="ID">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{ value }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="name">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            {{ value }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Editar" [width]="100">
+          <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+            <button class="btn btn-success" (click)="editarRutas(row)" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="glyphicon glyphicon-edit"></i></button>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Eliminar" [width]="100">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <a role="button" href="#ModalEliminar" class="btn btn-warning" (click)="cargarDataeliminarRuta(row)" data-toggle="modal"><i class="glyphicon glyphicon-remove"></i></a>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+</div>
+
+<div class="page_dlg modal fade bs-example-modal-lg" id="agregarZonaModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Rutas {{rutasObject.ruta_id}}</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" [formGroup]="rutasForm">
+          <div class="form-group">
+            <label class="col-md-3 control-label">Ruta</label>
+            <label class="col-md-3 ">{{rutasObject.ruta_id}}</label>
+          </div>
+
+
+          <div class="form-group">
+            <label class="col-md-3 control-label">País</label>
+            <div class="col-md-8">
+              <select class="paises input-md form-control" id="pais" selectedIndex="{{rutasObject.pais_id}}" formControlName="pais_id">
+                <option *ngFor="let pais of paises" [value]="pais.id">
+                  {{ pais.nombre }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-3 control-label">Nombre</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="Nombre ruta" class="form-control input-md" value="{{rutasObject.nombre}}" formControlName="nombre">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">Descripción</label>
+            <div class="col-md-8">
+              <input type="text" placeholder="Detalle de la ruta" id="detalleTextArea" class="form-control input-md" value="{{rutasObject.detalle}}" formControlName="detalle" />
+            </div>
+          </div>
+
+          <div class="form-group" style="margin: 5px;">
+            <select id="_Disponibles" class="col-md-5 col-md-offset-1" style="height: 270px;" multiple="multiple"></select>
+            <div class="col-md-1" style="height: 144px;">
+              <button (click)="asignar()" style="margin-top: 18px;"><i class="fa fa-arrow-circle-right fa-2x"></i></button>
+              <button (click)="desasignar()" style="margin-top: 18px;"><i class="fa fa-arrow-circle-left fa-2x"></i></button>
+            </div>
+            <select id="_Asignados" class="col-md-5" style="height: 270px;" multiple="multiple" formControlName="sucursales"></select>
+          </div>
+
+
+          <div class="form-group" style="margin: 18px 0; border: 0; /*height: 1px;*/ background: #333; background-image: linear-gradient(to right, #ccc, #333, #ccc);">
+            <div class="col-md-12">
+              <hr />
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <div class="col-md-2 col-md-offset-2">
+              <button type="button" class="btn btn-warning" data-dismiss="modal" aria-label="Close" style="width: 108px"><i class="fa fa-close"></i> Cerrar</button>
+            </div>
+            <div class="col-md-2 col-md-offset-2">
+              <button type="button" (click)="actualizarRuta()" class="btn btn-primary" style="width: 108px"><i class="fa fa-save"></i> Actualizar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal para eliminar-->
+<div id="ModalEliminar" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center" style="background-color:grey;">
+        <div class="icon-box">
+          <i class="material-icons" id="">help</i>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body text-center">
+        <h4>Jetbox Clientes</h4>
+        <div id="bodyEliminar">
+          <p>Desea eliminar la ruta {{rutasObject.nombre}} ?</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" id="BtnCerrarModal" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+          </div>
+          <div class="col-md-2 col-md-offset-2">
+            <button type="button" (click)="eliminar()" data-dismiss="modal" class="btn btn-primary">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
