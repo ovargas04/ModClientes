@@ -58,7 +58,7 @@
           <div class="form-group">
             <label class="col-md-2 control-label">Contrato</label>
             <div class="col-md-2" id="contrato-edit">
-              <input readonly="readonly" style="opacity:3;" type="text" placeholder="0" class="input-md form-control" value="{{objContrato.contrato_id}}" formControlName="contrato_id">
+              <input readonly="readonly" style="opacity:3;" type="text" placeholder="0" id="contrato_id" class="input-md form-control" value="{{objContrato.contrato_id}}" formControlName="contrato_id">
             </div>
           </div>
 
@@ -83,12 +83,12 @@
           <div class="form-group">
             <label class="col-md-2 control-label">País</label>
             <div class="col-md-8">
-              <select class="paises input-md form-control" selectedIndex="{{objContrato.pais_id}}" formControlName="pais_id">
+              <select class="paises input-md form-control" id="_Pais" selectedIndex="{{objContrato.pais_id}}" formControlName="pais_id">
                 <option *ngFor="let pais of paises" [value]="pais.id">
                   {{ pais.nombre }}
                 </option>
               </select>
-            </div>
+            </div>  
           </div>
 
           <div class="form-group">

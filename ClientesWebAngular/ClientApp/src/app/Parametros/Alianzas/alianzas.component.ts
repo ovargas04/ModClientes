@@ -420,6 +420,17 @@ export class AlianzasComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   productoAgregar() {
+
+
+    this.alianzaObject.name = "";
+    this.alianzaObject.codigoPais = 0;
+    this.alianzaObject.tarjetaRequerida = false;
+    this.alianzaObject.monDescuento = 0;
+    this.alianzaObject.conContrato = "";
+    this.alianzaObject.monJetBillete = 0;
+    this.alianzaObject.monKiloBox = 0;
+    this.alianzaObject.monBanco = "";
+    this.alianzaObject.bines = "";
     this.limpiarData();
   }
 

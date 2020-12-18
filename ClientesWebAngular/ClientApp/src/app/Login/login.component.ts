@@ -81,6 +81,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.clearOutput = true;
         this.loginData = JSON.parse(this.Iuser.values);
         if (this.loginData['autenticado']) {
+          debugger;
           // Se asignan valores y se muestra que se autentico correctamente
           this.loginOutput = true;
           this.clearOutput = true;

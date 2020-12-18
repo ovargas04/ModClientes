@@ -44,7 +44,7 @@ export class NavMenuComponent implements OnInit, OnDestroy {
         this.opcionesMenu = this.user.menuItems;
         if (this.opcionesMenu !== undefined) {
           if (this.opcionesMenu.length > 0) {
-            debugger;
+            console.log("opciones del menu : ", this.opcionesMenu);
             if (this.opcionesMenu.indexOf('MNU_PAR') >= 0) {
               this.menu.Parametros = {
                 tieneEmpresa: false,
@@ -97,26 +97,41 @@ export class NavMenuComponent implements OnInit, OnDestroy {
                 this.menu.Parametros.tieneManejo = true;
               }
             }
-            if (this.opcionesMenu.indexOf('MNU_SEG') >= 0) {
+
+
+            //if (this.opcionesMenu.indexOf('MNU_SEG') >= 0) {
+            //}
+
+            let tieneUsuarios = false;
+            if (this.opcionesMenu.indexOf('SEG_Usuarios') > 0) {
+              tieneUsuarios = true;
+            }
+
+            let tienePerfiles = false;
+            if (this.opcionesMenu.indexOf('SEG_Perfiles') > 0) {
+              tienePerfiles = true;
+            }
+
+
+            if (tieneUsuarios || tienePerfiles) {
               this.menu.Seguridad = {
-                tieneUsuarios: false,
-                tienePerfiles: false,
+                tieneUsuarios: tieneUsuarios,
+                tienePerfiles: tienePerfiles,
               };
-              if (this.opcionesMenu.indexOf('SEG_Usuarios') > 0) {
-                this.menu.Seguridad.tieneUsuarios = true;
-              }
-              if (this.opcionesMenu.indexOf('SEG_Perfiles') > 0) {
-                this.menu.Seguridad.tienePerfiles = true;
-              }
             }
-            if (this.opcionesMenu.indexOf('MNU_CLI') >= 0) {
+
+
+            //if (this.opcionesMenu.indexOf('MNU_CLI') >= 0) {
+             
+              
+            //}
+
+            if (this.opcionesMenu.includes('CLI_mostrar') || this.opcionesMenu.includes('MNU_CLI')) {
               this.menu.Clientes = {
-                tieneClientes: false,
+                tieneClientes: true,
               };
-              if (this.opcionesMenu.indexOf('SEG_Usuarios') > 0) {
-                this.menu.Clientes.tieneClientes = true;
-              }
             }
+
             if (this.opcionesMenu.indexOf('MNU_RPT') >= 0) {
               this.menu.Reportes = {
                 tieneClientePO: false,

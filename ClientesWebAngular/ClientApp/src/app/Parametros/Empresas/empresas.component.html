@@ -1,5 +1,6 @@
 <h1>Mantenimiento de Empresas</h1>
 
+<!--MODAL AGREGAR EMPRESA-->
 <div class="container">
   <div class="row">
     <div class="col-md-2 col-md-offset-8">
@@ -90,7 +91,9 @@
 
 <a style="display:none;" id="levantarAgregarEmpresaModal" class="btn" data-toggle="modal" data-target="#agregarEmpresaModal"><i class="btn-primary fa fa-plus"></i> levantarPopUpOculto</a>
 <a style="display:none;" id="levantareEdicionEmpresaModal" class="btn" data-toggle="modal" data-target="#EdicionEmpresaModal"><i class="btn-primary fa fa-plus"></i> levantarPopUpOculto</a>
-<div class="page_dlg modal fade bs-example-modal-lg" id="EdicionEmpresaModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+
+<!--MODAL MODIFICAR EMPRESA-->
+<div style="overflow-y:scroll" class="page_dlg modal fade bs-example-modal-lg" id="EdicionEmpresaModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -161,82 +164,7 @@
               <div class="pull-right">
                 <a class="btn btn-success" data-toggle="modal" data-target="#modificarMercaderiaModal"><i class="fa fa-plus"></i></a>
               </div>
-              <!--<bwu-datagrid id='tabla-mensajeria' style="margin: 1rem; width: 100%; height:270px;"></bwu-datagrid>-->
-              <ngx-datatable id="MercaderiaTable"
-                             [rows]="mercaderias"
-                             [columns]="columnsMercaderia"
-                             [columnMode]="ColumnMode.force"
-                             [loadingIndicator]="loadingIndicator"
-                             [summaryPosition]="'bottom'"
-                             [limit]="10"
-                             rowHeight="auto"
-                             [reorderable]="reorderable"
-                             [headerHeight]="50"
-                             [footerHeight]="50"
-                             class="bootstrap striped expandable"
-                             style="width:100%">
-                <ngx-datatable-column name="desde">
-                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                    {{ value }}
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="hasta">
-                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                    {{ value }}
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="costo">
-                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                    {{ value }}
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="valor">
-                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                    {{ value }}
-                  </ng-template>
-                </ngx-datatable-column>
-              </ngx-datatable>
-            </div>
-            <div class="col-sm-6">
-              <div class="pull-right">
-                <a class="btn btn-success" (click)="MercaderiaAgregar()" data-toggle="modal" data-target="#modificarManejoAduanasModalUno"><i class="fa fa-plus"></i></a>
-              </div>
-              <ngx-datatable id="ManejosTable"
-                             [rows]="manejos"
-                             [columns]="columnsManejo"
-                             [columnMode]="ColumnMode.force"
-                             [loadingIndicator]="loadingIndicator"
-                             [summaryPosition]="'bottom'"
-                             [limit]="10"
-                             rowHeight="auto"
-                             [reorderable]="reorderable"
-                             [headerHeight]="50"
-                             [footerHeight]="50"
-                             class="bootstrap striped expandable"
-                             style="width:100%">
-                <!--<ngx-datatable-column name="ID">
-                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                    {{ value }}
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="name">
-                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                    {{ value }}
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="Editar" [width]="100">
-                  <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
-                    <button class="btn btn-success" (click)="editarSucursal(row)" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="glyphicon glyphicon-edit"></i></button>
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="Eliminar" [width]="100">
-                  <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
-                    <button class="btn btn-warning" (click)="eliminarSucursal(row)"><i class="glyphicon glyphicon-remove"></i></button>
-                  </ng-template>
-                </ngx-datatable-column>-->
-              </ngx-datatable>
-              <!--<bwu-datagrid id='tabla-manejos' style="margin: 1rem; width: 100%; height:270px;"></bwu-datagrid>-->
-              <!--<table datatable id="ManejosTable" [dtOptions]="dtOptionsManejos" [dtTrigger]="dtTriggerManejos" class="table table-striped table-bordered table-hover table-responsive" style="width:100%">
+              <table id="tblMercaderiaEdicion" class="table table-striped table-bordered table-hover table-responsive" style="width:100%">
                 <thead>
                   <tr>
                     <th>Desde</th>
@@ -245,16 +173,25 @@
                     <th>[%]</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr *ngFor="let manejo of manejos">
-                    <td><span (keyup)="changeValue(manejo.id, 'desde', $event)" (blur)="updateList(manejo.id, 'desde', $event,manejos,'manejos')" contenteditable="true">{{ manejo.desde }}</span></td>
-                    <td><span (keyup)="changeValue(manejo.id, 'hasta', $event)" (blur)="updateList(manejo.id, 'hasta', $event,manejos,'manejos')" contenteditable="true">{{ manejo.hasta }}</span></td>
-                    <td><span (keyup)="changeValue(manejo.id, 'costo', $event)" (blur)="updateList(manejo.id, 'costo', $event,manejos,'manejos')" contenteditable="true">{{ manejo.costo }}</span></td>
-                    <td><input (keyup)="changeValue(manejo.id, 'valor', $event)" (blur)="updateList(manejo.id, 'valor', $event,manejos,'manejos')" type="checkbox" [checked]="manejo.valor" /></td>
-                    <td><span (keyup)="changeValue(manejo.id, 'valor', $event)" (blur)="updateList(manejo.id, 'valor', $event,manejos)" contenteditable="true">{{ manejo.valor }}</span></td>
+                <!--<tbody id="tbodyMercaderia_Edicion"></tbody>-->
+              </table>
+            </div>
+            <div class="col-sm-6">
+              <div class="pull-right">
+                <a class="btn btn-success" data-toggle="modal" data-target="#modificarManejoAduanasModalUno"><i class="fa fa-plus"></i></a>
+              </div>
+              <table id="tblManejoAduanasEdicion" class="table table-striped table-bordered table-hover table-responsive" style="width:100%">
+                <thead>
+                  <tr>
+                    <th>Desde</th>
+                    <th>Hasta</th>
+                    <th>Costo</th>
+                    <th>[%]</th>
                   </tr>
-                </tbody>
-              </table>-->
+                </thead>
+                <tbody id="tbodyManejoAduanas_Edicion"></tbody>
+              </table>
+              
             </div>
           </div>
 
@@ -266,44 +203,9 @@
           <div class="row">
             <div class="col-sm-6">
               <div class="pull-right">
-                <a class="btn btn-success" (click)="MercaderiaAgregar()" data-toggle="modal" data-target="#modificarManejoAduanasDosModal"><i class="fa fa-plus"></i></a>
+                <a class="btn btn-success" data-toggle="modal" data-target="#modificarManejoAduanasDosModal"><i class="fa fa-plus"></i></a>
               </div>
-              <ngx-datatable id="ManejosTable2"
-                             [rows]="manejos2"
-                             [columns]="columnsManejo2"
-                             [columnMode]="ColumnMode.force"
-                             [loadingIndicator]="loadingIndicator"
-                             [summaryPosition]="'bottom'"
-                             [limit]="10"
-                             rowHeight="auto"
-                             [reorderable]="reorderable"
-                             [headerHeight]="50"
-                             [footerHeight]="50"
-                             class="bootstrap striped expandable"
-                             style="width:100%">
-                <!--<ngx-datatable-column name="ID">
-                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                    {{ value }}
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="name">
-                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                    {{ value }}
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="Editar" [width]="100">
-                  <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
-                    <button class="btn btn-success" (click)="editarSucursal(row)" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="glyphicon glyphicon-edit"></i></button>
-                  </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="Eliminar" [width]="100">
-                  <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
-                    <button class="btn btn-warning" (click)="eliminarSucursal(row)"><i class="glyphicon glyphicon-remove"></i></button>
-                  </ng-template>
-                </ngx-datatable-column>-->
-              </ngx-datatable>
-              <!--<bwu-datagrid id='tabla-manejos2' style="margin: 1rem; width: 100%; height:270px;"></bwu-datagrid>-->
-              <!--<table datatable id="ManejosTable2" [dtOptions]="dtOptionsManejos2" [dtTrigger]="dtTriggerManejos2" class="table table-striped table-bordered table-hover table-responsive" style="width:100%">
+              <table id="TblManejoAduanasDosEdicion" class="table table-striped table-bordered table-hover table-responsive" style="width:100%">
                 <thead>
                   <tr>
                     <th>Desde</th>
@@ -312,37 +214,14 @@
                     <th>[%]</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr *ngFor="let manejo2 of manejos2">
-                    <td><span (keyup)="changeValue(manejo2.id, 'desde', $event)" (blur)="updateList(manejo2.id, 'desde', $event,manejos2,'manejos2')" contenteditable="true">{{ manejo2.desde }}</span></td>
-                    <td><span (keyup)="changeValue(manejo2.id, 'hasta', $event)" (blur)="updateList(manejo2.id, 'hasta', $event,manejos2,'manejos2')" contenteditable="true">{{ manejo2.hasta }}</span></td>
-                    <td><span (keyup)="changeValue(manejo2.id, 'costo', $event)" (blur)="updateList(manejo2.id, 'costo', $event,manejos2,'manejos2')" contenteditable="true">{{ manejo2.costo }}</span></td>
-                    <td><input (keyup)="changeValue(manejo2.id, 'valor', $event)" (blur)="updateList(manejo2.id, 'valor', $event,manejos2,'manejos2')" type="checkbox" [checked]="manejo2.valor" /></td>
-                  </tr>
-                </tbody>
-              </table>-->
+                <tbody id="tbodyManejoAduanasDos_Edicion"></tbody>
+              </table>
             </div>
             <div class="col-sm-6">
               <div class="pull-right">
                 <a class="btn btn-success" (click)="MercaderiaAgregar()" data-toggle="modal" data-target="#modificarMercaderiaSegurosModal"><i class="fa fa-plus"></i></a>
               </div>
-              <!--<ngx-datatable id="SegurosTable"
-                 [rows]="seguros"
-                 [columns]="columnsSeguros"
-                 [columnMode]="ColumnMode.force"
-                 [loadingIndicator]="loadingIndicator"
-                 [summaryPosition]="'bottom'"
-                 [limit]="10"
-                 rowHeight="auto"
-                 [reorderable]="reorderable"
-                 [headerHeight]="50"
-                 [footerHeight]="50"
-                 class="bootstrap striped expandable"
-                 style="width:100%">
-
-  </ngx-datatable>-->
-
-              <table id="SeguroMercaderia" class="table table-striped table-bordered table-hover table-responsive" style="width:100%">
+              <table id="TblSeguroMercaderiaEdicion" class="table table-striped table-bordered table-hover table-responsive" style="width:100%">
                 <thead>
                   <tr>
                     <th>Desde</th>
@@ -351,14 +230,10 @@
                     <th>[%]</th>
                   </tr>
                 </thead>
-                <tbody id="tbodySeguroMercaderia_Edicion">
-                </tbody>
+                <tbody id="tbodySeguroMercaderia_Edicion"></tbody>
               </table>
-
-
             </div>
           </div>
-
           <div class="row" style="margin: 18px 0; border: 0; /*height: 1px;*/ background: #333; background-image: linear-gradient(to right, #ccc, #333, #ccc);">
             <div class="col-md-12">
               <hr />
@@ -369,7 +244,7 @@
       <div class="modal-footer">
         <div class="form-group">
           <div class="col-md-2 col-md-offset-2">
-            <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i> Cerrar</button>
+            <button type="button" id="BtnCerrarModalEdit" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i> Cerrar</button>
           </div>
           <div class="col-md-2 col-md-offset-2">
             <button type="button" class="btn btn-primary" (click)="guardarEmpresa(empresa)"><i class="fa fa-save"></i> Actualizar</button>
@@ -397,7 +272,7 @@
               <input class="form-control input-md" type="text" value="{{empresa.id}}" name="empresa_id" formControlName="empresaid">
             </div>
             <div class="col-md-6 col-md-offset-1">
-              <input type="text" placeholder="Nombre empresa" class="form-control input-md" name="name" value="{{empresa.name}}" formControlName="empresanombre">
+              <input type="text" placeholder="Nombre empresa" class="form-control input-md" name="nombre" value="{{empresa.name}}" formControlName="empresanombre">
             </div>
           </div>
 
@@ -450,7 +325,7 @@
                 <a class="btn btn-success" (click)="MercaderiaAgregar()" data-toggle="modal" data-target="#agregarMercaderiaModal"><i class="fa fa-plus"></i></a>
               </div>
               <!--<bwu-datagrid id='tabla-mensajeria' style="margin: 1rem; width: 100%; height:270px;"></bwu-datagrid>-->
-              <ngx-datatable id="MercaderiaTable"
+              <ngx-datatable id="MercaderiaTableAdd"
                              [rows]="mercaderias"
                              [columns]="columnsMercaderia"
                              [columnMode]="ColumnMode.force"
@@ -1263,14 +1138,14 @@
           <div class="row">
             <label class="col-md-3 control-label">Desde</label>
             <div class="col-md-6">
-              <input id="mercaderiaKgDesde" class="form-control input-md" type="text" formControlName="mercaderiaKgDesde">
+              <input id="mercaderiaKgDesdeEdit" class="form-control input-md" type="text" formControlName="mercaderiaKgDesde">
             </div>
           </div>
 
           <div class="row">
             <label class="col-md-3 control-label">Hasta</label>
             <div class="col-md-6">
-              <input id="mercaderiaKgHasta" type="text" placeholder="" class="form-control input-md" formControlName="mercaderiaKgHasta">
+              <input id="mercaderiaKgHastaEdit" type="text" placeholder="" class="form-control input-md" formControlName="mercaderiaKgHasta">
             </div>
           </div>
 
@@ -1278,21 +1153,21 @@
             <label class="col-md-3 control-label">Costo</label>
             <div class="col-md-6">
 
-              <input id="mercaderiaKgCosto" class="form-control input-md" type="text" placeholder="" formControlName="mercaderiaKgCosto">
+              <input id="mercaderiaKgCostoEdit" class="form-control input-md" type="text" placeholder="" formControlName="mercaderiaKgCosto">
             </div>
           </div>
 
           <div class="row">
             <label class="col-md-3 control-label">[%]</label>
             <div class="col-md-6">
-              <input id="mercaderiaKgValor" type="checkbox" formControlName="mercaderiaKgValor">
+              <input id="mercaderiaKgValorEdit" type="checkbox" formControlName="mercaderiaKgValor">
             </div>
           </div>
 
           <div class="modal-footer">
             <div class="form-group">
               <div class="col-md-2 col-md-offset-2">
-                <button type="button" id="BtnCerrarModal2" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i>Cerrar</button>
+                <button type="button" id="BtnCerrarMercaderiaEdit" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i>Cerrar</button>
               </div>
               <div class="col-md-2 col-md-offset-2">
                 <button type="button" class="btn btn-primary" (click)="guardarMercaderiaKg()"><i class="fa fa-save"></i> Agregar</button>
@@ -1318,14 +1193,14 @@
           <div class="row">
             <label class="col-md-3 control-label">Desde</label>
             <div class="col-md-6">
-              <input id="manejosDesde" class="form-control input-md" type="text" formControlName="mercaderiaKgDesde">
+              <input id="manejosDesdeEdit" class="form-control input-md" type="text" formControlName="mercaderiaKgDesde">
             </div>
           </div>
 
           <div class="row">
             <label class="col-md-3 control-label">Hasta</label>
             <div class="col-md-6">
-              <input id="manejosHasta" type="text" placeholder="" class="form-control input-md" formControlName="mercaderiaKgHasta">
+              <input id="manejosHastaEdit" type="text" placeholder="" class="form-control input-md" formControlName="mercaderiaKgHasta">
             </div>
           </div>
 
@@ -1333,21 +1208,21 @@
             <label class="col-md-3 control-label">Costo</label>
             <div class="col-md-6">
 
-              <input id="manejosCosto" class="form-control input-md" type="text" placeholder="" formControlName="mercaderiaKgCosto">
+              <input id="manejosCostoEdit" class="form-control input-md" type="text" placeholder="" formControlName="mercaderiaKgCosto">
             </div>
           </div>
 
           <div class="row">
             <label class="col-md-3 control-label">[%]</label>
             <div class="col-md-6">
-              <input id="manejosValor" type="checkbox" formControlName="mercaderiaKgValor">
+              <input id="manejosValorEdit" type="checkbox" formControlName="mercaderiaKgValor">
             </div>
           </div>
 
           <div class="modal-footer">
             <div class="form-group">
               <div class="col-md-2 col-md-offset-2">
-                <button type="button" id="BtnCerrarModal2" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i>Cerrar</button>
+                <button type="button" id="BtnCerrarModalManejosEdit" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i>Cerrar</button>
               </div>
               <div class="col-md-2 col-md-offset-2">
                 <button type="button" class="btn btn-primary" (click)="guardarManejos()"><i class="fa fa-save"></i> Agregar</button>
@@ -1373,14 +1248,14 @@
           <div class="row">
             <label class="col-md-3 control-label">Desde</label>
             <div class="col-md-6">
-              <input id="manejosDosDesde" class="form-control input-md" type="text" formControlName="mercaderiaKgDesde">
+              <input id="manejosDosDesdeEdit" class="form-control input-md" type="text" formControlName="mercaderiaKgDesde">
             </div>
           </div>
 
           <div class="row">
             <label class="col-md-3 control-label">Hasta</label>
             <div class="col-md-6">
-              <input id="manejosDosHasta" type="text" placeholder="" class="form-control input-md" formControlName="mercaderiaKgHasta">
+              <input id="manejosDosHastaEdit" type="text" placeholder="" class="form-control input-md" formControlName="mercaderiaKgHasta">
             </div>
           </div>
 
@@ -1388,21 +1263,21 @@
             <label class="col-md-3 control-label">Costo</label>
             <div class="col-md-6">
 
-              <input id="manejosDosCosto" class="form-control input-md" type="text" placeholder="" formControlName="mercaderiaKgCosto">
+              <input id="manejosDosCostoEdit" class="form-control input-md" type="text" placeholder="" formControlName="mercaderiaKgCosto">
             </div>
           </div>
 
           <div class="row">
             <label class="col-md-3 control-label">[%]</label>
             <div class="col-md-6">
-              <input id="manejosDosValor" type="checkbox" formControlName="mercaderiaKgValor">
+              <input id="manejosDosValorEdit" type="checkbox" formControlName="mercaderiaKgValor">
             </div>
           </div>
 
           <div class="modal-footer">
             <div class="form-group">
               <div class="col-md-2 col-md-offset-2">
-                <button type="button" id="BtnCerrarModal2" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i>Cerrar</button>
+                <button type="button" id="BtnCerrarModalManejo2Edit" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i>Cerrar</button>
               </div>
               <div class="col-md-2 col-md-offset-2">
                 <button type="button" class="btn btn-primary" (click)="guardarManejosDos()"><i class="fa fa-save"></i> Agregar</button>
@@ -1428,14 +1303,14 @@
           <div class="row">
             <label class="col-md-3 control-label">Desde</label>
             <div class="col-md-6">
-              <input id="segurosDesde" class="form-control input-md" type="text" formControlName="mercaderiaKgDesde">
+              <input id="segurosDesdeEdit" class="form-control input-md" type="text" formControlName="mercaderiaKgDesde">
             </div>
           </div>
 
           <div class="row">
             <label class="col-md-3 control-label">Hasta</label>
             <div class="col-md-6">
-              <input id="segurosDesdeHasta" type="text" placeholder="" class="form-control input-md" formControlName="mercaderiaKgHasta">
+              <input id="segurosDesdeHastaEdit" type="text" placeholder="" class="form-control input-md" formControlName="mercaderiaKgHasta">
             </div>
           </div>
 
@@ -1443,21 +1318,21 @@
             <label class="col-md-3 control-label">Costo</label>
             <div class="col-md-6">
 
-              <input id="segurosDesdeCosto" class="form-control input-md" type="text" placeholder="" formControlName="mercaderiaKgCosto">
+              <input id="segurosDesdeCostoEdit" class="form-control input-md" type="text" placeholder="" formControlName="mercaderiaKgCosto">
             </div>
           </div>
 
           <div class="row">
             <label class="col-md-3 control-label">[%]</label>
             <div class="col-md-6">
-              <input id="segurosDesdeValorAgregar" type="checkbox" formControlName="mercaderiaKgValor">
+              <input id="segurosDesdeValorEdit" type="checkbox" formControlName="mercaderiaKgValor">
             </div>
           </div>
 
           <div class="modal-footer">
             <div class="form-group">
               <div class="col-md-2 col-md-offset-2">
-                <button type="button" id="BtnCerrarModal2" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i>Cerrar</button>
+                <button type="button" id="BtnCerrarSeguroMercaderiaEdit" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close"></i>Cerrar</button>
               </div>
               <div class="col-md-2 col-md-offset-2">
                 <button type="button" class="btn btn-primary" (click)="guardarSeguros()"><i class="fa fa-save"></i> Agregar</button>

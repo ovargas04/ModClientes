@@ -42,7 +42,14 @@ export class EmpresasComponent implements OnInit, OnDestroy, AfterViewInit {
   loadingIndicator = true;
   reorderable = true;
   SelectionType = SelectionType;
-  bntIdBotonModalDosCerrarTrigger = 'BtnCerrarModal2';
+  bntIdBotonModalDosCerrarTrigger = 'BtnCerrarMercaderiaEdit';
+  BtnCerrarSeguroMercaderiaEditTrigger = 'BtnCerrarSeguroMercaderiaEdit';
+  BtnCerrarModalManejosEditTrigger = 'BtnCerrarModalManejosEdit'
+  BtnCerrarModalManejo2EditTrigger = 'BtnCerrarModalManejo2Edit'
+  BtnCerrarModalModalEditTrigger = 'BtnCerrarModalEdit'
+  
+  
+
   columnsEmpresa = [
     { name: 'ID', prop: 'id' },
     { name: 'Empresa', prop: 'name' },
@@ -639,16 +646,10 @@ export class EmpresasComponent implements OnInit, OnDestroy, AfterViewInit {
       },
     };
 
-    this.overlays.message = 'Detalles de empresa...';
-    this.overlayService.show(this.overlays);
-    this.url = AppConfigService.settings.server + 'parametros/correo-empresa';
-    this.jdata = { jdata: { empresa_id: empresa.id }, jSessionId: this.user.token };
-    this.data = 'jdata=' + encodeURIComponent(JSON.stringify(this.jdata));
 
-    await this.serv.ObtenerSucursales(this.data, this.url, httpOptions)
-      .then((result: []) => this.resultado = result)
-      .catch(catchError(this.handleError));
-    if (this.util.vResultado(this.resultado)) {
+    var respuesta = await this.llamadaGenerica({ empresa_id: empresa.id }, 'Detalles de empresa...', 'parametros/correo-empresa');
+
+    if (respuesta.success) {
       this.objetoDetalle = JSON.parse(this.resultado.values);
       this.empresa.id = this.objetoDetalle['empresa']['id'];
       this.empresa.name = this.objetoDetalle['empresa']['nombre'];
@@ -663,18 +664,57 @@ export class EmpresasComponent implements OnInit, OnDestroy, AfterViewInit {
       this.manejos2 = this.objetoDetalle['manejos2'];
       this.seguros = this.objetoDetalle['seguros'];
       this.mercaderias = this.objetoDetalle['mensajeria'];
-
-      await this.construirTabla("#tbodySeguroMercaderia_Edicion", this.seguros);
-      // Refresh tables
-      this.refresh('#MercaderiaTable', 'dtTriggerMercaderia');
-      this.refresh('#ManejosTable', 'dtTriggerManejos');
-      this.refresh('#ManejosTable2', 'dtTriggerManejos2');
-      this.refresh('#SegurosTable', 'dtTriggerSeguros');
-      this.overlayService.show(this.overlaysHide);
       this.triggerClick("levantareEdicionEmpresaModal");
-    } else {
-      this.overlayService.show(this.overlaysHide);
     }
+    else {
+      await this.mostrarMensaje('<p>No se ha podido completar la operación </p>', this.iconoError);
+    }
+    debugger;
+    this.construirTabla("#tbodyMercaderia_Edicion", this.mercaderias, "#tblMercaderiaEdicion");
+    this.construirTabla("#tbodyManejoAduanas_Edicion", this.manejos, "#tblManejoAduanasEdicion");
+    this.construirTabla("#tbodyManejoAduanasDos_Edicion", this.manejos2, "#TblManejoAduanasDosEdicion");
+    this.construirTabla("#tbodySeguroMercaderia_Edicion", this.seguros, "#TblSeguroMercaderiaEdicion");
+
+
+
+
+
+
+
+
+
+    //this.overlays.message = 'Detalles de empresa...';
+    //this.overlayService.show(this.overlays);
+    //this.url = AppConfigService.settings.server + 'parametros/correo-empresa';
+    //this.jdata = { jdata: { empresa_id: empresa.id }, jSessionId: this.user.token };
+    //this.data = 'jdata=' + encodeURIComponent(JSON.stringify(this.jdata));
+    //debugger;
+    //await this.serv.ObtenerSucursales(this.data, this.url, httpOptions)
+    //  .then((result: []) => this.resultado = result)
+    //  .catch(catchError(this.handleError));
+    //if (this.util.vResultado(this.resultado)) {
+    //  this.objetoDetalle = JSON.parse(this.resultado.values);
+    //  this.empresa.id = this.objetoDetalle['empresa']['id'];
+    //  this.empresa.name = this.objetoDetalle['empresa']['nombre'];
+    //  this.empresa.costoElaboracionGuia = this.util.formatMonetario(this.objetoDetalle['costoElaboracionGuia']);
+    //  this.empresa.descripcionCostoElaboracionGuia = this.objetoDetalle['descripcionCostoElaboracionGuia'];
+    //  this.empresa.cargoFuel = this.util.formatMonetario(this.objetoDetalle['cargoFuel']);
+    //  this.empresa.cargoTarjeta = this.util.formatMonetario(this.objetoDetalle['cargoTarjeta']);
+    //  this.empresa.excepcionImpuesto = this.util.formatMonetario(this.objetoDetalle['excepcionImpuesto']);
+    //  this.empresa.excepcionImpuestoAdicional = this.util.formatMonetario(this.objetoDetalle['excepcionImpuestoAdicional']);
+
+    //  this.manejos = this.objetoDetalle['manejos'];
+    //  this.manejos2 = this.objetoDetalle['manejos2'];
+    //  this.seguros = this.objetoDetalle['seguros'];
+    //  this.mercaderias = this.objetoDetalle['mensajeria'];
+    //  this.triggerClick("levantareEdicionEmpresaModal");
+    //} else {
+    //  this.overlayService.show(this.overlaysHide);
+    //}
+    //this.construirTabla("#tbodyMercaderia_Edicion", this.mercaderias, "#tblMercaderiaEdicion");
+    //this.construirTabla("#tbodyManejoAduanas_Edicion", this.manejos, "#tblManejoAduanasEdicion");
+    //this.construirTabla("#tbodyManejoAduanasDos_Edicion", this.manejos2, "#TblManejoAduanasDosEdicion");
+    //this.construirTabla("#tbodySeguroMercaderia_Edicion", this.seguros, "#TblSeguroMercaderiaEdicion");
   }
 
   eliminarEmpresa(empresa) {
@@ -1091,10 +1131,11 @@ export class EmpresasComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   async guardarEmpresa(empresa) {
-    debugger;
+    
     let isAllow = true;
     const dataEmpresa = {};
     $("#agregarEmpresaModal input[type='text']").each(function () {
+      
       let value = $(this).val();
       const name = $(this).attr("name");
 
@@ -1112,7 +1153,7 @@ export class EmpresasComponent implements OnInit, OnDestroy, AfterViewInit {
       isAllow = false;
       this.servMessage.showAlert(this.message);
     }
-    if (dataEmpresa["name"].length === 0) {
+    if (dataEmpresa["nombre"].length === 0) {
       this.message.text = 'Ingrese el nombre de la empresa';
       this.message.type = 'Alert';
       isAllow = false;
@@ -1125,24 +1166,47 @@ export class EmpresasComponent implements OnInit, OnDestroy, AfterViewInit {
       dataEmpresa["manejo2"] = this.manejos2;
       dataEmpresa["mensajeria"] = this.mercaderias;
 
-      this.overlays.message = 'Actualizando Empresa...';
-      this.overlayService.show(this.overlays);
-      this.url = AppConfigService.settings.server + 'parametros/empresa-actualizar';
-      this.jdata = { jdata: dataEmpresa , jSessionId: this.user.token };
-      this.data = 'jdata=' + encodeURIComponent(JSON.stringify(this.jdata));
-      const httpOptions = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        }),
-      };
-      await this.serv.ObtenerSucursales(this.data, this.url, httpOptions)
-        .then((result: []) => this.resultado = result)
-        .catch(catchError(this.handleError));
-      if (this.util.vResultado(this.resultado)) {
-        this.overlayService.show(this.overlaysHide);
-      } else {
-        this.overlayService.show(this.overlaysHide);
+
+      
+
+      var respuesta = await this.llamadaGenerica(dataEmpresa, 'Actualizando Empresa...', 'parametros/empresa-actualizar');
+
+      if (respuesta.success) {
+        this.cargarSucursales();
+        this.triggerClick(this.BtnCerrarModalModalEditTrigger);
+        await this.limpiarData();
+        await this.mostrarMensaje('<p>Proceso ejecutado correctamente</p>', this.iconoSuccess);
+
       }
+      else {
+        await this.mostrarMensaje('<p>No se ha podido completar la operación </p>', this.iconoError);
+      }
+     
+
+
+
+
+      //this.overlays.message = 'Actualizando Empresa...';
+      //this.overlayService.show(this.overlays);
+      //this.url = AppConfigService.settings.server + 'parametros/empresa-actualizar';
+      //this.jdata = { jdata: dataEmpresa , jSessionId: this.user.token };
+      //this.data = 'jdata=' + encodeURIComponent(JSON.stringify(this.jdata));
+      //const httpOptions = {
+      //  headers: new HttpHeaders({
+      //    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+      //  }),
+      //};
+      //debugger;
+      //await this.serv.ObtenerSucursales(this.data, this.url, httpOptions)
+      //  .then((result: []) => this.resultado = result)
+      //  .catch(catchError(this.handleError));
+      //if (this.util.vResultado(this.resultado)) {
+      //  this.overlayService.show(this.overlaysHide);
+      //} else {
+      //  this.overlayService.show(this.overlaysHide);
+      //}
+
+     
     }
   }
 
@@ -1168,32 +1232,31 @@ export class EmpresasComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   limpiarDataMercaderia() {
-    $('#mercaderiaKgDesde').val('');
-    $('#mercaderiaKgHasta').val('');
-    $('#mercaderiaKgCosto').val('');
-
-    $('#mercaderiaKgValor').val('');
+    $('#mercaderiaKgDesdeEdit').val('');
+    $('#mercaderiaKgHastaEdit').val('');
+    $('#mercaderiaKgCostoEdit').val('');
+    $('#mercaderiaKgValorEdit').val('');
   }
 
   limpiarDataManejos() {
-    $('#manejosDesde').val('');
-    $('#manejosHasta').val('');
-    $('#manejosCosto').val('');
-    $('#manejosValor').val('');
+    $('#manejosDesdeEdit').val('');
+    $('#manejosHastaEdit').val('');
+    $('#manejosCostoEdit').val('');
+    $('#manejosValorEdit').val('');
   }
 
   limpiarDataManejos2() {
-    $('#manejosDosDesde').val('');
-    $('#manejosDosHasta').val('');
-    $('#manejosDosCosto').val('');
-    $('#manejosDosValor').val('');
+    $('#manejosDosDesdeEdit').val('');
+    $('#manejosDosHastaEdit').val('');
+    $('#manejosDosCostoEdit').val('');
+    $('#manejosDosValorEdit').val('');
   }
 
   limpiarDataSeguros() {
-    $('#segurosDesde').val('');
-    $('#segurosDesdeHasta').val('');
-    $('#segurosDesdeCosto').val('');
-    $('#segurosDesdeValor').val('');
+    $('#segurosDesdeEdit').val('');
+    $('#segurosDesdeHastaEdit').val('');
+    $('#segurosDesdeCostoEdit').val('');
+    $('#segurosDesdeValorEdit').val('');
   }
 
 
@@ -1238,9 +1301,8 @@ export class EmpresasComponent implements OnInit, OnDestroy, AfterViewInit {
             valor: valor
           })
 
-          this.mercaderias = mercaderiaParse;
-          this.refresh('#MercaderiaTable', 'dtTriggerSucursal');
-          //this.mercaderias = mercaderiaParse
+
+          this.construirTabla("#tbodyMercaderia_Edicion", mercaderiaParse, "#tblMercaderiaEdicion", true);
           this.limpiarDataMercaderia();
           this.triggerClick(this.bntIdBotonModalDosCerrarTrigger);
 
@@ -1269,8 +1331,14 @@ export class EmpresasComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         else {
 
-          if (this.manejos != undefined) {
-            mercaderiaParse = this.manejos;
+          //if (this.mercaderias == undefined) {
+          mercaderiaParse = this.manejos;
+          //}
+          this.manejos = [];
+
+          if (mercaderiaParse == undefined) {
+            mercaderiaParse = [];
+            //mercaderiaParse = this.mercaderias;
           }
 
           debugger;
@@ -1282,10 +1350,17 @@ export class EmpresasComponent implements OnInit, OnDestroy, AfterViewInit {
             valor: valor
           })
 
-          this.manejos = mercaderiaParse
+          this.construirTabla("#tbodyManejoAduanas_Edicion", mercaderiaParse, "#tblManejoAduanasEdicion", true);
+          //var table = $('#tblManejoAduanasEdicion').DataTable();
+          //table.rows.add([{
+          //  "desde": desde,
+          //  "hasta": hasta,
+          //  "costo": costo,
+          //  "valor": valor}])
+          //  .draw();
+          
           this.limpiarDataManejos();
-          this.triggerClick(this.bntIdBotonModalDosCerrarTrigger);
-
+          this.triggerClick(this.BtnCerrarModalManejosEditTrigger);
         }
   }
 
@@ -1311,8 +1386,14 @@ export class EmpresasComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         else {
 
-          if (this.manejos2 != undefined) {
-            mercaderiaParse = this.manejos2;
+          //if (this.mercaderias == undefined) {
+          mercaderiaParse = this.manejos2;
+          //}
+          this.manejos2 = [];
+
+          if (mercaderiaParse == undefined) {
+            mercaderiaParse = [];
+            //mercaderiaParse = this.mercaderias;
           }
 
           debugger;
@@ -1324,10 +1405,10 @@ export class EmpresasComponent implements OnInit, OnDestroy, AfterViewInit {
             valor: valor
           })
 
-          this.manejos2 = mercaderiaParse
-          this.limpiarDataManejos2();
-          this.triggerClick(this.bntIdBotonModalDosCerrarTrigger);
 
+          this.construirTabla("#tbodyManejoAduanasDos_Edicion", mercaderiaParse, "#TblManejoAduanasDosEdicion", true);
+          this.limpiarDataManejos2();
+          this.triggerClick(this.BtnCerrarModalManejo2EditTrigger);
         }
   }
 
@@ -1351,21 +1432,32 @@ export class EmpresasComponent implements OnInit, OnDestroy, AfterViewInit {
         if (costo == null) {
           this.mostrarMensaje("Debe digitar un valor para el campo costo");
         }
+
         else {
 
-          mercaderiaParse.push({
-            id: this.empresa.id,
-            desde: desde,
-            hasta: hasta,
-            costo: costo,
-            valor: valor
-          })
+          //if (this.mercaderias == undefined) {
+          mercaderiaParse = this.seguros;
+          //}
+          this.seguros = [];
 
-          this.construirTabla("#tbodySeguroMercaderia_Edicion", mercaderiaParse, true);
-          this.limpiarDataManejos2();
-          this.triggerClick(this.bntIdBotonModalDosCerrarTrigger);
-
+          if (mercaderiaParse == undefined) {
+            mercaderiaParse = [];
+            //mercaderiaParse = this.mercaderias;
+          }
         }
+
+    mercaderiaParse.push({
+      id: this.empresa.id,
+      desde: desde,
+      hasta: hasta,
+      costo: costo,
+      valor: valor
+    })
+
+    this.construirTabla("#tbodySeguroMercaderia_Edicion", mercaderiaParse, "TblSeguroMercaderiaEdicion", true);
+    this.limpiarDataSeguros();
+    this.triggerClick(this.BtnCerrarSeguroMercaderiaEditTrigger);
+
   }
 
 
@@ -1399,36 +1491,60 @@ export class EmpresasComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   //tbodySeguroMercaderia_Edicion
-  async construirTabla(idTable: string, data: any, esAppend: boolean = false)
+  construirTabla(idTable: string, data: any, nombreTable: string = "", esAppend: boolean = false)
   {
-    if (!idTable.startsWith("#"))
-      idTable = "#" + idTable;
-
-    const tableBody = $(idTable);
-    let html = "";
-    for (var i = 0; i < data.length; i++) {
-      html += "<tr>";
-      html += "<td>" + data[i]["desde"]+"</td>";
-      html += "<td>"+data[i]["hasta"]+"</td>";
-      html += "<td>" + data[i]["costo"] + "</td>";
-
-      if (data[i]["valor"]) {
-        html += "<td><input type='checkbox' checked='checked' /> </td>";
+    debugger;
+    var table = $(nombreTable).DataTable();
+    if (data.length > 0) {
+      for (var i = 0; i < data.length; i++) {
+        table.row.add([data[i].desde, data[i].hasta, data[i].costo, data[i].valor]).draw(false);
       }
-      else {
-        html += "<td><input type='checkbox' /> </td>";
-      }
+
+      //var editor = new $.fn.dataTable.Editor({
+      //  ajax: data,
+      //  table: "#example",
+
+      $(nombreTable).on('click', 'tbody td:not(:first-child)', function (e) {
+        //editor.inline(this);
+        alert($(this).html());
+      });
+
+
+    }
+
+    //if (!idTable.startsWith("#"))
+    //  idTable = "#" + idTable;
+    //const tableBody = $(idTable);
+    //let html = "";
+    //for (var i = 0; i < data.length; i++) {
+    //  html += "<tr>";
+    //  html += "<td>" + data[i]["desde"]+"</td>";
+    //  html += "<td>"+data[i]["hasta"]+"</td>";
+    //  html += "<td>" + data[i]["costo"] + "</td>";
+
+    //  if (data[i]["valor"]) {
+    //    html += "<td><input type='checkbox' checked='checked' /> </td>";
+    //  }
+    //  else {
+    //    html += "<td><input type='checkbox' /> </td>";
+    //  }
       
-      html += "</tr>";
-    }
+    //  html += "</tr>";
+    //}
+    //debugger;
+    //if (esAppend) {
+    //  $(nombreTable).DataTable().clear();
+    //  $(nombreTable).DataTable().draw();
+    //  tableBody.append(html);
+    //}
+    //else {
+    //  tableBody.html("");
+    //  tableBody.html(html);
+    //  $(nombreTable).DataTable();
 
-    if (esAppend) {
-      tableBody.append(html);
-    }
-    else {
-      tableBody.html("");
-      tableBody.html(html);
-    }
+    //}
+
+   
 
 
   }

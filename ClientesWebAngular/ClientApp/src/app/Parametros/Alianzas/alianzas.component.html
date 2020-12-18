@@ -2,7 +2,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-2 col-md-offset-8">
-      <a class="btn" (click)="productoAgregar" data-toggle="modal" data-target="#agregarAlianzaModal"><i class="btn-primary fa fa-plus"></i> Agregar Alianza</a>
+      <a class="btn" (click)="productoAgregar()" data-toggle="modal" data-target="#agregarAlianzaModal"><i class="btn-primary fa fa-plus"></i> Agregar Alianza</a>
     </div>
   </div>
   <div class="row">
@@ -65,7 +65,7 @@
           <div class="form-group">
             <label class="col-md-3 control-label">Nombre Alianza</label>
             <div class="col-md-6">
-              <input type="text" placeholder="Nombre alianza" class="form-control input-md" value="{{ alianzaObject.name}}" formControlName="alianzaNombre">
+              <input type="text" placeholder="Nombre alianza" class="form-control input-md" value="{{alianzaObject.name}}" formControlName="alianzaNombre">
             </div>
           </div>
 

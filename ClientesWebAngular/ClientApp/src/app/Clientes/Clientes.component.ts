@@ -40,7 +40,7 @@ export class ClientesComponent implements OnInit, OnDestroy, AfterViewInit {
   // Properties table empresa ngx
   ColumnMode = ColumnMode;
   loadingIndicator = true;
-  reorderable = true;
+  reorderable = true
   SelectionType = SelectionType;
   columnsEmpresa = [
     { name: 'ID', prop: 'id' },
@@ -178,7 +178,7 @@ export class ClientesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //*******BUSQUEDA VARIABLES******** //
 
-
+  esNuevoCliente = false;
 
   model = {
 
@@ -1265,6 +1265,7 @@ export class ClientesComponent implements OnInit, OnDestroy, AfterViewInit {
         this.CambiarNombreSucursal();
         this.inhabilitarHabilitar(this.paMenuIds.pa_cliente, true);
         this.inhabilitarElementoSimple("_TipoCliente", true);
+        
       }
       else {
         await this.mostrarMensaje("<p>Ha ocurrido un error cargando los datos</p>", this.iconoError);
@@ -1950,6 +1951,7 @@ export class ClientesComponent implements OnInit, OnDestroy, AfterViewInit {
         : (pa_pagina == "pa_direccion1" ? this.model.pa_cliente_direccion1_id : this.model.pa_cliente_direccion2_id);
 
 
+      
       var resultadoObjetoSeccion = this._PA_URLS.filter(x => x.NombreSeccion == pa_pagina)[0];
 
       if (!UtilApp.isNullOrUndefined(resultadoObjetoSeccion)) {
@@ -1958,18 +1960,30 @@ export class ClientesComponent implements OnInit, OnDestroy, AfterViewInit {
 
         if (resultadoGuardar.success) {
 
-         // this.sessionManager(this.AccionSessionManager.nombreSession, "true", this.AccionSessionManager.asignarValor); 
+          if (pa_pagina == "pa_direccion1") {
+
+            let dataClienteResponse: any = await this.obtenerDataClienteActual();
+            let cliente = dataClienteResponse["Data"][0];
+            this.model.pa_cliente_direccion1_id = cliente[28];
+          }
+
+
+          if (this.esNuevoCliente) {
+            this.cargarCliente();
+          }
 
         }
         else {
-          this.mostrarMensaje("<p>No se ha podido actualizar o guardar la informacion</p>", this.iconoError);
+          await this.mostrarMensaje("<p>No se ha podido actualizar o guardar la informacion</p>", this.iconoError);
         }
 
       }
 
       this.cambiarIconoBotonGuardarEditar(true);
       this.inhabilitarHabilitar(pa_pagina, false);
-      //this.cargarCliente();
+
+
+
     }
     else {
       //htmlButton = ;
@@ -2082,6 +2096,7 @@ export class ClientesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   async mostrarCliente(dataCliente) {
 
+    this.esNuevoCliente = false;
     this.cambiarIconoBotonGuardarEditar(true);
     this.limpiarData();
 
@@ -3134,7 +3149,7 @@ export class ClientesComponent implements OnInit, OnDestroy, AfterViewInit {
     else if (tipoAccion == 2) {
       return sessionStorage.getItem(nombreSession) ?? null;
     }
-    else if (true) {
+    else if (tipoAccion == 3) {
       sessionStorage.removeItem(nombreSession);
     }
 
@@ -4004,7 +4019,7 @@ export class ClientesComponent implements OnInit, OnDestroy, AfterViewInit {
         "#seg_clientesAutorizadosMostrar",
         "#seg_clientesContactosMostrar",
         "#seg_clientesImagenesMostrar",
-
+        
       ];
 
     this.Mostrar_Ocultar_Campos("#DivMenuIzquierda ul.nav li", "");
@@ -4018,8 +4033,8 @@ export class ClientesComponent implements OnInit, OnDestroy, AfterViewInit {
     this.Mostrar_Ocultar_Campos("", "#pa_cliente .pa_cliente_cambio_sucursal");
 
     this.pa_Click("#seg_clientesMostrar");
-
-    
+    this.cambiarIconoBotonGuardarEditar(false);
+    this.esNuevoCliente = true;
     
   }
 
@@ -4029,7 +4044,7 @@ export class ClientesComponent implements OnInit, OnDestroy, AfterViewInit {
   setearValorElemento(elemento,valor)
   {
 
-    var jqueryElement = $(elemento);
+    let jqueryElement = $(elemento);
 
     if (!UtilApp.isNullOrUndefined(jqueryElement)) {
       jqueryElement.val(valor);

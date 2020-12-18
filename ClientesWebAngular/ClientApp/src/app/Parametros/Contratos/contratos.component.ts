@@ -354,6 +354,7 @@ export class ContratosComponent implements OnInit, OnDestroy, AfterViewInit {
         this.objContrato.usaJumping = values[0]["usaJumping"];
         this.objContrato.publicado = values[0]["publicado"];
         this.dataExcel = values[1];
+        $("#contrato_id").attr("readonly","readonly");
 
         this.llenarTablaExcel(false);
 
@@ -382,11 +383,11 @@ export class ContratosComponent implements OnInit, OnDestroy, AfterViewInit {
    
 
     var esEdicion = this.objContrato.contrato_id > 0 ? true : false;
-    var contratoId = this.objContrato.contrato_id;
+    var contratoId = parseInt($("#contrato_id").val().toString() ?? "0");
     var accion = this.objContrato.contrato_id > 0 ? "actualizado" : "guardado";
     var empresa = this.contratosForm.controls["empresa"].value;
     var nombre = this.contratosForm.controls["nombre"].value;
-    var pais_id = this.contratosForm.controls["pais_id"].value;
+    var pais_id = parseInt($("#_Pais").val().toString());
     var tipo = this.contratosForm.controls["tipo"].value;
     var cupo = this.contratosForm.controls["cupo"].value;
     var pesoMinimo = this.contratosForm.controls["pesoMinimo"].value;
@@ -491,8 +492,8 @@ export class ContratosComponent implements OnInit, OnDestroy, AfterViewInit {
       this.objContrato.publicado = publicado;
     }
 
-    this.objContrato["costos"] = this.contratosModificar;
-    var respuesta = await this.llamadaGenerica(this.objContrato, 'Actualizando contratos...', 'parametros/contrato-actualizar');
+    this.objContrato["costos"] = this.contratosModificar; 
+    let respuesta = await this.llamadaGenerica(this.objContrato, 'Actualizando contratos...', 'parametros/contrato-actualizar');
 
     if (respuesta.success) {
       await this.cargarContratos();
@@ -627,7 +628,7 @@ export class ContratosComponent implements OnInit, OnDestroy, AfterViewInit {
     this.objContrato.data_excel = null;
     this.objContrato.tipoReal = 0;
     this.objContrato.paisIdReal = 0;
-
+    $("#contrato_id").removeAttr("readonly");
   }
 
 
@@ -641,7 +642,7 @@ export class ContratosComponent implements OnInit, OnDestroy, AfterViewInit {
       return false;
     }
 
-
+    debugger;
     try {
       let fileReader = new FileReader();
       fileReader.readAsArrayBuffer(this.file);
@@ -671,23 +672,24 @@ export class ContratosComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   llenarTablaExcel(esArchivo) {
+    debugger;
     let tablaContratos: IContrato[];
     tablaContratos = [];
 
     if (esArchivo) {
-      for (var i = 0; i < this.dataExcel.length; i++) {
+      for (let i = 0; i < this.dataExcel.length; i++) {
         tablaContratos.push(
           {
-            desde: this.dataExcel[i].Desde,
-            hasta: this.dataExcel[i].Hasta,
-            costo: this.dataExcel[i].Costo,
-            valor: this.dataExcel[i].Valor
+            desde: this.dataExcel[i].desde,
+            hasta: this.dataExcel[i].hasta,
+            costo: this.dataExcel[i].valor,
+            valor: this.dataExcel[i].porcentaje
 
           });
       }
     }
     else {
-      for (var i = 0; i < this.dataExcel.length; i++) {
+      for (let i = 0; i < this.dataExcel.length; i++) {
         tablaContratos.push(
           {
             desde: this.dataExcel[i][0],
